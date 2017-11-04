@@ -19,9 +19,8 @@ public class SectionManager {
 		throw new UnsupportedOperationException();
 	}
 
-
 	/**
-	 * Make a player enter a section by section name
+	 * Make a player enter a section by section name.
 	 * If the current section force a specific target section, this method will fail gracefully.
 	 * @param player Player to be moved
 	 * @param sectionName Section name to go to
@@ -34,15 +33,30 @@ public class SectionManager {
 	}
 
 	/**
-	 * Make a player enter a section by section name
+	 * Make a player enter a section by section name.
+	 * If the current section force a specific target section, this method will fail gracefully.
 	 * @param player Player to be moved
 	 * @param sectionName Section name to go to
+	 * @param subSection Sub-section to go to
+	 * @throws InvalidSectionException Invalid section name provided
+	 * @throws IllegalSectionLeavingException The current section forbids the player to go to the desired section
+	 * @throws IllegalSectionEnteringException The player should not enter the desired section
+	 */
+	public static void enter( Player player, String sectionName, String subSection ) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Make a player enter a section by section name.
+	 * @param player Player to be moved
+	 * @param sectionName Section name to go to
+	 * @param subSection Sub-section to go to
 	 * @param force Force the player to go to the target section, even if his current section prefers another. He will be successively transferred to intermediate preferred sections to avoid any problems.
 	 * @throws InvalidSectionException Invalid section name provided
 	 * @throws IllegalSectionLeavingException The current section forbids the player to go to the desired section
 	 * @throws IllegalSectionEnteringException The player should not enter the desired section
 	 */
-	public static void enter( Player player, String sectionName, boolean force ) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
+	public static void enter( Player player, String sectionName, String subSection, boolean force ) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
 		throw new UnsupportedOperationException();
 	}
 

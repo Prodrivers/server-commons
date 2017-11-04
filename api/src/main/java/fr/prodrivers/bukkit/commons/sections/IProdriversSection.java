@@ -33,18 +33,45 @@ public interface IProdriversSection {
 	boolean isHub();
 
 	/**
-	 * Section join callback
-	 * @param player Player that joins the section
-	 * @param leavedSection Section name to be entered. May be null.
-	 * @return {@code true} Continue the section enter process
+	 * Get if the whole party should enter the section
+	 *
+	 * @return {@code true} Force the whole party to enter
 	 */
-	boolean join( Player player, String leavedSection );
+	boolean shouldMoveParty();
 
 	/**
-	 * Section leave callback
-	 * @param player Player that leaves the section
+	 * Section join callback, called before teleporting the player to the section. Should prepare the player to enter the section, or deny its entry if he should not.
+	 *
+	 * @param player        Player that joins the section
+	 * @param leavedSection Section name to be entered. May be null.
+	 * @param subSection Sub-section to enter. May be null.
+	 * @return {@code true} Continue the section enter process
+	 */
+	boolean join( Player player, String leavedSection, String subSection );
+
+	/**
+	 * Section post-join callback, called after teleporting the player to the section. Should makes the final preparation for the player entering the section. Should not kick the player.
+	 *
+	 * @param player        Player that joins the section
+	 * @param leavedSection Section name to be entered. May be null.
+	 * @param subSection Sub-section to enter. May be null.
+	 */
+	void postJoin( Player player, String leavedSection, String subSection );
+
+	/**
+	 * Section leave callback, called before teleporting the player to the section. Should prepare the player to leave the section, or deny its exit if he should not.
+	 *
+	 * @param player         Player that leaves the section
 	 * @param enteredSection Section name to be entered. May be null.
 	 * @return {@code true} Continue the section enter process
 	 */
 	boolean leave( Player player, String enteredSection );
+
+	/**
+	 * Section post-leave callback, called after teleporting the player to the section. Should makes the final preparation for the player leaving the section.
+	 *
+	 * @param player        Player that leaves the section
+	 * @param leavedSection Section name to be entered. May be null.
+	 */
+	void postLeave( Player player, String leavedSection );
 }
