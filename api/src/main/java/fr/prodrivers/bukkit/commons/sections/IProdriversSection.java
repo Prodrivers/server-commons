@@ -43,20 +43,20 @@ public interface IProdriversSection {
 	 * Section join callback, called before teleporting the player to the section. Should prepare the player to enter the section, or deny its entry if he should not.
 	 *
 	 * @param player        Player that joins the section
-	 * @param leavedSection Section name to be entered. May be null.
 	 * @param subSection Sub-section to enter. May be null.
+	 * @param leavedSection Section name to be entered. May be null.
 	 * @return {@code true} Continue the section enter process
 	 */
-	boolean join( Player player, String leavedSection, String subSection );
+	boolean join( Player player, String subSection, String leavedSection );
 
 	/**
 	 * Section post-join callback, called after teleporting the player to the section. Should makes the final preparation for the player entering the section. Should not kick the player.
 	 *
 	 * @param player        Player that joins the section
-	 * @param leavedSection Section name to be entered. May be null.
 	 * @param subSection Sub-section to enter. May be null.
+	 * @param leavedSection Section name to be entered. May be null.
 	 */
-	void postJoin( Player player, String leavedSection, String subSection );
+	void postJoin( Player player, String subSection, String leavedSection );
 
 	/**
 	 * Section leave callback, called before teleporting the player to the section. Should prepare the player to leave the section, or deny its exit if he should not.
