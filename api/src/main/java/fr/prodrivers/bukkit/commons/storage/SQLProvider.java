@@ -1,6 +1,9 @@
 package fr.prodrivers.bukkit.commons.storage;
 
+import io.ebean.EbeanServer;
+
 import java.sql.Connection;
+import java.util.List;
 
 /**
  * SQL Database provider for Prodrivers plugins.
@@ -18,6 +21,14 @@ public class SQLProvider {
 	 * @return Connection or null
 	 */
 	public static Connection getConnection() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Gets an Ebean ORM Server that uses the provided classes
+	 * @return Ebean Server or null
+	 */
+	public static EbeanServer getEbeanServer( List<Class<?>> classes ) {
 		throw new UnsupportedOperationException();
 	}
 }

@@ -20,6 +20,7 @@
 
 	<properties>
 		<maven.deploy.skip>true</maven.deploy.skip>
+		<ebean-maven-plugin.args>debug=0</ebean-maven-plugin.args>
 	</properties>
 
 	<repositories>
@@ -38,14 +39,14 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.9.4-R0.1-SNAPSHOT</version>
+			<version>1.12.2-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<!--Bukkit API-->
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.9.4-R0.1-SNAPSHOT</version>
+			<version>1.12.2-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<!--Prodrivers Commons API-->
@@ -59,6 +60,29 @@
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongodb-driver</artifactId>
 			<version>3.5.0</version>
+		</dependency>
+		<!-- JavaX Validation Annotations -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+		<!-- EBeans -->
+		<dependency>
+			<groupId>io.ebean</groupId>
+			<artifactId>ebean</artifactId>
+			<version>11.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.ebean</groupId>
+			<artifactId>ebean-querybean</artifactId>
+			<version>10.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.ebean</groupId>
+			<artifactId>querybean-generator</artifactId>
+			<version>10.2.1</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
