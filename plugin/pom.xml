@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>prodrivers-commons-plugin</artifactId>
@@ -55,6 +54,12 @@
 			<artifactId>prodrivers-commons-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- MySQL Connector/J -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.16</version>
+		</dependency>
 		<!-- MongoDB Driver -->
 		<dependency>
 			<groupId>org.mongodb</groupId>
@@ -71,24 +76,30 @@
 		<dependency>
 			<groupId>io.ebean</groupId>
 			<artifactId>ebean</artifactId>
-			<version>11.2.1</version>
+			<version>11.39.1</version>
 		</dependency>
 		<dependency>
 			<groupId>io.ebean</groupId>
 			<artifactId>ebean-querybean</artifactId>
-			<version>10.3.1</version>
+			<version>11.39.1</version>
 		</dependency>
 		<dependency>
 			<groupId>io.ebean</groupId>
 			<artifactId>querybean-generator</artifactId>
-			<version>10.2.1</version>
+			<version>11.39.2</version>
 			<scope>provided</scope>
+		</dependency>
+		<!-- SLF4J (for EBean) -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.26</version>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		<defaultGoal>clean compile resources:resources assembly:single</defaultGoal>
+		<defaultGoal>clean compile resources:resources package dependency:copy-dependencies</defaultGoal>
 
 		<resources>
 			<resource>
@@ -123,14 +134,75 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.0.0</version>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
 				<configuration>
-					<descriptors>
-						<descriptor>${basedir}/assembly.xml</descriptor>
-					</descriptors>
-					<appendAssemblyId>false</appendAssemblyId>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>ProdriversCommons/libs/</classpathPrefix>
+						</manifest>
+					</archive>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>fr.prodrivers.bukkit:prodrivers-commons-api</include>
+								</includes>
+							</artifactSet>
+							<filters>
+								<filter>
+									<artifact>fr.prodrivers.bukkit:prodrivers-commons-api</artifact>
+									<excludes>
+										<exclude>fr/prodrivers/bukkit/commons/sections/SectionManager*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/Chat*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/configuration/Configuration*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/configuration/AbstractAttributeConfiguration*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/configuration/file/AbstractFileAttributeConfiguration*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/configuration/file/FileAttributeConfiguration*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/configuration/Messages*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/parties/Party*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/parties/PartyManager*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/storage/StorageProvider*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/storage/SQLProvider*</exclude>
+									</excludes>
+								</filter>
+							</filters>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.0.2</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<excludeScope>provided</excludeScope>
+							<excludeArtifactIds>prodrivers-commons-api</excludeArtifactIds>
+							<outputDirectory>${project.build.directory}/ProdriversCommons/libs/</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
