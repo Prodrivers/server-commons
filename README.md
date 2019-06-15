@@ -15,21 +15,15 @@ Documentation is available on [Prodrivers Sources](http://commons.sources.prodri
 ```
 <repositories>
 	<repository>
-		<id>horgeon-repo-snapshot</id>
-		<url>https://repo.horgeon.fr/repository/maven-snapshots/</url>
-		<releases>
-			<enabled>false</enabled>
-		</releases>
-		<snapshots>
-			<enabled>true</enabled>
-		</snapshots>
-	</repository>
+    	<id>prodrivers-repo</id>
+    	<url>https://gitlab.com/api/v4/groups/Prodrivers/-/packages/maven</url>
+    </repository>
 </repositories>
 <dependencies>
 	<dependency>
-		<groupId>fr.horgeon.bukkit</groupId>
-		<artifactId>packets-utilities</artifactId>
-		<version>1.4</version>
+		<groupId>fr.prodrivers.bukkit</groupId>
+		<artifactId>prodrivers-commons</artifactId>
+		<version>1.0-SNAPSHOT</version>
 		<scope>provided</scope>
 	</dependency>
 </dependencies>
