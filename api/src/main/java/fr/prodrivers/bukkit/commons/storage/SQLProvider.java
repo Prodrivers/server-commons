@@ -26,6 +26,7 @@ public class SQLProvider {
 
 	/**
 	 * Gets an Ebean ORM Server that uses the provided classes
+	 * @param classes Classes (typically entity beans) to be used by the ORM
 	 * @return Ebean Server or null
 	 */
 	public static EbeanServer getEbeanServer( List<Class<?>> classes ) {
