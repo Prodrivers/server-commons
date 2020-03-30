@@ -1,0 +1,50 @@
+name: ProdriversCommons
+main: fr.prodrivers.bukkit.commons.plugin.Main
+version: ${project.version}
+description: ${project.description}
+
+commands:
+  plugin:
+    description: Blocked command
+  pl:
+    description: Blocked command
+  help:
+    description: Blocked command
+  bukkit:
+    description: Blocked command
+  '?':
+    description: Blocked command
+  pcommons:
+    description: Prodrivers Commons main command
+  pcommons reload:
+    description: Reload Prodrivers Commons
+    permission: pcommons.reload
+  pcommons sections query:
+    description: Prodrivers Commons Section Player Query Command
+    permission: pcommons.section.query
+  hub:
+    description: Prodrivers Commons' Hub teleportation command
+    permission: pcommons.hub
+  party:
+    description: Prodrivers Commons' Party system interaction command
+    permission: pcommons.party
+  p:
+    description: Prodrivers Commons' Party chat
+    permission: pcommons.party
+
+permissions:
+  pcommons.hub:
+    description: Allows one to enter to Prodrivers Commons-compatible sections.
+    default: true
+  pcommons.commandblocker.bypass:
+    description: Allows one to executed blocked commands.
+    default: op
+  pcommons.party:
+    description: Allows one to use Prodrivers Commons' party command.
+    default: true
+  pcommons.sections.query:
+    description: Allows one to see which section the player is in.
+    default: op
+  pcommons.reload:
+    description: Allows one to reload Prodrivers Commons.
+    default: op

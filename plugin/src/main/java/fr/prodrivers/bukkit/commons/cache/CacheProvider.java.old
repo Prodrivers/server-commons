@@ -1,0 +1,49 @@
+package fr.prodrivers.bukkit.commons.cache;
+
+import fr.prodrivers.bukkit.commons.plugin.Main;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.exceptions.JedisException;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.net.URI;
+
+public class CacheProvider implements Closeable {
+	private JedisPool pool;
+
+	public CacheProvider() {
+		try {
+			JedisPoolConfig config = new JedisPoolConfig();
+			config.setMaxTotal( Main.getConfiguration().cache_maxTotalConnections );
+			config.setMaxIdle( Main.getConfiguration().cache_maxIdleConnections );
+			pool = new JedisPool( config, URI.create( Main.getConfiguration().cache_uri ), Main.getConfiguration().cache_timeOut );
+		} catch( JedisException ex ) {
+			Main.logger.warning( "[ProdriversCommons] Cache provider is not available: " + ex.getLocalizedMessage() );
+			Main.logger.warning( "[ProdriversCommons] Please check your cache connection URI and credentials." );
+		}
+	}
+
+	public Jedis getResource() {
+		try {
+			Jedis resource = pool.getResource();
+			if( resource != null ) {
+				if( Main.getConfiguration().cache_password != null && !Main.getConfiguration().cache_password.isEmpty() )
+					resource.auth( Main.getConfiguration().cache_password );
+				return resource;
+			}
+		} catch( JedisException ex ) {
+			Main.logger.warning( "[ProdriversCommons] Cache instance could not be retrieved: " + ex.getLocalizedMessage() );
+			Main.logger.warning( "[ProdriversCommons] Please check your connection URI and credentials." );
+			Main.logger.warning( "[ProdriversCommons] The pool may have run out of active connections." );
+		}
+		return null;
+	}
+
+	@Override
+	public void close() throws IOException {
+		if( pool != null )
+			pool.destroy();
+	}
+}
