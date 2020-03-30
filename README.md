@@ -16,7 +16,7 @@ Documentation is available on [Prodrivers Sources](http://commons.sources.prodri
 <repositories>
 	<repository>
     	<id>prodrivers-repo</id>
-    	<url>https://gitlab.com/api/v4/groups/Prodrivers/-/packages/maven</url>
+    	<url>https://repo.prodrivers.fr/</url>
     </repository>
 </repositories>
 <dependencies>
