@@ -75,6 +75,15 @@ public class Party {
 	}
 
 	/**
+	 * Set a player as the new party owner
+	 *
+	 * @param newOwner New owner
+	 */
+	public void electOwner( UUID newOwner ) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
 	 * Returns the party's number of players.
 	 *
 	 * @return Party's number of players
