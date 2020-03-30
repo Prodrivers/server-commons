@@ -27,8 +27,9 @@ public class SectionManager {
 	 * @throws InvalidSectionException Invalid section name provided
 	 * @throws IllegalSectionLeavingException The current section forbids the player to go to the desired section
 	 * @throws IllegalSectionEnteringException The player should not enter the desired section
+	 * @throws NotPartyOwnerException The player is in a party and is trying to enter a section not authorized as a non-party owner
 	 */
-	public static void enter( Player player, String sectionName ) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
+	public static void enter( Player player, String sectionName ) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NotPartyOwnerException {
 		throw new UnsupportedOperationException();
 	}
 
@@ -41,8 +42,9 @@ public class SectionManager {
 	 * @throws InvalidSectionException Invalid section name provided
 	 * @throws IllegalSectionLeavingException The current section forbids the player to go to the desired section
 	 * @throws IllegalSectionEnteringException The player should not enter the desired section
+	 * @throws NotPartyOwnerException The player is in a party and is trying to enter a section not authorized as a non-party owner
 	 */
-	public static void enter( Player player, String sectionName, String subSection ) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
+	public static void enter( Player player, String sectionName, String subSection ) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NotPartyOwnerException {
 		throw new UnsupportedOperationException();
 	}
 
@@ -55,8 +57,9 @@ public class SectionManager {
 	 * @throws InvalidSectionException Invalid section name provided
 	 * @throws IllegalSectionLeavingException The current section forbids the player to go to the desired section
 	 * @throws IllegalSectionEnteringException The player should not enter the desired section
+	 * @throws NotPartyOwnerException The player is in a party and is trying to enter a section not authorized as a non-party owner
 	 */
-	public static void enter( Player player, String sectionName, String subSection, boolean force ) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
+	public static void enter( Player player, String sectionName, String subSection, boolean force ) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NotPartyOwnerException {
 		throw new UnsupportedOperationException();
 	}
 
