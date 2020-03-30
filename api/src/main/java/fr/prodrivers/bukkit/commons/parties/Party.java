@@ -1,6 +1,9 @@
 package fr.prodrivers.bukkit.commons.parties;
 
+import fr.prodrivers.bukkit.commons.Chat;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -96,6 +99,27 @@ public class Party {
 	 * Disband/Delete the party.
 	 */
 	public void disband() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Send a message to all party players
+	 *
+	 * @param chat Chat plugin to use
+	 * @param msg Message to send
+	 */
+	public void broadcast( Chat chat, final String msg )  {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Send a message to all party players, except some defined ones
+	 *
+	 * @param chat Chat plugin to use
+	 * @param msg Message to send
+	 * @param excluded Players to be excluded from the broadcast
+	 */
+	public void broadcast( Chat chat, final String msg, final List<UUID> excluded )  {
 		throw new UnsupportedOperationException();
 	}
 }
