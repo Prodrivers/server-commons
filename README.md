@@ -4,7 +4,9 @@ ProdriversCommons is a common set of tools for Bukkit plugins, designed to fulfi
 
 This repository holds the common API that all implementations should follow, with its documentation.
 
-The API is currently not finished and may be subject to slight changes. Such changes will be documented.
+The 1.0 API is currently is considered stable and in maintenance mode. It will not have any significant features added to it.
+
+Work has been transfered on the next version which is a new, incompatible API designed from tehe results and lessons learned in developping the first version.
 
 ## Usage
 
@@ -34,3 +36,4 @@ Documentation is available on [Prodrivers Sources](http://commons.sources.prodri
 ProdriversCommons API is distributed under the LGPL version 3 license. A copy of the license is provided in LICENSE.md.
 
 Its reference implementation is closed-source.
+
