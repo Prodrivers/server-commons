@@ -44,7 +44,7 @@ public interface IProdriversSection {
 	 *
 	 * @param player        Player that joins the section
 	 * @param subSection Sub-section to enter. May be null.
-	 * @param leavedSection Section name to be entered. May be null.
+	 * @param leavedSection Section name to be leaved. May be null.
 	 * @return {@code true} Continue the section enter process
 	 */
 	boolean join( Player player, String subSection, String leavedSection );
@@ -71,7 +71,7 @@ public interface IProdriversSection {
 	 * Section post-leave callback, called after teleporting the player to the section. Should makes the final preparation for the player leaving the section.
 	 *
 	 * @param player        Player that leaves the section
-	 * @param leavedSection Section name to be entered. May be null.
+	 * @param enteredSection Section name to be entered. May be null.
 	 */
-	void postLeave( Player player, String leavedSection );
+	void postLeave( Player player, String enteredSection );
 }
