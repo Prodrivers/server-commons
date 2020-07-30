@@ -17,6 +17,23 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	/**
 	 * Configuration helper constructor.
 	 * @param plugin Plugin initializing the helper
+	 */
+	public Configuration( Plugin plugin ) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Configuration helper constructor.
+	 * @param plugin Plugin initializing the helper
+	 * @param messagesClass Messages class to use internally, uses this to provide your own inheriting class that adds its own message fields
+	 */
+	public Configuration( Plugin plugin, Class<? extends Messages> messagesClass ) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Configuration helper constructor.
+	 * @param plugin Plugin initializing the helper
 	 * @param messagesClass Messages class to use internally, uses this to provide your own inheriting class that adds its own message fields
 	 * @param chat Chat instance to manage
 	 */
