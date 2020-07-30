@@ -97,6 +97,12 @@ public class Main extends JavaPlugin implements Listener {
 	public void onEnable() {
 		plugin = this;
 
+		logger.info( "Java version is " + System.getProperty( "java.version" ) + "." );
+		if( !System.getProperty( "java.version" ).startsWith( "1.8" ) ) {
+			logger.severe( "ProdriversCommons currently only supports Java 1.8." );
+			System.exit( 10 );
+		}
+
 		registerLibraries();
 
 		getServer().getPluginManager().registerEvents( this, this );
