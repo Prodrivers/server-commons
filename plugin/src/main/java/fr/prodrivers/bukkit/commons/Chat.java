@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Chat {
-	private String prefix;
+	private String prefix = "[<name>]";
 	private String name;
 
 	public Chat( String name ) {
@@ -16,7 +16,9 @@ public class Chat {
 	}
 
 	public void load( fr.prodrivers.bukkit.commons.configuration.Configuration configuration ) {
-		this.prefix = configuration.getMessages().prefix;
+		if( configuration.getMessages() != null && configuration.getMessages().prefix != null ) {
+			this.prefix = configuration.getMessages().prefix;
+		}
 		this.prefix.replaceAll( "<name>", this.name );
 	}
 
