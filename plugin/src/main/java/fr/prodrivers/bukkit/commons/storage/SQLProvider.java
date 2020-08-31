@@ -67,6 +67,7 @@ public class SQLProvider {
 		dbSrcCfg.setUsername( Main.getConfiguration().storage_sql_username );
 		dbSrcCfg.setPassword( Main.getConfiguration().storage_sql_password );
 		dbSrcCfg.setUrl( connection.getMetaData().getURL() );
+		dbSrcCfg.addProperty( "useSSL", false );
 
 		ServerConfig sc = new ServerConfig();
 		sc.setName( generateName() );
