@@ -20,7 +20,11 @@ public class MessageListFileAttributeConfigurationAction extends ObjectFileConfi
 
 	@Override
 	public Object get( Field field ) {
-		return configClass.getConfiguration().getStringList( field.getName() ).parallelStream().map( msg -> ( msg != null ? ChatColor.translateAlternateColorCodes( '&', msg ) : null ) ).collect( Collectors.toList() );
+		return configClass.getConfiguration()
+				.getStringList( field.getName() )
+				.parallelStream()
+				.map( msg -> ( msg != null ? ChatColor.translateAlternateColorCodes( '&', msg ) : null ) )
+				.collect( Collectors.toList() );
 	}
 
 	@Override

@@ -1,11 +1,13 @@
 package fr.prodrivers.bukkit.commons.configuration;
 
 import fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration;
+import fr.prodrivers.bukkit.commons.annotations.ForceSkipObjectAction;
 
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +42,7 @@ public abstract class AbstractAttributeConfiguration {
 			ObjectOutputStream oo = new ObjectOutputStream( bo );
 			oo.writeObject( object );
 			oo.flush();
-			return bo.toString();
+			return Base64.getEncoder().encodeToString(bo.toByteArray());
 		} catch( IOException ex ) {
 			System.err.println( "Error while serializing object. Some configuration values might be invalid." );
 			System.err.println( "Problematic object: " + object.getClass().getName() );
@@ -51,7 +53,7 @@ public abstract class AbstractAttributeConfiguration {
 
 	private Object unserialize( String serializedObject ) {
 		try {
-			byte b[] = serializedObject.getBytes();
+			byte[] b = Base64.getDecoder().decode( serializedObject );
 			ByteArrayInputStream bi = new ByteArrayInputStream( b );
 			ObjectInputStream oi = new ObjectInputStream( bi );
 			return oi.readObject();
@@ -79,12 +81,12 @@ public abstract class AbstractAttributeConfiguration {
 				}
 
 				action = actions.get( Object.class );
-				if( action != null ) {
+				if( action != null && !field.isAnnotationPresent( ForceSkipObjectAction.class ) ) {
 					fieldCallback.run( ProcessCallbackType.Object, action, field );
 					continue;
 				}
 
-				if( type.isAssignableFrom( Serializable.class ) ) {
+				if( Serializable.class.isAssignableFrom( type ) ) {
 					action = actions.get( String.class );
 					if( action != null ) {
 						fieldCallback.run( ProcessCallbackType.Serialize, action, field );
