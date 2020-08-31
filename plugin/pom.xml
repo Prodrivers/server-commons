@@ -6,7 +6,7 @@
 	<artifactId>prodrivers-commons-plugin</artifactId>
 	<name>Prodrivers Commons Plugin</name>
 	<description>Plugin implementing common utilities for Prodrivers plugins</description>
-	<version>1.0</version>
+	<version>1.0.1</version>
 	<url>https://prodrivers.fr/</url>
 
 	<packaging>jar</packaging>
@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>fr.prodrivers.bukkit</groupId>
 		<artifactId>prodrivers-commons</artifactId>
-		<version>1.0</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<properties>

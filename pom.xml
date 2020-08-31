@@ -8,7 +8,7 @@
 	<artifactId>prodrivers-commons</artifactId>
 	<name>Prodrivers Commons</name>
 	<description>Common utilities for Prodrivers plugins</description>
-	<version>1.0</version>
+	<version>1.0.1</version>
 	<url>https://prodrivers.fr/</url>
 
 	<packaging>pom</packaging>
