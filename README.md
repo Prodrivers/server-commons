@@ -4,9 +4,11 @@ ProdriversCommons is a common set of tools for Bukkit plugins, designed to fulfi
 
 This repository holds the common API that all implementations should follow, with its documentation.
 
-The 1.0 API and reference implementation are currently considered stable and in maintenance mode. No significant features will be developped for them.
+This new revision focus on a cleaner, idiomatic design, with heavy usage of dependency injection.
 
-Work has been transfered on the next version which is a new, incompatible API designed from tehe results and lessons learned in developping the first version.
+The multiple independent modules that constitute ProdriversCommons are made to have limited side effects for calling code,
+focusing on doing one task but doing it well. Calling code should have limited specific code — as in, having close to
+zero preconditions, checks and exception thrown —  and usage of such code should  be explicitly indicated by ProdriversCommons.
 
 ## Usage
 
@@ -25,7 +27,7 @@ Documentation is available on [Prodrivers Sources](http://commons.sources.prodri
 	<dependency>
 		<groupId>fr.prodrivers.bukkit</groupId>
 		<artifactId>prodrivers-commons</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>2.0.0-SNAPSHOT</version>
 		<scope>provided</scope>
 	</dependency>
 </dependencies>
