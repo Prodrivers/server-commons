@@ -6,7 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.lang.reflect.Field;
 
 public class ByteFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
-	public ByteFileAttributeConfigurationAction( AbstractFileAttributeConfiguration configuration ) {
+	public ByteFileAttributeConfigurationAction( FileConfiguration configuration ) {
 		super( configuration );
 	}
 
@@ -17,6 +17,6 @@ public class ByteFileAttributeConfigurationAction extends ObjectFileConfiguratio
 
 	@Override
 	public Object get( Field field ) {
-		return (byte) configClass.getConfiguration().getInt( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ) );
+		return (byte) configuration.getInt( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ) );
 	}
 }

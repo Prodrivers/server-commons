@@ -7,7 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.lang.reflect.Field;
 
 public class StringFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
-	public StringFileAttributeConfigurationAction( AbstractFileAttributeConfiguration configuration ) {
+	public StringFileAttributeConfigurationAction( FileConfiguration configuration ) {
 		super( configuration );
 	}
 
@@ -18,16 +18,16 @@ public class StringFileAttributeConfigurationAction extends ObjectFileConfigurat
 
 	@Override
 	public Object get( Field field ) {
-		return configClass.getConfiguration().getString( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ) );
+		return configuration.getString( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ) );
 	}
 
 	@Override
 	public void set( Field field, Object value ) {
-		configClass.getConfiguration().set( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ), value );
+		configuration.set( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ), value );
 	}
 
 	@Override
 	public void setDefault( Field field, Object value ) {
-		configClass.getConfiguration().addDefault( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ), value );
+		configuration.addDefault( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ), value );
 	}
 }

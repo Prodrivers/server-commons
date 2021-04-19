@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 public class MapFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
-	public MapFileAttributeConfigurationAction( AbstractFileAttributeConfiguration configuration ) {
+	public MapFileAttributeConfigurationAction( FileConfiguration configuration ) {
 		super( configuration );
 	}
 
@@ -19,11 +19,6 @@ public class MapFileAttributeConfigurationAction extends ObjectFileConfiguration
 
 	@Override
 	public Object get( Field field ) {
-		String name = AbstractFileAttributeConfiguration.filterFieldName( field.getName() );
-		if( configClass.getConfiguration().get( name ) instanceof MemorySection ) {
-			return ( (MemorySection) configClass.getConfiguration().get( name ) ).getValues( false );
-		} else {
-			return configClass.getConfiguration().get( name );
-		}
+		return ( (MemorySection) configuration.get( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ) ) ).getValues( false );
 	}
 }

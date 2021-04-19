@@ -1,6 +1,6 @@
 package fr.prodrivers.bukkit.commons.configuration.file;
 
-import org.bukkit.configuration.InvalidConfigurationException;
+import fr.prodrivers.bukkit.commons.plugin.Main;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;

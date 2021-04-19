@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FloatFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
-	public FloatFileAttributeConfigurationAction( AbstractFileAttributeConfiguration configuration ) {
+	public FloatFileAttributeConfigurationAction( FileConfiguration configuration ) {
 		super( configuration );
 	}
 
@@ -20,6 +20,6 @@ public class FloatFileAttributeConfigurationAction extends ObjectFileConfigurati
 
 	@Override
 	public Object get( Field field ) {
-		return (float) configClass.getConfiguration().getDouble( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ) );
+		return (float) configuration.getDouble( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ) );
 	}
 }

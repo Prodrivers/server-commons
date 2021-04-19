@@ -9,10 +9,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.lang.reflect.Field;
 
 public class LocationFileConfigurationAction implements IConfigurationAction {
-	private AbstractFileAttributeConfiguration configClass;
+	private FileConfiguration configuration;
 
-	public LocationFileConfigurationAction( AbstractFileAttributeConfiguration configuration ) {
-		configClass = configuration;
+	public LocationFileConfigurationAction( FileConfiguration configuration ) {
+		this.configuration = configuration;
 	}
 
 	@Override
@@ -23,22 +23,22 @@ public class LocationFileConfigurationAction implements IConfigurationAction {
 	@Override
 	public Object get( Field field ) {
 		String key = AbstractFileAttributeConfiguration.filterFieldName( field.getName() );
-		if( configClass.getConfiguration().isSet( key + ".world" ) && configClass.getConfiguration().isSet( key + ".X" ) && configClass.getConfiguration().isSet( key + ".Y" ) && configClass.getConfiguration().isSet( key + ".Z" ) ) {
-			if( configClass.getConfiguration().isSet( key + ".yaw" ) && configClass.getConfiguration().isSet( key + ".pitch" ) ) {
+		if( this.configuration.isSet( key + ".world" ) && this.configuration.isSet( key + ".X" ) && this.configuration.isSet( key + ".Y" ) && this.configuration.isSet( key + ".Z" ) ) {
+			if( this.configuration.isSet( key + ".yaw" ) && this.configuration.isSet( key + ".pitch" ) ) {
 				return new Location(
-					Bukkit.getWorld( configClass.getConfiguration().getString( key + ".world" ) ),
-					configClass.getConfiguration().getDouble( key + ".X" ),
-					configClass.getConfiguration().getDouble( key + ".Y" ),
-					configClass.getConfiguration().getDouble( key + ".Z" ),
-					(float) configClass.getConfiguration().getDouble( key + ".yaw" ),
-					(float) configClass.getConfiguration().getDouble( key + ".pitch" )
+					Bukkit.getWorld( this.configuration.getString( key + ".world" ) ),
+					this.configuration.getDouble( key + ".X" ),
+					this.configuration.getDouble( key + ".Y" ),
+					this.configuration.getDouble( key + ".Z" ),
+					(float) this.configuration.getDouble( key + ".yaw" ),
+					(float) this.configuration.getDouble( key + ".pitch" )
 				);
 			} else {
 				return new Location(
-					Bukkit.getWorld( configClass.getConfiguration().getString( key + ".world" ) ),
-					configClass.getConfiguration().getDouble( key + ".X" ),
-					configClass.getConfiguration().getDouble( key + ".Y" ),
-					configClass.getConfiguration().getDouble( key + ".Z" )
+					Bukkit.getWorld( this.configuration.getString( key + ".world" ) ),
+					this.configuration.getDouble( key + ".X" ),
+					this.configuration.getDouble( key + ".Y" ),
+					this.configuration.getDouble( key + ".Z" )
 				);
 			}
 		} else {
@@ -50,14 +50,14 @@ public class LocationFileConfigurationAction implements IConfigurationAction {
 	public void set( Field field, Object value ) {
 		String key = AbstractFileAttributeConfiguration.filterFieldName( field.getName() );
 		if( value != null ) {
-			configClass.getConfiguration().set( key + ".world", ( ( (Location) value ).getWorld() != null ? ( (Location) value ).getWorld().getName() : "" ) );
-			configClass.getConfiguration().set( key + ".X", ( (Location) value ).getX() );
-			configClass.getConfiguration().set( key + ".Y", ( (Location) value ).getY() );
-			configClass.getConfiguration().set( key + ".Z", ( (Location) value ).getZ() );
-			configClass.getConfiguration().set( key + ".yaw", ( (Location) value ).getYaw() );
-			configClass.getConfiguration().set( key + ".pitch", ( (Location) value ).getPitch() );
+			this.configuration.set( key + ".world", ( ( (Location) value ).getWorld() != null ? ( (Location) value ).getWorld().getName() : "" ) );
+			this.configuration.set( key + ".X", ( (Location) value ).getX() );
+			this.configuration.set( key + ".Y", ( (Location) value ).getY() );
+			this.configuration.set( key + ".Z", ( (Location) value ).getZ() );
+			this.configuration.set( key + ".yaw", ( (Location) value ).getYaw() );
+			this.configuration.set( key + ".pitch", ( (Location) value ).getPitch() );
 		} else {
-			configClass.getConfiguration().set( key, null );
+			this.configuration.set( key, null );
 		}
 	}
 
@@ -65,12 +65,12 @@ public class LocationFileConfigurationAction implements IConfigurationAction {
 	public void setDefault( Field field, Object value ) {
 		String key = AbstractFileAttributeConfiguration.filterFieldName( field.getName() );
 		if( value != null ) {
-			configClass.getConfiguration().addDefault( key + ".world", ( ( (Location) value ).getWorld() != null ? ( (Location) value ).getWorld().getName() : "" ) );
-			configClass.getConfiguration().addDefault( key + ".X", ( (Location) value ).getX() );
-			configClass.getConfiguration().addDefault( key + ".Y", ( (Location) value ).getY() );
-			configClass.getConfiguration().addDefault( key + ".Z", ( (Location) value ).getZ() );
-			configClass.getConfiguration().addDefault( key + ".yaw", ( (Location) value ).getYaw() );
-			configClass.getConfiguration().addDefault( key + ".pitch", ( (Location) value ).getPitch() );
+			this.configuration.addDefault( key + ".world", ( ( (Location) value ).getWorld() != null ? ( (Location) value ).getWorld().getName() : "" ) );
+			this.configuration.addDefault( key + ".X", ( (Location) value ).getX() );
+			this.configuration.addDefault( key + ".Y", ( (Location) value ).getY() );
+			this.configuration.addDefault( key + ".Z", ( (Location) value ).getZ() );
+			this.configuration.addDefault( key + ".yaw", ( (Location) value ).getYaw() );
+			this.configuration.addDefault( key + ".pitch", ( (Location) value ).getPitch() );
 		}
 	}
 }

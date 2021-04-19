@@ -17,9 +17,9 @@ public class Messages extends FileAttributeConfiguration {
 
 	@Override
 	public void init() {
-		registerAction( new MessageFileAttributeConfigurationAction( this ) );
-		registerAction( new MessageListFileAttributeConfigurationAction( this ) );
-		registerAction( new MessageMapFileAttributeConfigurationAction( this ) );
+		registerAction( new MessageFileAttributeConfigurationAction( this.configuration ) );
+		registerAction( new MessageListFileAttributeConfigurationAction( this.configuration ) );
+		registerAction( new MessageMapFileAttributeConfigurationAction( this.configuration ) );
 		super.init();
 	}
 }
