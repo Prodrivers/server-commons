@@ -233,7 +233,9 @@ public class SectionManager {
 			}
 
 			// Walk front player to common node with target node
-			walkForward(player, commonNode, targetNode, nodesToVisit);
+			if(!walkForward(player, commonNode, targetNode, nodesToVisit)) {
+				return false;
+			}
 		} catch(Exception e) {
 			Main.logger.log(Level.SEVERE, "Error encountered during section tree traversal.", e);
 		}
