@@ -4,6 +4,8 @@ import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.configuration.file.AbstractFileAttributeConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Level;
+
 /**
  * Configuration helper for Prodrivers plugins.
  * 
@@ -14,6 +16,8 @@ import org.bukkit.plugin.Plugin;
  * As with every AbstractAttributeConfiguration derivative, init() have to be called immediately after constructing the object.
  */
 public class Configuration extends AbstractFileAttributeConfiguration {
+	public Level logLevel = Level.INFO;
+
 	/**
 	 * Configuration helper constructor.
 	 * @param plugin Plugin initializing the helper

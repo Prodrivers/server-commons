@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 public class FileAttributeConfiguration extends AbstractFileAttributeConfiguration {
 	private File configurationFile;
@@ -17,17 +18,16 @@ public class FileAttributeConfiguration extends AbstractFileAttributeConfigurati
 			if( !configurationFile.exists() ) {
 				if( configurationFile.getParentFile().exists() || configurationFile.getParentFile().mkdirs() ) {
 					if( !configurationFile.createNewFile() ) {
-						System.err.println( "Could not create " + getClass().getName() + "'s " + configurationFile.getName() + " file. Make sure your server can create files in the plugin's personal directory." );
+						Main.logger.severe( "Could not create " + getClass().getName() + "'s " + configurationFile.getName() + " file. Make sure your server can create files in the plugin's personal directory." );
 					}
 				} else {
-					System.err.println( "Could not create " + getClass().getName() + "'s " + configurationFile.getName() + " file's parent folder. Make sure your server can create directories in the plugin's personal directory." );
+					Main.logger.severe( "Could not create " + getClass().getName() + "'s " + configurationFile.getName() + " file's parent folder. Make sure your server can create directories in the plugin's personal directory." );
 				}
 			}
 
 			configuration = YamlConfiguration.loadConfiguration( configurationFile );
-		} catch( Throwable e ) {
-			System.err.println( "Error while loading " + getClass().getName() + "'s " + configurationFile.getName() + " file configuration." );
-			e.printStackTrace();
+		} catch( Exception e ) {
+			Main.logger.log( Level.SEVERE, "Error while loading " + getClass().getName() + "'s " + configurationFile.getName() + " file configuration.", e );
 		}
 	}
 
@@ -35,9 +35,8 @@ public class FileAttributeConfiguration extends AbstractFileAttributeConfigurati
 	public void save() {
 		try {
 			configuration.save( configurationFile );
-		} catch( Throwable ex ) {
-			System.err.println( "Error while saving " + getClass().getName() + "'s " + configurationFile.getName() + " file configuration." );
-			ex.printStackTrace();
+		} catch( IOException e ) {
+			Main.logger.log( Level.SEVERE, "Error while saving " + getClass().getName() + "'s " + configurationFile.getName() + " file configuration.", e );
 		}
 	}
 
@@ -53,9 +52,8 @@ public class FileAttributeConfiguration extends AbstractFileAttributeConfigurati
 		try {
 			configuration = YamlConfiguration.loadConfiguration( configurationFile );
 			super.reload();
-		} catch( Throwable e ) {
-			System.err.println( "Error while reloading " + getClass().getName() + "'s " + configurationFile.getName() + " file configuration." );
-			e.printStackTrace();
+		} catch( Exception e ) {
+			Main.logger.log( Level.SEVERE, "Error while reloading " + getClass().getName() + "'s " + configurationFile.getName() + " file configuration.", e );
 		}
 	}
 }

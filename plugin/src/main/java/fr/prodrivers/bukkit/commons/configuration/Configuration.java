@@ -2,6 +2,7 @@ package fr.prodrivers.bukkit.commons.configuration;
 
 import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration;
+import fr.prodrivers.bukkit.commons.annotations.ForceSkipObjectAction;
 import fr.prodrivers.bukkit.commons.configuration.file.AbstractFileAttributeConfiguration;
 import fr.prodrivers.bukkit.commons.plugin.Main;
 import org.bukkit.Bukkit;
@@ -14,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
 
 public class Configuration extends AbstractFileAttributeConfiguration {
 	@ExcludedFromConfiguration
@@ -30,6 +32,8 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	public Configuration( Plugin plugin, Class<? extends Messages> messagesClass ) {
 		this( plugin, messagesClass, null );
 	}
+	@ForceSkipObjectAction
+	public Level logLevel = Level.INFO;
 
 	public Configuration( Plugin plugin, Class<? extends Messages> messagesClass, Chat chat ) {
 		super();
@@ -46,9 +50,8 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 		try {
 			Constructor<? extends Messages> ctor = messagesClass.getConstructor( Plugin.class );
 			this.messages = ctor.newInstance( this.plugin );
-		} catch( NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException ex ) {
-			System.err.println( "Error while loading " + plugin.getDescription().getName() + " messages configuration." );
-			ex.printStackTrace();
+		} catch( NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e ) {
+			Main.logger.log( Level.SEVERE, "Error while loading " + plugin.getDescription().getName() + " messages configuration.", e );
 		}
 	}
 

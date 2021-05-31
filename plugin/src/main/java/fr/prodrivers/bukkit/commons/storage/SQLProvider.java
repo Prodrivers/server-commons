@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * SQL Database provider for Prodrivers plugins
@@ -54,9 +55,8 @@ public class SQLProvider {
 			return null;
 		try {
 			return initEbeanServer( classes );
-		} catch( RuntimeException | SQLException ex ) {
-			Main.logger.severe( "[ProdriversCommons] Error while creating EBean server: " + ex.getLocalizedMessage() );
-			ex.printStackTrace();
+		} catch( RuntimeException | SQLException e ) {
+			Main.logger.log( Level.SEVERE, "[ProdriversCommons] Error while creating EBean server: " + e.getLocalizedMessage(), e );
 		}
 		return null;
 	}
