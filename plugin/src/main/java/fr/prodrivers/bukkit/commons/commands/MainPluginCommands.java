@@ -1,14 +1,13 @@
 package fr.prodrivers.bukkit.commons.commands;
 
 import fr.prodrivers.bukkit.commons.plugin.Main;
-import fr.prodrivers.bukkit.commons.sections.IProdriversSection;
+import fr.prodrivers.bukkit.commons.sections.Section;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MainPluginCommands implements CommandExecutor {
@@ -48,10 +47,10 @@ public class MainPluginCommands implements CommandExecutor {
 							if( target == null ) {
 								target = Bukkit.getOfflinePlayer( args[ 2 ] );
 							}
-							IProdriversSection section = SectionManager.getCurrentSection( target );
+							Section section = SectionManager.getCurrentSection( target );
 
 							if( section != null )
-								Main.getChat().send( sender, target.getName() + " -> " + section.getName() + " (" + section.getClass().getCanonicalName() + ")" );
+								Main.getChat().send( sender, target.getName() + " -> " + section.getFullName() + " (" + section.getClass().getCanonicalName() + ")" );
 							else
 								Main.getChat().send( sender, target.getName() + " -> No registered section" );
 						}
