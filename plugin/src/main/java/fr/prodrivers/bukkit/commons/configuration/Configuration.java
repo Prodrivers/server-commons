@@ -5,14 +5,8 @@ import fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration;
 import fr.prodrivers.bukkit.commons.annotations.ForceSkipObjectAction;
 import fr.prodrivers.bukkit.commons.configuration.file.AbstractFileAttributeConfiguration;
 import fr.prodrivers.bukkit.commons.plugin.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
@@ -25,13 +19,6 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	@ExcludedFromConfiguration
 	private Messages messages;
 
-	public Configuration( Plugin plugin ) {
-		this( plugin, Messages.class );
-	}
-
-	public Configuration( Plugin plugin, Class<? extends Messages> messagesClass ) {
-		this( plugin, messagesClass, null );
-	}
 	@ForceSkipObjectAction
 	public Level logLevel = Level.INFO;
 
