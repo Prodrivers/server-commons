@@ -6,6 +6,6 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Exclude a field from field-based configurations
  */
-@Retention( RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface ForceSkipObjectAction {
 }

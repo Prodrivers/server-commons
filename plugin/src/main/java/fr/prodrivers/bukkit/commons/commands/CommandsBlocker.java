@@ -10,29 +10,29 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashSet;
 
 public class CommandsBlocker implements CommandExecutor {
-	private HashSet<String> blocked = new HashSet<>();
+	private final HashSet<String> blocked = new HashSet<>();
 
-	CommandsBlocker( JavaPlugin plugin ) {
+	CommandsBlocker(JavaPlugin plugin) {
 		populate();
-		for( String cmd : blocked ) {
-			PluginCommand command = plugin.getCommand( cmd );
-			if( command != null )
-				command.setExecutor( this );
+		for(String cmd : blocked) {
+			PluginCommand command = plugin.getCommand(cmd);
+			if(command != null)
+				command.setExecutor(this);
 			else
-				Main.logger.warning( "[ProdriversCommons] Command " + cmd + " could not be blocked." );
+				Main.logger.warning("Command " + cmd + " could not be blocked.");
 		}
 	}
 
 	private void populate() {
 		blocked.clear();
-		blocked.add( "plugin" );
-		blocked.add( "pl" );
-		blocked.add( "help" );
-		blocked.add( "bukkit" );
-		blocked.add( "?" );
+		blocked.add("plugin");
+		blocked.add("pl");
+		blocked.add("help");
+		blocked.add("bukkit");
+		blocked.add("?");
 	}
 
-	public boolean onCommand( CommandSender sender, Command command, String label, String[] args ) {
-		return !sender.hasPermission( "pcommons.commandblocker.bypass" ) && blocked.contains( label );
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		return !sender.hasPermission("pcommons.commandblocker.bypass") && blocked.contains(label);
 	}
 }

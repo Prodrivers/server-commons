@@ -27,10 +27,6 @@ public class MainHub extends Section {
 		instance = this;
 	}
 
-	public String getPreferredNextSection() {
-		return null;
-	}
-
 	public @NonNull Set<SectionCapabilities> getCapabilities() {
 		return capabilities;
 	}
@@ -41,7 +37,7 @@ public class MainHub extends Section {
 
 	public boolean join(@NonNull Player player) {
 		player.teleport(loc);
-		player.playSound( player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10, 5 );
+		player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10, 5);
 		return true;
 	}
 

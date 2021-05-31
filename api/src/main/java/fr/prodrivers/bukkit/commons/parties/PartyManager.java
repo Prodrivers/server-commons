@@ -4,7 +4,7 @@ import java.util.UUID;
 
 /**
  * Prodrivers Commons Party Manager.
- *
+ * <p>
  * Allows to interect with Prodrivers Commons global parties.
  * Invites, kick, disband and others are directly handled by the plugin.
  */
@@ -15,7 +15,7 @@ public class PartyManager {
 	 * @param playerUniqueId Player unique ID
 	 * @return {@code true} if the player is in a party
 	 */
-	public static boolean isInParty( UUID playerUniqueId ) {
+	public static boolean isInParty(UUID playerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -25,7 +25,7 @@ public class PartyManager {
 	 * @param playerUniqueId Player Unqiue ID
 	 * @return Player's party
 	 */
-	public static Party getParty( UUID playerUniqueId ) {
+	public static Party getParty(UUID playerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -44,7 +44,7 @@ public class PartyManager {
 	 * @param ownerUniqueId Party owner
 	 * @return New party instance
 	 */
-	public static Party createParty( UUID ownerUniqueId ) {
+	public static Party createParty(UUID ownerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -53,7 +53,7 @@ public class PartyManager {
 	 *
 	 * @param playerUniqueId Player's UniqueId
 	 */
-	static void addParty( UUID playerUniqueId, Party party ) {
+	static void addParty(UUID playerUniqueId, Party party) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -62,7 +62,7 @@ public class PartyManager {
 	 *
 	 * @param playerUniqueId Player's UniqueId
 	 */
-	static void removeParty( UUID playerUniqueId ) {
+	static void removeParty(UUID playerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -70,9 +70,9 @@ public class PartyManager {
 	 * Invites a player to a party
 	 *
 	 * @param invitedPlayerUniqueId Invited player
-	 * @param party Associated party
+	 * @param party                 Associated party
 	 */
-	public static void addPartyInvite( UUID invitedPlayerUniqueId, Party party ) {
+	public static void addPartyInvite(UUID invitedPlayerUniqueId, Party party) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -82,7 +82,7 @@ public class PartyManager {
 	 * @param invitedPlayerUniqueId Invited player's Unique ID
 	 * @return {@code true} if the player has pending party invites.
 	 */
-	public static boolean hasPartyInvites( UUID invitedPlayerUniqueId ) {
+	public static boolean hasPartyInvites(UUID invitedPlayerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -92,7 +92,7 @@ public class PartyManager {
 	 * @param invitedPlayerUniqueId Invited player's Unique ID
 	 * @return Parties that sent an invitation to the specified player
 	 */
-	public static Iterable<Party> getPartyInvites( UUID invitedPlayerUniqueId ) {
+	public static Iterable<Party> getPartyInvites(UUID invitedPlayerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -101,7 +101,7 @@ public class PartyManager {
 	 *
 	 * @param invitedPlayerUniqueId Invited player's Unique ID
 	 */
-	public static void removePartyInvites( UUID invitedPlayerUniqueId ) {
+	public static void removePartyInvites(UUID invitedPlayerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 }

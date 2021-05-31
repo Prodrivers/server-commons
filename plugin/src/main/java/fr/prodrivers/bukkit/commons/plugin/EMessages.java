@@ -4,18 +4,14 @@ import fr.prodrivers.bukkit.commons.configuration.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@SuppressWarnings("CanBeFinal")
 public class EMessages extends Messages {
 	public String player_only_command = "This command can only be executed by players.";
 	public String no_permission = "&cYou do not have permission to execute this.";
-	public String invalid_hub_name = "Invalid hub name.";
-	public String kicked_because_of_section_enter_denied = "You were kicked because the location you wanted to go to can not let you enter.";
-	public String kicked_to_mainhub_because_of_section_enter_denied = "You were placed back to the main lobby because the location you wanted to go to can not let you enter.";
 	public String kicked_because_no_safe_place = "You were kicked as the server found no secure place to put you in.";
-	public String section_leaving_denied = "You can not join this section from where you are !";
 
 	public String party_prefix = "[Party]";
 	public String party_help_heading = ChatColor.DARK_GRAY + "------- " + ChatColor.BLUE + "Help" + ChatColor.DARK_GRAY + " -------";
@@ -46,17 +42,17 @@ public class EMessages extends Messages {
 	public String party_chat_format = "[Party] %PLAYER%: %MESSAGE%";
 
 	{
-		party_help.put( "invite <player>", "Invites a player to your party and creates one if you don't have one yet." );
-		party_help.put( "accept <player>", "Accepts an invitation to a party" );
-		party_help.put( "disband", "Disbands the party" );
-		party_help.put( "kick <player>", "Kicks a player from your party." );
-		party_help.put( "leave", "Leaves a party you're in." );
-		party_help.put( "list", "Lists all players and the owner of the party." );
-		party_help.put( "owner <player>", "Set the player as the new party owner." );
-		party_help.put( "chat", "Send a message to all party players." );
+		party_help.put("invite <player>", "Invites a player to your party and creates one if you don't have one yet.");
+		party_help.put("accept <player>", "Accepts an invitation to a party");
+		party_help.put("disband", "Disbands the party");
+		party_help.put("kick <player>", "Kicks a player from your party.");
+		party_help.put("leave", "Leaves a party you're in.");
+		party_help.put("list", "Lists all players and the owner of the party.");
+		party_help.put("owner <player>", "Set the player as the new party owner.");
+		party_help.put("chat", "Send a message to all party players.");
 	}
 
-	public EMessages( Plugin plugin ) {
-		super( plugin );
+	public EMessages(Plugin plugin) {
+		super(plugin);
 	}
 }

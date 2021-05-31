@@ -7,27 +7,27 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.lang.reflect.Field;
 
 public class MaterialFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
-	public MaterialFileAttributeConfigurationAction( FileConfiguration configuration ) {
-		super( configuration );
+	public MaterialFileAttributeConfigurationAction(FileConfiguration configuration) {
+		super(configuration);
 	}
 
 	@Override
 	public Class<?>[] getTypes() {
-		return new Class<?>[]{ Material.class };
+		return new Class<?>[]{Material.class};
 	}
 
 	@Override
-	public Object get( Field field ) {
-		return Material.valueOf( configuration.getString( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ) ) );
+	public Object get(Field field) {
+		return Material.valueOf(configuration.getString(AbstractFileAttributeConfiguration.filterFieldName(field.getName())));
 	}
 
 	@Override
-	public void set( Field field, Object value ) {
-		configuration.set( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ), value.toString() );
+	public void set(Field field, Object value) {
+		configuration.set(AbstractFileAttributeConfiguration.filterFieldName(field.getName()), value.toString());
 	}
 
 	@Override
-	public void setDefault( Field field, Object value ) {
-		configuration.addDefault( AbstractFileAttributeConfiguration.filterFieldName( field.getName() ), value.toString() );
+	public void setDefault(Field field, Object value) {
+		configuration.addDefault(AbstractFileAttributeConfiguration.filterFieldName(field.getName()), value.toString());
 	}
 }

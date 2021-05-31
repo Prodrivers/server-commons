@@ -40,7 +40,8 @@ public abstract class Section {
 	 *
 	 * @param fullName Section full name
 	 */
-	public Section(@NonNull String fullName) {}
+	public Section(@NonNull String fullName) {
+	}
 
 	/**
 	 * Get the section's name, without its parents sections
@@ -87,13 +88,13 @@ public abstract class Section {
 
 	/**
 	 * Section pre join callback, called to check whether or not the player should enter the section.
-	 *
+	 * <p>
 	 * This could be called at any point in the section's lifetime.
 	 * The player is not guaranteed to actually enter the section.
-	 *
+	 * <p>
 	 * The return value should be a guarantee that the player can enter the section.
 	 *
-	 * @param player        Player that should join the section
+	 * @param player Player that should join the section
 	 * @return {@code true} The user is authorized to enter the section
 	 */
 	public abstract boolean preJoin(@NonNull Player player);
@@ -101,22 +102,22 @@ public abstract class Section {
 	/**
 	 * Section join callback. Should do the actions required when a player enters a section.
 	 *
-	 * @param player        Player that joins the section
+	 * @param player Player that joins the section
 	 * @return {@code true} Continue the section enter process
 	 */
 	public abstract boolean join(@NonNull Player player);
 
 	/**
 	 * Section pre leave callback, called to check whether or not the player can leave the section.
-	 *
+	 * <p>
 	 * This could be called at any point in the section's lifetime.
 	 * The player is not guaranteed to actually leave the section.
 	 * This can be called even if the player is not actually in the section (ex: called during the check pass of
 	 * section tree traversal)
-	 *
+	 * <p>
 	 * The return value should be a guarantee that the player can leave the section.
 	 *
-	 * @param player        Player that should leave the section
+	 * @param player Player that should leave the section
 	 * @return {@code true} The user is authorized to leave the section
 	 */
 	public abstract boolean preLeave(@NonNull OfflinePlayer player);
@@ -124,7 +125,7 @@ public abstract class Section {
 	/**
 	 * Section leave callback. Should do the actions required when a player leaves a section.
 	 *
-	 * @param player         Player that leaves the section
+	 * @param player Player that leaves the section
 	 * @return {@code true} Continue the section enter process
 	 */
 	public abstract boolean leave(@NonNull OfflinePlayer player);

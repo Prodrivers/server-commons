@@ -4,11 +4,12 @@ import com.google.common.collect.Lists;
 import fr.prodrivers.bukkit.commons.exceptions.InvalidSectionException;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
+@SuppressWarnings({"CanBeFinal", "SameReturnValue"})
 public abstract class Section {
 	protected Set<OfflinePlayer> players = new HashSet<>();
 	protected Map<String, Section> children = new HashMap<>();
@@ -116,10 +117,6 @@ public abstract class Section {
 
 		// Get all individual subsection names
 		String[] subsectionIndividualNames = sectionName.split("\\.");
-
-		/*if(subsectionIndividualNames.length < 2) {
-			throw new InvalidSectionException("Section name is either a parent or empty");
-		}*/
 
 		StringBuilder subsectionName = new StringBuilder();
 		String[] intermediateSubsectionNames = new String[subsectionIndividualNames.length];

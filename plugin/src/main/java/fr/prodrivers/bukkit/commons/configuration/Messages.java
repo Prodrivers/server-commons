@@ -8,18 +8,19 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 
+@SuppressWarnings("CanBeFinal")
 public class Messages extends FileAttributeConfiguration {
 	public String prefix = "[<name>]";
 
-	public Messages( Plugin plugin ) {
-		super( new File( plugin.getDataFolder(), "messages.yml" ) );
+	public Messages(Plugin plugin) {
+		super(new File(plugin.getDataFolder(), "messages.yml"));
 	}
 
 	@Override
 	public void init() {
-		registerAction( new MessageFileAttributeConfigurationAction( this.configuration ) );
-		registerAction( new MessageListFileAttributeConfigurationAction( this.configuration ) );
-		registerAction( new MessageMapFileAttributeConfigurationAction( this.configuration ) );
+		registerAction(new MessageFileAttributeConfigurationAction(this.configuration));
+		registerAction(new MessageListFileAttributeConfigurationAction(this.configuration));
+		registerAction(new MessageMapFileAttributeConfigurationAction(this.configuration));
 		super.init();
 	}
 }

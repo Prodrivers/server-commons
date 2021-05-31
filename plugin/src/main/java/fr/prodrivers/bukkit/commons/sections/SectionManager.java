@@ -25,47 +25,47 @@ public class SectionManager {
 
 	private static MainHub mainHub;
 
-	public static void init( JavaPlugin plugin ) {
-		new SectionListener( plugin );
+	public static void init(JavaPlugin plugin) {
+		new SectionListener(plugin);
 
 		mainHub = new MainHub();
-		register( mainHub );
+		register(mainHub);
 	}
 
 	public static void reload() {
 		mainHub.reload();
 	}
 
-	public static void enter( Player player ) throws NoCurrentSectionException, NoParentSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
+	public static void enter(Player player) throws NoCurrentSectionException, NoParentSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
 		// Get the current player section
-		Section currentSection = playersCurrentSection.get( player.getUniqueId() );
+		Section currentSection = playersCurrentSection.get(player.getUniqueId());
 
 		// If it is null
-		if( currentSection == null ) {
+		if(currentSection == null) {
 			// Stop everything and inform
-			throw new NoCurrentSectionException( "Player should indicate a section to join" );
+			throw new NoCurrentSectionException("Player should indicate a section to join");
 		}
 
 		Section parentSection = currentSection.getParentSection();
 
 		// If it is null
-		if( parentSection == null ) {
+		if(parentSection == null) {
 			// Stop everything and inform
-			throw new NoParentSectionException( "Current section doesn't have a parent section, player is probably at the root." );
+			throw new NoParentSectionException("Current section doesn't have a parent section, player is probably at the root.");
 		}
 
 		// Send the player to the parent section
-		enter( player, currentSection, parentSection );
+		enter(player, currentSection, parentSection);
 	}
 
-	public static void enter(Player player, String sectionName)  throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoRegisteredParentSectionException {
+	public static void enter(Player player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoRegisteredParentSectionException {
 		// Get the target section
-		Section targetNode = getSection( sectionName );
+		Section targetNode = getSection(sectionName);
 
 		// If the section doesn't exist
-		if( targetNode == null ) {
+		if(targetNode == null) {
 			// Stop everything and inform
-			throw new InvalidSectionException( "Invalid section name" );
+			throw new InvalidSectionException("Invalid section name");
 		}
 
 		enter(player, targetNode);
@@ -74,11 +74,11 @@ public class SectionManager {
 	public static void enter(Player player, Section targetNode) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoRegisteredParentSectionException {
 		// Check that all party players can enter, if necessary
 		// If the section handles party by itself
-		if( !targetNode.getCapabilities().contains( SectionCapabilities.PARTY_AWARE ) ) {
-			Party party = PartyManager.getParty( player.getUniqueId() );
+		if(!targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
+			Party party = PartyManager.getParty(player.getUniqueId());
 
 			// If player is in party
-			if( party != null ) {
+			if(party != null) {
 				// Check party owner
 				if(party.getOwnerUniqueId() != player.getUniqueId()) {
 					// Get player current section
@@ -115,10 +115,10 @@ public class SectionManager {
 		}
 
 		// Get the left section
-		Section currentSection = playersCurrentSection.get( player.getUniqueId() );
+		Section currentSection = playersCurrentSection.get(player.getUniqueId());
 
 		// Process player entering
-		enter( player, currentSection, targetNode );
+		enter(player, currentSection, targetNode);
 	}
 
 	private static void enter(Player player, Section leftNode, Section targetNode) throws IllegalSectionLeavingException, IllegalSectionEnteringException, NoRegisteredParentSectionException {
@@ -128,8 +128,7 @@ public class SectionManager {
 			return;
 		}
 
-		System.out.println(player.getName() + " entering section : " + targetNode);
-		System.out.println(Arrays.stream(Thread.currentThread().getStackTrace()).map(StackTraceElement::toString).reduce((acc, elem) -> (acc + elem)));
+		Main.logger.fine(player.getName() + " entering section : " + targetNode);
 
 		// Check that the player can walk along the path
 		if(!canPlayerWalkAlongSectionPath(player, leftNode, targetNode)) {
@@ -156,14 +155,13 @@ public class SectionManager {
 		// Register that the player is in an enter process
 		inEnter.add(player.getUniqueId());
 
-		System.out.println(nodesToVisit);
+		Main.logger.finest("Path to travel : " + nodesToVisit);
 
-		System.out.println("Left : " + leftNode);
-		System.out.println("Target : " + targetNode);
+		Main.logger.finest("Left : " + leftNode);
+		Main.logger.finest("Target : " + targetNode);
 
 		// Successively enter and leave sections along the path
 		for(Section node : nodesToVisit) {
-			System.out.println("Node : " + node);
 			// If we are not considering the first node, as the player is already in this node
 			if(node != leftNode) {
 				if(!node.join(player)) {
@@ -173,7 +171,7 @@ public class SectionManager {
 				}
 
 				// Register the target section as current section for the player
-				playersCurrentSection.put( player.getUniqueId(), node );
+				playersCurrentSection.put(player.getUniqueId(), node);
 			}
 			// If we are not considering the last node, as the player should stay in it
 			if(node != targetNode) {
@@ -184,19 +182,17 @@ public class SectionManager {
 				}
 
 				// Remove the corresponding section as this player's current section
-				playersCurrentSection.remove( player.getUniqueId() );
+				playersCurrentSection.remove(player.getUniqueId());
 			}
 		}
 
-		System.out.println(player.getUniqueId());
-		System.out.println(playersCurrentSection);
 		// Indicate that the player finished its enter process, remove temporary values
 		inEnter.remove(player.getUniqueId());
 		playersSectionPath.remove(player.getUniqueId());
 
 		// Make entering player party's players move if necessary
 		if(!targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
-			Party party = PartyManager.getParty( player.getUniqueId() );
+			Party party = PartyManager.getParty(player.getUniqueId());
 
 			// If player is in party
 			if(party != null) {
@@ -260,9 +256,9 @@ public class SectionManager {
 	 * the top-most node of the left node's branch.
 	 * At the end, the player is registered in the final processed node.
 	 *
-	 * @param player The player that should walk back nodes.
-	 * @param start The node that we start from.
-	 * @param target The node, higher in the tree, that we want the player to go to at the end of this function.
+	 * @param player       The player that should walk back nodes.
+	 * @param start        The node that we start from.
+	 * @param target       The node, higher in the tree, that we want the player to go to at the end of this function.
 	 * @param visitedNodes List that should receive all visited nodes
 	 * @return @{code true} success of walking back. @{code false} if any section did not authorized the player leaving or entering it.
 	 */
@@ -316,9 +312,9 @@ public class SectionManager {
 	 * the bottom-most node of the left node's branch.
 	 * At the end, the player is registered in the final processed node.
 	 *
-	 * @param player The player that should walk back nodes.
-	 * @param start The node that we start from.
-	 * @param target The node, lower in the tree, that we want the player to go to at the end of this function.
+	 * @param player       The player that should walk back nodes.
+	 * @param start        The node that we start from.
+	 * @param target       The node, lower in the tree, that we want the player to go to at the end of this function.
 	 * @param visitedNodes List that should receive all visited nodes
 	 * @return @{code true} success of walking back. @{code false} if any section did not authorized the player leaving or entering it.
 	 */
@@ -344,7 +340,7 @@ public class SectionManager {
 			throw new InvalidSectionException("End node is a transitive node, which is invalid.");
 		}
 		// Go through the list in reverse order, as they were inserted finish to start
-		for(Iterator<Section> it = sectionsToWalk.descendingIterator(); it.hasNext();) {
+		for(Iterator<Section> it = sectionsToWalk.descendingIterator(); it.hasNext(); ) {
 			Section node = it.next();
 			// If we are not at the first iteration (we consider the starting node of this function to be the node the
 			// player is in)
@@ -378,11 +374,11 @@ public class SectionManager {
 			}
 
 			// Remove the corresponding section as this player's current section
-			playersCurrentSection.remove( player.getUniqueId() );
+			playersCurrentSection.remove(player.getUniqueId());
 
 			// Unregister the player in the section
-			removeInSection( node, player );
-		} catch( Exception e ) {
+			removeInSection(node, player);
+		} catch(Exception e) {
 			Main.logger.log(Level.SEVERE, "Could not execute leave call of section " + node, e);
 		}
 
@@ -395,23 +391,23 @@ public class SectionManager {
 		try {
 			if(!node.join(player)) {
 				// If this is the root node
-				if( node.getFullName().equals( ROOT_NODE_NAME ) ) {
+				if(node.getFullName().equals(ROOT_NODE_NAME)) {
 					// Kick the player as there is probably no safe place to put him
-					player.kickPlayer( Main.getMessages().kicked_because_no_safe_place );
+					player.kickPlayer(Main.getMessages().kicked_because_no_safe_place);
 					Main.logger.severe("Kicked player " + player.getName() + " as node" + node + " refused it to join.");
 					return false;
 				} else {
 					// Stop everything and inform, put the player to the main lobby
-					SectionManager.enter( player, ROOT_NODE_NAME );
-					throw new IllegalSectionEnteringException( "Player should not go to the selected section" );
+					SectionManager.enter(player, ROOT_NODE_NAME);
+					throw new IllegalSectionEnteringException("Player should not go to the selected section");
 				}
 			}
 
 			// Register the target section as current section for the player
-			playersCurrentSection.put( player.getUniqueId(), node );
+			playersCurrentSection.put(player.getUniqueId(), node);
 
 			// Register the player in the section
-			addInSection( node, player );
+			addInSection(node, player);
 		} catch(Exception e) {
 			Main.logger.log(Level.SEVERE, "Could not execute enter call of section " + node, e);
 		}
@@ -438,24 +434,25 @@ public class SectionManager {
 		return getSection(commonNodeName.toString());
 	}
 
-	private static void addInSection(Section targetSection, Player player ) {
-		for(Section section = targetSection; section != null; section = section.getParentSection() ) {
-			section.add( player );
+	private static void addInSection(Section targetSection, Player player) {
+		for(Section section = targetSection; section != null; section = section.getParentSection()) {
+			section.add(player);
 		}
 	}
 
-	private static void removeInSection(Section leftSection, Player player ) {
-		for(Section section = leftSection; section != null; section = section.getParentSection() ) {
-			section.remove( player );
+	private static void removeInSection(Section leftSection, Player player) {
+		for(Section section = leftSection; section != null; section = section.getParentSection()) {
+			section.remove(player);
 		}
 	}
 
 	private static class KeyTreeNode {
-		public String key;
-		public String fullKey;
-		public String parentFullKey;
-		public Map<String, KeyTreeNode> children = new HashMap<>();
-		public KeyTreeNode(String key, String fullKey){
+		public final String key;
+		public final String fullKey;
+		public final String parentFullKey;
+		public final Map<String, KeyTreeNode> children = new HashMap<>();
+
+		public KeyTreeNode(String key, String fullKey) {
 			this.key = key;
 			this.fullKey = fullKey;
 			List<String> splitFullKey = Section.getSplitName(fullKey);

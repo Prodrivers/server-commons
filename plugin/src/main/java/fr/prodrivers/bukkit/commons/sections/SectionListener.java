@@ -9,19 +9,19 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SectionListener implements Listener {
-	SectionListener( JavaPlugin plugin ) {
-		plugin.getServer().getPluginManager().registerEvents( this, plugin );
+	SectionListener(JavaPlugin plugin) {
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler
-	public void onPlayerJoin( PlayerJoinEvent e ) {
+	public void onPlayerJoin(PlayerJoinEvent e) {
 		final Player player = e.getPlayer();
 
 		SectionManager.enter(player, SectionManager.ROOT_NODE_NAME);
 	}
 
 	@EventHandler
-	public void onPlayerQuit( PlayerQuitEvent e ) {
+	public void onPlayerQuit(PlayerQuitEvent e) {
 		final OfflinePlayer player = e.getPlayer();
 
 		SectionManager.unregister(player);

@@ -15,7 +15,7 @@ public class Party {
 	 *
 	 * @param ownerUniqueId Party owner's Unique ID
 	 */
-	Party( final UUID ownerUniqueId ) {
+	Party(final UUID ownerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -43,7 +43,7 @@ public class Party {
 	 * @param playerUniqueId Player to add's Unique ID
 	 * @return {@code true} if the player was added to the party
 	 */
-	public boolean addPlayer( final UUID playerUniqueId ) {
+	public boolean addPlayer(final UUID playerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -53,7 +53,7 @@ public class Party {
 	 * @param playerUniqueId Player to remove's Unique Id
 	 * @return {@code true} if the player was removed from the party
 	 */
-	public boolean removePlayer( final UUID playerUniqueId ) {
+	public boolean removePlayer(final UUID playerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -63,7 +63,7 @@ public class Party {
 	 * @param playerUniqueId Player's Unique ID
 	 * @return {@code true} if the player is within the party list.
 	 */
-	public boolean containsPlayer( final UUID playerUniqueId ) {
+	public boolean containsPlayer(final UUID playerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -73,7 +73,7 @@ public class Party {
 	 * @param playerUniqueId Player's Unique ID
 	 * @return {@code true} if the player is the party owner
 	 */
-	public boolean isPartyOwner( final UUID playerUniqueId ) {
+	public boolean isPartyOwner(final UUID playerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -82,7 +82,7 @@ public class Party {
 	 *
 	 * @param newOwner New owner
 	 */
-	public void electOwner( UUID newOwner ) {
+	public void electOwner(UUID newOwner) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -106,20 +106,20 @@ public class Party {
 	 * Send a message to all party players
 	 *
 	 * @param chat Chat plugin to use
-	 * @param msg Message to send
+	 * @param msg  Message to send
 	 */
-	public void broadcast( Chat chat, final String msg )  {
+	public void broadcast(Chat chat, final String msg) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * Send a message to all party players, except some defined ones
 	 *
-	 * @param chat Chat plugin to use
-	 * @param msg Message to send
+	 * @param chat     Chat plugin to use
+	 * @param msg      Message to send
 	 * @param excluded Players to be excluded from the broadcast
 	 */
-	public void broadcast( Chat chat, final String msg, final List<UUID> excluded )  {
+	public void broadcast(Chat chat, final String msg, final List<UUID> excluded) {
 		throw new UnsupportedOperationException();
 	}
 }
