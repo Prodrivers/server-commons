@@ -37,6 +37,17 @@
 	</repositories>
 
 	<dependencies>
+		<!-- Checker Framework -->
+		<dependency>
+			<groupId>org.checkerframework</groupId>
+			<artifactId>checker-qual</artifactId>
+			<version>3.11.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.checkerframework</groupId>
+			<artifactId>checker</artifactId>
+			<version>3.11.0</version>
+		</dependency>
 		<!--Spigot API-->
 		<dependency>
 			<groupId>org.spigotmc</groupId>
@@ -115,17 +126,6 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
 			<version>2.11.0</version>
-		</dependency>
-		<!-- Checker Framework -->
-		<dependency>
-			<groupId>org.checkerframework</groupId>
-			<artifactId>checker-qual</artifactId>
-			<version>3.11.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.checkerframework</groupId>
-			<artifactId>checker</artifactId>
-			<version>3.11.0</version>
 		</dependency>
 	</dependencies>
 
