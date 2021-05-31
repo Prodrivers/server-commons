@@ -81,19 +81,12 @@ public class SectionManager {
 			if(party != null) {
 				// Check party owner
 				if(party.getOwnerUniqueId() != player.getUniqueId()) {
-					// Get player current section
-					Section currentSection = playersCurrentSection.get(player.getUniqueId());
-					// If there is a current section
-					if(currentSection != null) {
-						// Player is not party owner
-						if(!currentSection.getCapabilities().contains(SectionCapabilities.HUB)) {
-							// Target section is not a hub, forbid moving
-							throw new NotPartyOwnerException("Player tried to join a section while not being party owner.");
-						}
-						// Target section is a hub, proceed normally
-					} else {
-						Main.logger.severe("Player " + player.getUniqueId() + " is in a party but not in a section ! Cannot check");
+					// Player is not party owner
+					if(!targetNode.getCapabilities().contains(SectionCapabilities.HUB)) {
+						// Target section is not a hub, forbid moving
+						throw new NotPartyOwnerException("Player tried to join a section while not being party owner.");
 					}
+					// Target section is a hub, proceed normally
 				} else {
 					// Player is party owner
 					// Move all party players, except the owner, to the target section
