@@ -200,7 +200,6 @@
 								<filter>
 									<artifact>fr.prodrivers.bukkit:prodrivers-commons-api</artifact>
 									<excludes>
-										<exclude>fr/prodrivers/bukkit/commons/sections/SectionManager*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/Chat*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/configuration/Configuration*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/configuration/AbstractAttributeConfiguration*</exclude>
@@ -211,7 +210,8 @@
 										<exclude>fr/prodrivers/bukkit/commons/parties/PartyManager*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/storage/StorageProvider*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/storage/SQLProvider*</exclude>
-										<exclude>fr/prodrivers/bukkit/commons/sections/ProdriversSection*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/sections/Section.class</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/sections/SectionManager*</exclude>
 									</excludes>
 								</filter>
 							</filters>
