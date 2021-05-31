@@ -2,53 +2,56 @@ package fr.prodrivers.bukkit.commons.sections;
 
 import fr.prodrivers.bukkit.commons.plugin.Main;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class MainHub implements IProdriversSection {
-	public static String name = "main";
+import java.util.HashSet;
+import java.util.Set;
+
+public class MainHub extends Section {
 	public static MainHub instance;
+	private final static Set<SectionCapabilities> capabilities = new HashSet<>();
+
+	static {
+		capabilities.add(SectionCapabilities.HUB);
+		capabilities.add(SectionCapabilities.PARTY_AWARE);
+	}
+
 	private Location loc;
 
 	MainHub() {
+		super(SectionManager.ROOT_NODE_NAME);
 		reload();
 		instance = this;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public String getPreferredNextSection() {
 		return null;
 	}
 
-	public boolean forceNextSection() {
-		return false;
+	public @NonNull Set<SectionCapabilities> getCapabilities() {
+		return capabilities;
 	}
 
-	public boolean isHub() {
-		return true;
-	}
-
-	public boolean shouldMoveParty() {
-		return false;
-	}
-
-	public boolean join( Player player, String leavedSection, String subSection ) {
+	public boolean preJoin(@NonNull Player player) {
 		return loc != null;
 	}
 
-	public void postJoin( Player player, String leavedSection, String subSection ) {
-		player.teleport( loc );
+	public boolean join(@NonNull Player player) {
+		player.teleport(loc);
 		player.playSound( player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10, 5 );
-	}
-
-	public boolean leave( Player player, String enteredSection ) {
 		return true;
 	}
 
-	public void postLeave( Player player, String enteredSection ) {}
+	public boolean preLeave(@NonNull OfflinePlayer player) {
+		return true;
+	}
+
+	public boolean leave(@NonNull OfflinePlayer player) {
+		return true;
+	}
 
 	void reload() {
 		loc = Main.getConfiguration().sections_mainHub;
