@@ -7,6 +7,7 @@ import fr.prodrivers.bukkit.commons.parties.PartyManager;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.storage.SQLProvider;
 import fr.prodrivers.bukkit.commons.storage.StorageProvider;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -123,6 +124,12 @@ public class Main extends JavaPlugin implements Listener {
 		CommandsManager.init( this );
 
 		PlayerOpenOwnInventoryImplementationEventListener.init( this );
+
+		Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
+			logger.info("All plugins are loaded, building the section tree.");
+			SectionManager.buildSectionTree();
+			logger.info("Section tree built.");
+		}, configuration.sectionTree_buildDelayTicks);
 
 		logger.info( "[ProdriversCommons] " + plugindescription.getName() + " has been enabled!" );
 	}

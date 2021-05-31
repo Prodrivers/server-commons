@@ -21,6 +21,7 @@ public class EConfiguration extends Configuration {
 	public String storage_sql_uri = "jdbc:mysql://localhost:3306/db";
 	public String storage_sql_username = "";
 	public String storage_sql_password = "";
+	public long sectionTree_buildDelayTicks = 40L;
 
 	public EConfiguration( JavaPlugin plugin, Class<? extends Messages> messagesClass, Chat chat ) {
 		super( plugin, messagesClass, chat );
