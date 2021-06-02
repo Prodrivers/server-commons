@@ -293,6 +293,7 @@ public class SectionManager {
 			}
 
 			// Check if there is a parent node
+			// Only the root node can have no parent, but we should not encounter the root node at this point.
 			if(node.getParentSection() == null) {
 				// If not, stop everything as the requested path is invalid
 				throw new InvalidSectionException("Section " + node + " has no parent, cannot walk back from it when going from " + start + " to " + target);
@@ -317,7 +318,7 @@ public class SectionManager {
 		// Get the sections to walk to
 		LinkedList<Section> sectionsToWalk = new LinkedList<>();
 		// Go up from the target node until we hit the start node, remembering all nodes we passed through
-		for(Section currentNode = target; currentNode != start; currentNode = currentNode.parent) {
+		for(Section currentNode = target; currentNode != start; currentNode = currentNode.getParentSection()) {
 			if(currentNode == null) {
 				// We attained a node with no parent on our path, stop everything as the requested path is invalid
 				throw new InvalidSectionException("Section " + (sectionsToWalk.peekLast() != null ? sectionsToWalk.peekLast().getFullName() : null) + " has no parent, cannot walk forward when going to it from " + start + " to " + target);
@@ -444,7 +445,7 @@ public class SectionManager {
 	private static class KeyTreeNode {
 		public final String key;
 		public final String fullKey;
-		public final String parentFullKey;
+		public String parentFullKey;
 		public final Map<String, KeyTreeNode> children = new HashMap<>();
 
 		public KeyTreeNode(String key, String fullKey) {
@@ -455,6 +456,9 @@ public class SectionManager {
 				splitFullKey.remove(splitFullKey.size() - 1);
 			}
 			this.parentFullKey = String.join(".", splitFullKey);
+			if(this.parentFullKey.equals(this.fullKey)) {
+				this.parentFullKey = null;
+			}
 		}
 
 		public boolean equals(String key) {
@@ -523,7 +527,10 @@ public class SectionManager {
 			if(currentSection != null) {
 				// Complete the node
 				// Get the parent and add it to the current node
-				currentSection.parent = getSection(currentKeyNode.parentFullKey);
+				currentSection.addParent(getSection(currentKeyNode.parentFullKey));
+				if(currentSection == currentSection.getParentSection()) {
+					throw new RuntimeException("Unexpected situation : set node's parent as itself.");
+				}
 				// Go through all children keys, get the sections and add them as children to the section
 				currentKeyNode.children.values()
 						.stream()
