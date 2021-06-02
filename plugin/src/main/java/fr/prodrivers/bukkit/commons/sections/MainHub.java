@@ -31,7 +31,7 @@ public class MainHub extends Section {
 		return capabilities;
 	}
 
-	public boolean preJoin(@NonNull Player player) {
+	public boolean preJoin(@NonNull Player player, boolean fromParty) {
 		return loc != null;
 	}
 
@@ -41,7 +41,7 @@ public class MainHub extends Section {
 		return true;
 	}
 
-	public boolean preLeave(@NonNull OfflinePlayer player) {
+	public boolean preLeave(@NonNull OfflinePlayer player, boolean fromParty) {
 		return true;
 	}
 

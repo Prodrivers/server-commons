@@ -45,11 +45,11 @@ public abstract class Section {
 
 	public abstract @NonNull Set<SectionCapabilities> getCapabilities();
 
-	public abstract boolean preJoin(@NonNull Player player);
+	public abstract boolean preJoin(@NonNull Player player, boolean fromParty);
 
 	public abstract boolean join(@NonNull Player player);
 
-	public abstract boolean preLeave(@NonNull OfflinePlayer player);
+	public abstract boolean preLeave(@NonNull OfflinePlayer player, boolean fromParty);
 
 	public abstract boolean leave(@NonNull OfflinePlayer player);
 
