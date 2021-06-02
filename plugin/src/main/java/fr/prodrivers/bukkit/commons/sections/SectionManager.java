@@ -238,6 +238,7 @@ public class SectionManager {
 			}
 		} catch(Exception e) {
 			Main.logger.log(Level.SEVERE, "Error encountered during section tree traversal.", e);
+			return false;
 		}
 
 		// Store computed path
