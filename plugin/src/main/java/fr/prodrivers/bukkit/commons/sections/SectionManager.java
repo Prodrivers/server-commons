@@ -132,7 +132,6 @@ public class SectionManager {
 		// Get the path that the player have to follow
 		List<Section> nodesToVisit = playersSectionPath.get(player.getUniqueId());
 		assert nodesToVisit != null;
-		assert nodesToVisit.size() > 0;
 
 		// The check pass guarantee us that the player can not walk down to a transitive node. However, he can still
 		// walk up to one. In this case, go up until we encounter a non-transitive node.
@@ -209,6 +208,15 @@ public class SectionManager {
 		// If there is already a temporary path stored
 		if(playersSectionPath.containsKey(player.getUniqueId())) {
 			// Do not make the computation again
+			return true;
+		}
+
+		// If the target node is the same as the left node
+		if(leftNode != null && leftNode.getFullName().equals(targetNode.getFullName())) {
+			// The path is technically possible as no movement is needed and no checks need to be performed
+			// Put an empty path as it is realistically what it is, while still allowing party processing to happen (for
+			// example, for players in a different section)
+			playersSectionPath.put(player.getUniqueId(), Collections.emptyList());
 			return true;
 		}
 
