@@ -1,8 +1,10 @@
 package fr.prodrivers.bukkit.commons.configuration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration;
-import fr.prodrivers.bukkit.commons.annotations.ForceSkipObjectAction;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -23,7 +25,8 @@ public abstract class AbstractAttributeConfiguration {
 		Serialize,
 		Object,
 		ToStringValueOf,
-		ToStringParse
+		ToStringParse,
+		SerializeJSON
 	}
 
 	private interface ProcessCallback {
@@ -73,23 +76,10 @@ public abstract class AbstractAttributeConfiguration {
 				Class<?> type = field.getType();
 				IConfigurationAction action = actions.get(type);
 
+				// Normal
 				if(action != null) {
 					fieldCallback.run(ProcessCallbackType.Normal, action, field);
 					continue;
-				}
-
-				action = actions.get(Object.class);
-				if(action != null && !field.isAnnotationPresent(ForceSkipObjectAction.class)) {
-					fieldCallback.run(ProcessCallbackType.Object, action, field);
-					continue;
-				}
-
-				if(Serializable.class.isAssignableFrom(type)) {
-					action = actions.get(String.class);
-					if(action != null) {
-						fieldCallback.run(ProcessCallbackType.Serialize, action, field);
-						continue;
-					}
 				}
 
 				// ToStringValueOf
@@ -117,6 +107,33 @@ public abstract class AbstractAttributeConfiguration {
 				} catch(NoSuchMethodException e) {
 					// Silently ignore
 				}
+
+				// SerializeJSON
+				ObjectMapper objectMapper = new ObjectMapper();
+				JavaType jacksonType = objectMapper.constructType(type);
+				action = actions.get(String.class);
+				if(action != null && objectMapper.canSerialize(type) && jacksonType != null && objectMapper.canDeserialize(jacksonType)) {
+					fieldCallback.run(ProcessCallbackType.SerializeJSON, action, field);
+					continue;
+				}
+
+				// Serialize
+				if(Serializable.class.isAssignableFrom(type)) {
+					action = actions.get(String.class);
+					if(action != null) {
+						fieldCallback.run(ProcessCallbackType.Serialize, action, field);
+						continue;
+					}
+				}
+
+				// Object
+				action = actions.get(Object.class);
+				if(action != null) {
+					fieldCallback.run(ProcessCallbackType.Object, action, field);
+					continue;
+				}
+
+				throw new IllegalStateException(getClass().getName() + "'s field " + field.getName() + " can not be used, as it is of type (" + field.getType().getName() + ") neither supported directly, nor serializable, nor can it be converted to String back and forth using toString and valueOf methods\nConfiguration is left in an invalid state.");
 			}
 		}
 	}
@@ -149,6 +166,16 @@ public abstract class AbstractAttributeConfiguration {
 						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not saved.\nConfiguration is left in an invalid state.", e);
 					}
 					break;
+
+				case SerializeJSON:
+					try {
+						ObjectMapper objectMapper = new ObjectMapper();
+						String stringValue = objectMapper.writeValueAsString(field.get(AbstractAttributeConfiguration.this));
+						action.set(field, stringValue);
+					} catch(JsonProcessingException ex) {
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " has been given an invalid value: " + ex.getLocalizedMessage() + ".\nConfiguration is left in an invalid state.");
+					} catch(IllegalAccessException e) {
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not saved.\nConfiguration is left in an invalid state.", e);
 					}
 					break;
 
@@ -194,6 +221,16 @@ public abstract class AbstractAttributeConfiguration {
 						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not saved.\nConfiguration is left in an invalid state.", e);
 					}
 					break;
+
+				case SerializeJSON:
+					try {
+						ObjectMapper objectMapper = new ObjectMapper();
+						String stringValue = objectMapper.writeValueAsString(field.get(AbstractAttributeConfiguration.this));
+						action.setDefault(field, stringValue);
+					} catch(JsonProcessingException ex) {
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " has been given an invalid value: " + ex.getLocalizedMessage() + ".\nConfiguration is left in an invalid state.");
+					} catch(IllegalAccessException e) {
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not saved.\nConfiguration is left in an invalid state.", e);
 					}
 					break;
 
@@ -225,6 +262,16 @@ public abstract class AbstractAttributeConfiguration {
 
 				case Serialize:
 					value = unserialize((String) action.get(field));
+					break;
+
+				case SerializeJSON:
+					try {
+						ObjectMapper objectMapper = new ObjectMapper();
+						String stringValue = (String) action.get(field);
+						value = objectMapper.readValue(stringValue, field.getType());
+					} catch(JsonProcessingException ex) {
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " has been given an invalid value: " + ex.getLocalizedMessage() + ".\nConfiguration is left in an invalid state.");
+					}
 					break;
 
 				case ToStringValueOf:

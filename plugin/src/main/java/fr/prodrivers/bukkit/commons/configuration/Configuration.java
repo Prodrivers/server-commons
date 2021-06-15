@@ -2,7 +2,6 @@ package fr.prodrivers.bukkit.commons.configuration;
 
 import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration;
-import fr.prodrivers.bukkit.commons.annotations.ForceSkipObjectAction;
 import fr.prodrivers.bukkit.commons.configuration.file.AbstractFileAttributeConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -18,7 +17,6 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	@ExcludedFromConfiguration
 	private final Messages messages;
 
-	@ForceSkipObjectAction
 	public Level logLevel = Level.INFO;
 
 	@Inject
