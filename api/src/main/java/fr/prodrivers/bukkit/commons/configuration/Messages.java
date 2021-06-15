@@ -6,11 +6,13 @@ import org.bukkit.plugin.Plugin;
 /**
  * Messages helper for Prodrivers plugins.
  * <p>
- * It represents messages using class fields, by saving and loading string fields from and inside the plugin's messages configuration file, using an underlying AbstractAttributeConfiguration.
+ * It represents messages using class fields, by saving and loading string fields from and inside the plugin's messages
+ * configuration file, using an underlying AbstractAttributeConfiguration.
  * Initialization and reloads are handled directly by the main Configuration instance.
  * <p>
  * ExcludedFromConfiguration annotation allows specific fields not to be used by the field processor.
- * As with every AbstractAttributeConfiguration derivative, init() have to be called immediately after constructing the object.
+ * If it is not used in pair with a Configuration derivative, init() have to be called immediately after constructing
+ * the object, either at the end of the constructor or outside of it.
  */
 public class Messages extends FileAttributeConfiguration {
 	public String prefix = "[<name>]";

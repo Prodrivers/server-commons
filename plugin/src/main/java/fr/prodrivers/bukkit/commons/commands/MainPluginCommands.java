@@ -1,6 +1,7 @@
 package fr.prodrivers.bukkit.commons.commands;
 
-import fr.prodrivers.bukkit.commons.plugin.Main;
+import fr.prodrivers.bukkit.commons.Chat;
+import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.sections.Section;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import org.bukkit.Bukkit;
@@ -10,10 +11,22 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.inject.Inject;
+
 public class MainPluginCommands implements CommandExecutor {
 	private static final String label = "pcommons";
 
-	MainPluginCommands(JavaPlugin plugin) {
+	private final SectionManager sectionManager;
+	private final Chat chat;
+	private final CommandsModule manager;
+	private final Configuration configuration;
+
+	@Inject
+	MainPluginCommands(JavaPlugin plugin, SectionManager sectionManager, Chat chat, CommandsModule manager, Configuration configuration) {
+		this.chat = chat;
+		this.manager = manager;
+		this.sectionManager = sectionManager;
+		this.configuration = configuration;
 		plugin.getCommand(label).setExecutor(this);
 	}
 
@@ -23,7 +36,7 @@ public class MainPluginCommands implements CommandExecutor {
 				switch(args[0]) {
 					case "reload":
 						if(sender.hasPermission("pcommons.reload"))
-							Main.getConfiguration().reload();
+							this.configuration.reload();
 						break;
 					case "sections":
 						sectionsCommand(sender, args);
@@ -47,12 +60,12 @@ public class MainPluginCommands implements CommandExecutor {
 							if(target == null) {
 								target = Bukkit.getOfflinePlayer(args[2]);
 							}
-							Section section = SectionManager.getCurrentSection(target);
+							Section section = this.sectionManager.getCurrentSection(target);
 
 							if(section != null)
-								Main.getChat().send(sender, target.getName() + " -> " + section.getFullName() + " (" + section.getClass().getCanonicalName() + ")");
+								this.chat.send(sender, target.getName() + " -> " + section.getFullName() + " (" + section.getClass().getCanonicalName() + ")");
 							else
-								Main.getChat().send(sender, target.getName() + " -> No registered section");
+								this.chat.send(sender, target.getName() + " -> No registered section");
 						}
 					}
 					break;

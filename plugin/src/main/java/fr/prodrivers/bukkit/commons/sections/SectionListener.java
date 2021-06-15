@@ -9,7 +9,11 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SectionListener implements Listener {
-	SectionListener(JavaPlugin plugin) {
+	private final SectionManager sectionManager;
+
+	SectionListener(JavaPlugin plugin, SectionManager sectionManager) {
+		this.sectionManager = sectionManager;
+
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
@@ -17,13 +21,13 @@ public class SectionListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		final Player player = e.getPlayer();
 
-		SectionManager.enter(player, SectionManager.ROOT_NODE_NAME);
+		sectionManager.enter(player, SectionManager.ROOT_NODE_NAME);
 	}
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent e) {
 		final OfflinePlayer player = e.getPlayer();
 
-		SectionManager.unregister(player);
+		sectionManager.unregister(player);
 	}
 }

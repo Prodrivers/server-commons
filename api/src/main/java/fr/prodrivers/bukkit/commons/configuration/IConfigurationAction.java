@@ -5,7 +5,9 @@ import java.lang.reflect.Field;
 /**
  * Configuration Action interface.
  * <p>
- * Configuration Actions are called by configurations when processing configuration fields, and, for a determined type, provide getters and setters for the underlying storage mechanism, abstracting away storage concerns from the core logic.
+ * Configuration Actions are called by configurations when processing configuration fields, and, for a determined type,
+ * provide getters and setters for the underlying storage mechanism, abstracting away storage concerns from the core
+ * logic.
  */
 public interface IConfigurationAction {
 	/**

@@ -1,30 +1,32 @@
 package fr.prodrivers.bukkit.commons.sections;
 
-import fr.prodrivers.bukkit.commons.plugin.Main;
+import fr.prodrivers.bukkit.commons.plugin.EConfiguration;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.HashSet;
 import java.util.Set;
 
+@Singleton
 public class MainHub extends Section {
-	public static MainHub instance;
 	private final static Set<SectionCapabilities> capabilities = new HashSet<>();
+
+	private final EConfiguration configuration;
 
 	static {
 		capabilities.add(SectionCapabilities.HUB);
 		capabilities.add(SectionCapabilities.PARTY_AWARE);
 	}
 
-	private Location loc;
-
-	MainHub() {
+	@Inject
+	MainHub(EConfiguration configuration) {
 		super(SectionManager.ROOT_NODE_NAME);
-		reload();
-		instance = this;
+		this.configuration = configuration;
 	}
 
 	public @NonNull Set<SectionCapabilities> getCapabilities() {
@@ -32,11 +34,11 @@ public class MainHub extends Section {
 	}
 
 	public boolean preJoin(@NonNull Player player, boolean fromParty) {
-		return loc != null;
+		return this.configuration.sections_mainHub != null;
 	}
 
 	public boolean join(@NonNull Player player) {
-		player.teleport(loc);
+		player.teleport(this.configuration.sections_mainHub);
 		player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10, 5);
 		return true;
 	}
@@ -47,9 +49,5 @@ public class MainHub extends Section {
 
 	public boolean leave(@NonNull OfflinePlayer player) {
 		return true;
-	}
-
-	void reload() {
-		loc = Main.getConfiguration().sections_mainHub;
 	}
 }

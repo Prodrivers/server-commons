@@ -1,32 +1,27 @@
 package fr.prodrivers.bukkit.commons.plugin;
 
 import fr.prodrivers.bukkit.commons.Chat;
-import fr.prodrivers.bukkit.commons.commands.CommandsManager;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.configuration.Messages;
-import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @SuppressWarnings("CanBeFinal")
+@Singleton
 public class EConfiguration extends Configuration {
 	public Location sections_mainHub = new Location(Bukkit.getWorld("world"), 0, 70, 0);
-	public String storage_uri = "mongodb://localhost:27017";
-	public String storage_playerCollection = "players";
 	public String storage_sql_uri = "jdbc:mysql://localhost:3306/db";
 	public String storage_sql_username = "";
 	public String storage_sql_password = "";
 	public long sectionTree_buildDelayTicks = 40L;
 
-	public EConfiguration(JavaPlugin plugin, Class<? extends Messages> messagesClass, Chat chat) {
-		super(plugin, messagesClass, chat);
-	}
-
-	@Override
-	public void reload() {
-		super.reload();
-		SectionManager.reload();
-		CommandsManager.reload();
+	@Inject
+	public EConfiguration(Plugin plugin, Chat chat, Messages messages) {
+		super(plugin, chat, messages);
+		init();
 	}
 }

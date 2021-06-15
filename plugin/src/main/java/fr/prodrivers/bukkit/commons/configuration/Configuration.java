@@ -4,11 +4,9 @@ import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration;
 import fr.prodrivers.bukkit.commons.annotations.ForceSkipObjectAction;
 import fr.prodrivers.bukkit.commons.configuration.file.AbstractFileAttributeConfiguration;
-import fr.prodrivers.bukkit.commons.plugin.Main;
 import org.bukkit.plugin.Plugin;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import javax.inject.Inject;
 import java.util.logging.Level;
 
 @SuppressWarnings("CanBeFinal")
@@ -18,38 +16,32 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	@ExcludedFromConfiguration
 	private final Chat chat;
 	@ExcludedFromConfiguration
-	private Messages messages;
+	private final Messages messages;
 
 	@ForceSkipObjectAction
 	public Level logLevel = Level.INFO;
 
-	public Configuration(Plugin plugin, Class<? extends Messages> messagesClass, Chat chat) {
+	@Inject
+	public Configuration(Plugin plugin, Chat chat, Messages messages) {
 		super();
 		this.plugin = plugin;
-		this.configuration = this.plugin.getConfig();
 		this.chat = chat;
-		this.messages = null;
-		if(messagesClass != Messages.class) {
-			initMessages(messagesClass);
-		}
-	}
-
-	private void initMessages(Class<? extends Messages> messagesClass) {
-		try {
-			Constructor<? extends Messages> ctor = messagesClass.getConstructor(Plugin.class);
-			this.messages = ctor.newInstance(this.plugin);
-		} catch(NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-			Main.logger.log(Level.SEVERE, "Error while loading " + plugin.getDescription().getName() + " messages configuration.", e);
-		}
+		this.messages = messages;
+		this.configuration = this.plugin.getConfig();
 	}
 
 	@Override
-	public void init() {
+	protected void init() {
+		System.out.println("Injection result:");
+		System.out.println(plugin);
+		System.out.println(chat);
+		System.out.println(messages);
 		super.init();
 		if(this.messages != null) {
 			this.messages.init();
-			if(this.chat != null)
-				this.chat.load(this);
+			if(this.chat != null) {
+				this.chat.load(this.messages);
+			}
 		}
 	}
 
@@ -58,8 +50,9 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 		super.save();
 
 		this.plugin.saveConfig();
-		if(this.messages != null)
+		if(this.messages != null) {
 			this.messages.save();
+		}
 	}
 
 	@Override
@@ -73,13 +66,11 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	public void reload() {
 		this.plugin.reloadConfig();
 		super.reload();
-		if(this.messages != null)
+		if(this.messages != null) {
 			this.messages.reload();
-		if(chat != null)
-			this.chat.load(this);
-	}
-
-	public Messages getMessages() {
-		return this.messages;
+			if(chat != null) {
+				this.chat.load(this.messages);
+			}
+		}
 	}
 }

@@ -1,8 +1,8 @@
 package fr.prodrivers.bukkit.commons.configuration;
 
+import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration;
 import fr.prodrivers.bukkit.commons.annotations.ForceSkipObjectAction;
-import fr.prodrivers.bukkit.commons.plugin.Main;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -11,7 +11,6 @@ import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 public abstract class AbstractAttributeConfiguration {
 	@ExcludedFromConfiguration
@@ -46,7 +45,7 @@ public abstract class AbstractAttributeConfiguration {
 			oo.flush();
 			return Base64.getEncoder().encodeToString(bo.toByteArray());
 		} catch(IOException ex) {
-			Main.logger.log(Level.SEVERE, "Error while serializing object. Some configuration values might be invalid. Problematic object: " + object.getClass().getName(), ex);
+			Log.severe("Error while serializing object. Some configuration values might be invalid. Problematic object: " + object.getClass().getName(), ex);
 			return "";
 		}
 	}
@@ -58,7 +57,7 @@ public abstract class AbstractAttributeConfiguration {
 			ObjectInputStream oi = new ObjectInputStream(bi);
 			return oi.readObject();
 		} catch(IOException | ClassNotFoundException ex) {
-			Main.logger.log(Level.SEVERE, "Error while unserializing object. Some configuration values might be invalid. Problematic object: " + serializedObject, ex);
+			Log.severe("Error while unserializing object. Some configuration values might be invalid. Problematic object: " + serializedObject, ex);
 			return null;
 		}
 	}
@@ -106,7 +105,7 @@ public abstract class AbstractAttributeConfiguration {
 		}
 	}
 
-	public void init() throws IllegalStateException {
+	protected void init() throws IllegalStateException {
 		saveDefaults();
 		load();
 	}
@@ -227,6 +226,6 @@ public abstract class AbstractAttributeConfiguration {
 			}
 		});
 
-		Main.logger.info("- Loaded " + loadCount + " " + getClass().getSimpleName() + " fields");
+		Log.info("- Loaded " + loadCount + " " + getClass().getSimpleName() + " fields");
 	}
 }

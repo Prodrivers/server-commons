@@ -6,12 +6,14 @@ import fr.prodrivers.bukkit.commons.configuration.file.actions.MessageListFileAt
 import fr.prodrivers.bukkit.commons.configuration.file.actions.MessageMapFileAttributeConfigurationAction;
 import org.bukkit.plugin.Plugin;
 
+import javax.inject.Inject;
 import java.io.File;
 
 @SuppressWarnings("CanBeFinal")
 public class Messages extends FileAttributeConfiguration {
 	public String prefix = "[<name>]";
 
+	@Inject
 	public Messages(Plugin plugin) {
 		super(new File(plugin.getDataFolder(), "messages.yml"));
 	}

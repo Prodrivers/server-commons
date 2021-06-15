@@ -4,10 +4,13 @@ import fr.prodrivers.bukkit.commons.configuration.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @SuppressWarnings("CanBeFinal")
+@Singleton
 public class EMessages extends Messages {
 	public String player_only_command = "This command can only be executed by players.";
 	public String no_permission = "&cYou do not have permission to execute this.";
@@ -52,6 +55,7 @@ public class EMessages extends Messages {
 		party_help.put("chat", "Send a message to all party players.");
 	}
 
+	@Inject
 	public EMessages(Plugin plugin) {
 		super(plugin);
 	}

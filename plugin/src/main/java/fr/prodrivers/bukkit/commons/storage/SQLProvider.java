@@ -1,18 +1,20 @@
 package fr.prodrivers.bukkit.commons.storage;
 
-import fr.prodrivers.bukkit.commons.plugin.Main;
+import fr.prodrivers.bukkit.commons.Log;
+import fr.prodrivers.bukkit.commons.plugin.EConfiguration;
 import io.ebean.EbeanServer;
 import io.ebean.EbeanServerFactory;
 import io.ebean.config.ServerConfig;
 import io.ebean.datasource.DataSourceConfig;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Level;
 
 /**
  * SQL Database provider for Prodrivers plugins
@@ -24,21 +26,26 @@ import java.util.logging.Level;
  * SQLProvider is an optional part of the plugin, meaning that the result of its methods, on top of the underlying SQL database internal quirks and wrong queries, is not guaranteed to be correct.
  * One must check against null each results returned by SQLProvider.
  */
+@Singleton
 public class SQLProvider {
 	private static Connection connection;
 	private final static String EBEAN_SERVER_NAME_PREFIX = "ProdriversCommonsEbeanServer_";
+	
+	private final EConfiguration configuration;
 
-	public static void init() {
+	@Inject
+	public SQLProvider(EConfiguration configuration) {
+		this.configuration = configuration;
 		try {
-			if(Main.getConfiguration().storage_sql_username != null && !Main.getConfiguration().storage_sql_username.isEmpty() && Main.getConfiguration().storage_sql_password != null && !Main.getConfiguration().storage_sql_password.isEmpty()) {
-				connection = DriverManager.getConnection(Main.getConfiguration().storage_sql_uri, Main.getConfiguration().storage_sql_username, Main.getConfiguration().storage_sql_password);
+			if(this.configuration.storage_sql_username != null && !this.configuration.storage_sql_username.isEmpty() && this.configuration.storage_sql_password != null && !this.configuration.storage_sql_password.isEmpty()) {
+				connection = DriverManager.getConnection(this.configuration.storage_sql_uri, this.configuration.storage_sql_username, this.configuration.storage_sql_password);
 			} else {
-				connection = DriverManager.getConnection(Main.getConfiguration().storage_sql_uri);
+				connection = DriverManager.getConnection(this.configuration.storage_sql_uri);
 			}
 		} catch(SQLException ex) {
 			connection = null;
-			Main.logger.warning("SQL provider is not available: " + ex.getLocalizedMessage());
-			Main.logger.warning("Please check your SQL connection URI and credentials.");
+			Log.warning("SQL provider is not available: " + ex.getLocalizedMessage());
+			Log.warning("Please check your SQL connection URI and credentials.");
 		}
 	}
 
@@ -47,26 +54,26 @@ public class SQLProvider {
 	 *
 	 * @return Connection or null
 	 */
-	public static Connection getConnection() {
+	public Connection getConnection() {
 		return connection;
 	}
 
-	public static EbeanServer getEbeanServer(List<Class<?>> classes) {
+	public EbeanServer getEbeanServer(List<Class<?>> classes) {
 		if(connection == null)
 			return null;
 		try {
 			return initEbeanServer(classes);
 		} catch(RuntimeException | SQLException e) {
-			Main.logger.log(Level.SEVERE, "Error while creating EBean server: " + e.getLocalizedMessage(), e);
+			Log.severe("Error while creating EBean server: " + e.getLocalizedMessage(), e);
 		}
 		return null;
 	}
 
-	private static EbeanServer initEbeanServer(List<Class<?>> classes) throws SQLException {
+	private EbeanServer initEbeanServer(List<Class<?>> classes) throws SQLException {
 		DataSourceConfig dbSrcCfg = new DataSourceConfig();
 		dbSrcCfg.setDriver(DriverManager.getDriver(connection.getMetaData().getURL()).getClass().getName());
-		dbSrcCfg.setUsername(Main.getConfiguration().storage_sql_username);
-		dbSrcCfg.setPassword(Main.getConfiguration().storage_sql_password);
+		dbSrcCfg.setUsername(this.configuration.storage_sql_username);
+		dbSrcCfg.setPassword(this.configuration.storage_sql_password);
 		dbSrcCfg.setUrl(connection.getMetaData().getURL());
 		dbSrcCfg.addProperty("useSSL", false);
 

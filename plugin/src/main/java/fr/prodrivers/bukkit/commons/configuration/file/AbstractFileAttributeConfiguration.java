@@ -7,12 +7,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 public abstract class AbstractFileAttributeConfiguration extends AbstractAttributeConfiguration {
 	protected FileConfiguration configuration;
 
-	public AbstractFileAttributeConfiguration() {
-		super();
-	}
-
 	@Override
-	public void init() {
+	protected void init() {
 		registerAction(new ObjectFileConfigurationAction(this.configuration));
 		registerAction(new StringFileAttributeConfigurationAction(this.configuration));
 		registerAction(new LocationFileConfigurationAction(this.configuration));

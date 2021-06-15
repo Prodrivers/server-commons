@@ -1,76 +1,79 @@
 package fr.prodrivers.bukkit.commons;
 
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Log {
-	private final Logger logger;
+	private static Logger logger;
 
-	public Log(JavaPlugin plugin, Configuration configuration) {
-		logger = plugin.getLogger();
+	public static void init(Logger logger) {
+		Log.logger = logger;
+	}
+
+	public static void setLevel(Configuration configuration) {
+		Log.logger = logger;
 		logger.setLevel(configuration.logLevel);
 		for(Handler handler : logger.getHandlers()) {
 			handler.setLevel(configuration.logLevel);
 		}
 	}
 
-	public void config(String msg) {
+	public static void config(String msg) {
 		logger.log(Level.CONFIG, msg);
 	}
 
-	public void config(String msg, Throwable thrown) {
+	public static void config(String msg, Throwable thrown) {
 		logger.log(Level.CONFIG, msg, thrown);
 	}
 
-	public void finest(String msg) {
+	public static void finest(String msg) {
 		logger.log(Level.FINEST, msg);
 	}
 
-	public void finest(String msg, Throwable thrown) {
+	public static void finest(String msg, Throwable thrown) {
 		logger.log(Level.FINEST, msg, thrown);
 	}
 
-	public void finer(String msg) {
+	public static void finer(String msg) {
 		logger.log(Level.FINER, msg);
 	}
 
-	public void finer(String msg, Throwable thrown) {
+	public static void finer(String msg, Throwable thrown) {
 		logger.log(Level.FINER, msg, thrown);
 	}
 
-	public void fine(String msg) {
+	public static void fine(String msg) {
 		logger.log(Level.FINE, msg);
 	}
 
-	public void fine(String msg, Throwable thrown) {
+	public static void fine(String msg, Throwable thrown) {
 		logger.log(Level.INFO, msg, thrown);
 	}
 
-	public void info(String msg) {
+	public static void info(String msg) {
 		logger.log(Level.INFO, msg);
 	}
 
-	public void info(String msg, Throwable thrown) {
+	public static void info(String msg, Throwable thrown) {
 		logger.log(Level.INFO, msg, thrown);
 	}
 
-	public void warning(String msg) {
+	public static void warning(String msg) {
 		logger.log(Level.WARNING, msg);
 	}
 
-	public void warning(String msg, Throwable thrown) {
+	public static void warning(String msg, Throwable thrown) {
 		logger.log(Level.WARNING, msg, thrown);
 	}
 
-	public void severe(String msg) {
+	public static void severe(String msg) {
 		logger.log(Level.SEVERE, msg);
 	}
 
-	public void severe(String msg, Throwable thrown) {
+	public static void severe(String msg, Throwable thrown) {
 		logger.log(Level.SEVERE, msg, thrown);
 	}
 }

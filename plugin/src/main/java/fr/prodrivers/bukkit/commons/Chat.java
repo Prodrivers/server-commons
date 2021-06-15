@@ -1,5 +1,6 @@
 package fr.prodrivers.bukkit.commons;
 
+import fr.prodrivers.bukkit.commons.configuration.Messages;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -14,11 +15,11 @@ public class Chat {
 		this.name = name;
 	}
 
-	public void load(fr.prodrivers.bukkit.commons.configuration.Configuration configuration) {
-		if(configuration.getMessages() != null && configuration.getMessages().prefix != null) {
-			this.prefix = configuration.getMessages().prefix;
+	public void load(Messages messages) {
+		if(messages != null && messages.prefix != null) {
+			this.prefix = messages.prefix;
 		}
-		this.prefix.replaceAll("<name>", this.name);
+		this.prefix = this.prefix.replaceAll("<name>", this.name);
 	}
 
 	public void send(CommandSender sender, String message, String prefix) {

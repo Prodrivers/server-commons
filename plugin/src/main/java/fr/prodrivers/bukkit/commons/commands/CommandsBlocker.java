@@ -1,5 +1,6 @@
 package fr.prodrivers.bukkit.commons.commands;
 
+import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.plugin.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -7,11 +8,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.inject.Inject;
 import java.util.HashSet;
 
 public class CommandsBlocker implements CommandExecutor {
 	private final HashSet<String> blocked = new HashSet<>();
 
+	@Inject
 	CommandsBlocker(JavaPlugin plugin) {
 		populate();
 		for(String cmd : blocked) {
@@ -19,7 +22,7 @@ public class CommandsBlocker implements CommandExecutor {
 			if(command != null)
 				command.setExecutor(this);
 			else
-				Main.logger.warning("Command " + cmd + " could not be blocked.");
+				Log.warning("Command " + cmd + " could not be blocked.");
 		}
 	}
 

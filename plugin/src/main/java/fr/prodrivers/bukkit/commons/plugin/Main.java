@@ -1,10 +1,18 @@
 package fr.prodrivers.bukkit.commons.plugin;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import fr.prodrivers.bukkit.commons.Chat;
-import fr.prodrivers.bukkit.commons.commands.CommandsManager;
+import fr.prodrivers.bukkit.commons.Log;
+import fr.prodrivers.bukkit.commons.commands.CommandsModule;
+import fr.prodrivers.bukkit.commons.configuration.Configuration;
+import fr.prodrivers.bukkit.commons.configuration.Messages;
 import fr.prodrivers.bukkit.commons.parties.PartyManager;
+import fr.prodrivers.bukkit.commons.parties.PartyModule;
+import fr.prodrivers.bukkit.commons.sections.MainHub;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.storage.SQLProvider;
+import fr.prodrivers.bukkit.commons.storage.StorageModule;
 import fr.prodrivers.bukkit.commons.storage.StorageProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -21,37 +29,52 @@ import java.net.URLClassLoader;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin implements Listener {
-	private static EConfiguration configuration;
-	private static EMessages messages;
-	private static Chat chat;
-	private static Main plugin;
+	private static Main instance;
 
-	public static final Logger logger = Logger.getLogger("ProdriversCommons");
+	private EConfiguration configuration;
+	private EMessages messages;
+	private Chat chat;
+	private Logger logger;
 
-	public static EConfiguration getConfiguration() {
+	private SectionManager sectionManager;
+	private PartyManager partyManager;
+	private SQLProvider sqlProvider;
+
+	public static Main getInstance() {
+		return instance;
+	}
+
+	public EConfiguration getConfiguration() {
 		return configuration;
 	}
 
-	public static EMessages getMessages() {
+	public EMessages getMessages() {
 		return messages;
 	}
 
-	public static Chat getChat() {
+	public Chat getChat() {
 		return chat;
 	}
 
-	public static Main getPlugin() {
-		return plugin;
+	public SectionManager getSectionManager() {
+		return sectionManager;
+	}
+
+	public PartyManager getPartyManager() {
+		return partyManager;
+	}
+
+	public SQLProvider getSqlProvider() {
+		return sqlProvider;
 	}
 
 	@Override
 	public void onDisable() {
 		PluginDescriptionFile plugindescription = this.getDescription();
-		configuration.save();
-		try {
-			StorageProvider.close();
-		} catch(IOException ex) {
-			logger.severe("Error while closing storage provider: " + ex.getLocalizedMessage());
+		if(configuration != null) {
+			configuration.save();
+		} else {
+			logger.warning("Configuration not saved because it is null.");
 		}
 		try {
 			SQLProvider.close();
@@ -93,7 +116,9 @@ public class Main extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
-		plugin = this;
+		instance = this;
+		logger = getLogger();
+		Log.init(logger);
 
 		logger.info("Java version is " + System.getProperty("java.version") + ".");
 		if(!System.getProperty("java.version").startsWith("1.8")) {
@@ -103,31 +128,35 @@ public class Main extends JavaPlugin implements Listener {
 
 		registerLibraries();
 
+		Injector injector = Guice.createInjector(
+				new PluginModule(this),
+				new CommandsModule(),
+				new StorageModule(),
+				new PartyModule()
+		);
+
+		chat = injector.getInstance(Chat.class);
+		configuration = (EConfiguration) injector.getInstance(Configuration.class);
+		messages = (EMessages) injector.getInstance(Messages.class);
+
+		Log.setLevel(configuration);
+
 		getServer().getPluginManager().registerEvents(this, this);
 
-		PluginDescriptionFile plugindescription = this.getDescription();
+		sqlProvider = injector.getInstance(SQLProvider.class);
 
-		chat = new Chat(plugindescription.getName());
-		configuration = new EConfiguration(this, EMessages.class, chat);
-		configuration.init();
-		messages = (EMessages) configuration.getMessages();
+		sectionManager = injector.getInstance(SectionManager.class);
+		partyManager = injector.getInstance(PartyManager.class);
 
-		StorageProvider.init();
-		SQLProvider.init();
-
-		SectionManager.init(this);
-		PartyManager.init(this);
-		CommandsManager.init(this);
+		MainHub hub = injector.getInstance(MainHub.class);
+		sectionManager.register(hub);
 
 		Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
 			logger.info("All plugins are loaded, building the section tree.");
-			SectionManager.buildSectionTree();
+			sectionManager.buildSectionTree();
 			logger.info("Section tree built.");
 		}, configuration.sectionTree_buildDelayTicks);
 
-		logger.info("" + plugindescription.getName() + " has been enabled!");
-	}
-
-	public void reload() {
+		logger.info("" + this.getDescription().getName() + " has been enabled!");
 	}
 }
