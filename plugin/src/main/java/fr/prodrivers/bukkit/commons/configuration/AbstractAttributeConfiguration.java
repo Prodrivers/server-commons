@@ -22,7 +22,8 @@ public abstract class AbstractAttributeConfiguration {
 		Normal,
 		Serialize,
 		Object,
-		ToString
+		ToStringValueOf,
+		ToStringParse
 	}
 
 	private interface ProcessCallback {
@@ -91,15 +92,30 @@ public abstract class AbstractAttributeConfiguration {
 					}
 				}
 
+				// ToStringValueOf
 				try {
 					type.getMethod("toString");
 					type.getMethod("valueOf", String.class);
 					action = actions.get(String.class);
 					if(action != null) {
-						fieldCallback.run(ProcessCallbackType.ToString, action, field);
+						fieldCallback.run(ProcessCallbackType.ToStringValueOf, action, field);
+						continue;
 					}
 				} catch(NoSuchMethodException e) {
-					throw new IllegalStateException(getClass().getName() + "'s field " + field.getName() + " can not be used, as it is of type (" + field.getType().getName() + ") neither supported directly, nor serializable, nor can it be converted to String back and forth using toString and valueOf methods\nConfiguration is left in an invalid state.");
+					// Silently ignore
+				}
+
+				// ToStringParse
+				try {
+					type.getMethod("toString");
+					type.getMethod("parse", String.class);
+					action = actions.get(String.class);
+					if(action != null) {
+						fieldCallback.run(ProcessCallbackType.ToStringParse, action, field);
+						continue;
+					}
+				} catch(NoSuchMethodException e) {
+					// Silently ignore
 				}
 			}
 		}
@@ -120,7 +136,7 @@ public abstract class AbstractAttributeConfiguration {
 					} catch(IllegalArgumentException ex) {
 						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " has been given an invalid value: " + ex.getLocalizedMessage() + ".\nConfiguration is left in an invalid state.");
 					} catch(IllegalAccessException e) {
-						break;
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not saved.\nConfiguration is left in an invalid state.", e);
 					}
 					break;
 
@@ -130,18 +146,21 @@ public abstract class AbstractAttributeConfiguration {
 					} catch(IllegalArgumentException ex) {
 						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " has been given an invalid value: " + ex.getLocalizedMessage() + ".\nConfiguration is left in an invalid state.");
 					} catch(IllegalAccessException e) {
-						break;
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not saved.\nConfiguration is left in an invalid state.", e);
+					}
+					break;
 					}
 					break;
 
-				case ToString:
+				case ToStringValueOf:
+				case ToStringParse:
 					try {
 						Method toString = field.getType().getMethod("toString");
 						action.set(field, toString.invoke(field.get(AbstractAttributeConfiguration.this)));
 					} catch(IllegalArgumentException ex) {
 						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " has been given an invalid value: " + ex.getLocalizedMessage() + ".\nConfiguration is left in an invalid state.");
 					} catch(NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-						break;
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not saved.\nConfiguration is left in an invalid state.", e);
 					}
 					break;
 			}
@@ -162,7 +181,7 @@ public abstract class AbstractAttributeConfiguration {
 					} catch(IllegalArgumentException ex) {
 						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " has been given an invalid value: " + ex.getLocalizedMessage() + ".\nConfiguration is left in an invalid state.");
 					} catch(IllegalAccessException e) {
-						break;
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not saved.\nConfiguration is left in an invalid state.", e);
 					}
 					break;
 
@@ -172,18 +191,21 @@ public abstract class AbstractAttributeConfiguration {
 					} catch(IllegalArgumentException ex) {
 						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " has been given an invalid value: " + ex.getLocalizedMessage() + ".\nConfiguration is left in an invalid state.");
 					} catch(IllegalAccessException e) {
-						break;
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not saved.\nConfiguration is left in an invalid state.", e);
+					}
+					break;
 					}
 					break;
 
-				case ToString:
+				case ToStringValueOf:
+				case ToStringParse:
 					try {
 						Method toString = field.getType().getMethod("toString");
 						action.setDefault(field, toString.invoke(field.get(AbstractAttributeConfiguration.this)));
 					} catch(IllegalArgumentException ex) {
 						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " has been given an invalid value: " + ex.getLocalizedMessage() + ".\nConfiguration is left in an invalid state.");
 					} catch(NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-						break;
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not saved.\nConfiguration is left in an invalid state.", e);
 					}
 					break;
 			}
@@ -205,12 +227,23 @@ public abstract class AbstractAttributeConfiguration {
 					value = unserialize((String) action.get(field));
 					break;
 
-				case ToString:
+				case ToStringValueOf:
 					try {
-						Method valueOf = field.getType().getMethod("valueOf");
-						value = valueOf.invoke(action.get(field));
+						Method valueOf = field.getType().getMethod("valueOf", String.class);
+						String stringValue = (String) action.get(field);
+						value = valueOf.invoke(AbstractAttributeConfiguration.this, stringValue);
 					} catch(NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-						break;
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not loaded.\nConfiguration is left in an invalid state.", e);
+					}
+					break;
+
+				case ToStringParse:
+					try {
+						Method valueOf = field.getType().getMethod("parse", String.class);
+						String stringValue = (String) action.get(field);
+						value = valueOf.invoke(AbstractAttributeConfiguration.this, stringValue);
+					} catch(NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+						throw new IllegalStateException(AbstractAttributeConfiguration.this.getClass().getName() + "'s field " + field.getName() + " was not loaded.\nConfiguration is left in an invalid state.", e);
 					}
 					break;
 			}
