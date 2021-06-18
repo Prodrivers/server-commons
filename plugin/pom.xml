@@ -101,17 +101,17 @@
 		<dependency>
 			<groupId>io.ebean</groupId>
 			<artifactId>ebean</artifactId>
-			<version>12.3.3</version>
+			<version>12.9.2</version>
 		</dependency>
 		<dependency>
 			<groupId>io.ebean</groupId>
 			<artifactId>ebean-querybean</artifactId>
-			<version>12.3.3</version>
+			<version>12.9.2</version>
 		</dependency>
 		<dependency>
 			<groupId>io.ebean</groupId>
 			<artifactId>querybean-generator</artifactId>
-			<version>12.3.3</version>
+			<version>12.9.2</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- SLF4J (for EBean) -->
@@ -225,6 +225,7 @@
 										<exclude>fr/prodrivers/bukkit/commons/parties/Party*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/parties/PartyManager*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/storage/StorageProvider*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/storage/EbeanProvider*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/storage/SQLProvider*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/sections/Section.class</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/sections/SectionManager*</exclude>

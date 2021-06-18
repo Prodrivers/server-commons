@@ -2,19 +2,19 @@ package fr.prodrivers.bukkit.commons.storage;
 
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.plugin.EConfiguration;
-import io.ebean.EbeanServer;
-import io.ebean.EbeanServerFactory;
-import io.ebean.config.ServerConfig;
+import io.ebean.Database;
+import io.ebean.DatabaseFactory;
+import io.ebean.config.DatabaseConfig;
 import io.ebean.datasource.DataSourceConfig;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
+import java.io.Closeable;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * SQL Database provider for Prodrivers plugins
@@ -27,20 +27,16 @@ import java.util.concurrent.ThreadLocalRandom;
  * One must check against null each results returned by SQLProvider.
  */
 @Singleton
-public class SQLProvider {
-	private static Connection connection;
-	private final static String EBEAN_SERVER_NAME_PREFIX = "ProdriversCommonsEbeanServer_";
-	
-	private final EConfiguration configuration;
+public class SQLProvider implements Provider<Connection>, Closeable {
+	private Connection connection;
 
 	@Inject
 	public SQLProvider(EConfiguration configuration) {
-		this.configuration = configuration;
 		try {
-			if(this.configuration.storage_sql_username != null && !this.configuration.storage_sql_username.isEmpty() && this.configuration.storage_sql_password != null && !this.configuration.storage_sql_password.isEmpty()) {
-				connection = DriverManager.getConnection(this.configuration.storage_sql_uri, this.configuration.storage_sql_username, this.configuration.storage_sql_password);
+			if(configuration.storage_sql_username != null && !configuration.storage_sql_username.isEmpty() && configuration.storage_sql_password != null && !configuration.storage_sql_password.isEmpty()) {
+				connection = DriverManager.getConnection(configuration.storage_sql_uri, configuration.storage_sql_username, configuration.storage_sql_password);
 			} else {
-				connection = DriverManager.getConnection(this.configuration.storage_sql_uri);
+				connection = DriverManager.getConnection(configuration.storage_sql_uri);
 			}
 		} catch(SQLException ex) {
 			connection = null;
@@ -54,46 +50,16 @@ public class SQLProvider {
 	 *
 	 * @return Connection or null
 	 */
-	public Connection getConnection() {
+	@Override
+	public Connection get() {
 		return connection;
 	}
 
-	public EbeanServer getEbeanServer(List<Class<?>> classes) {
-		if(connection == null)
-			return null;
+	public void close() throws IOException {
 		try {
-			return initEbeanServer(classes);
-		} catch(RuntimeException | SQLException e) {
-			Log.severe("Error while creating EBean server: " + e.getLocalizedMessage(), e);
-		}
-		return null;
-	}
-
-	private EbeanServer initEbeanServer(List<Class<?>> classes) throws SQLException {
-		DataSourceConfig dbSrcCfg = new DataSourceConfig();
-		dbSrcCfg.setDriver(DriverManager.getDriver(connection.getMetaData().getURL()).getClass().getName());
-		dbSrcCfg.setUsername(this.configuration.storage_sql_username);
-		dbSrcCfg.setPassword(this.configuration.storage_sql_password);
-		dbSrcCfg.setUrl(connection.getMetaData().getURL());
-		dbSrcCfg.addProperty("useSSL", false);
-
-		ServerConfig sc = new ServerConfig();
-		sc.setName(generateName());
-		sc.setDataSourceConfig(dbSrcCfg);
-		sc.setClasses(classes);
-		sc.setRegister(false);
-
-		return EbeanServerFactory.create(sc);
-	}
-
-	private static String generateName() {
-		return EBEAN_SERVER_NAME_PREFIX + ThreadLocalRandom.current().nextInt();
-	}
-
-	public static void close() throws IOException {
-		try {
-			if(connection != null)
+			if(connection != null) {
 				connection.close();
+			}
 		} catch(Exception ex) {
 			throw new IOException(ex);
 		}
