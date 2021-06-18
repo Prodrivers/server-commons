@@ -13,7 +13,6 @@ import fr.prodrivers.bukkit.commons.sections.MainHub;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.storage.SQLProvider;
 import fr.prodrivers.bukkit.commons.storage.StorageModule;
-import fr.prodrivers.bukkit.commons.storage.StorageProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;

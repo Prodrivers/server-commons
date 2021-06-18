@@ -224,7 +224,6 @@
 										<exclude>fr/prodrivers/bukkit/commons/configuration/Messages*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/parties/Party*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/parties/PartyManager*</exclude>
-										<exclude>fr/prodrivers/bukkit/commons/storage/StorageProvider*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/storage/EbeanProvider*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/storage/SQLProvider*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/sections/Section.class</exclude>
