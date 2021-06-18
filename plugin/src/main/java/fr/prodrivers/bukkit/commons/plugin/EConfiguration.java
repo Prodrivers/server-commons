@@ -9,10 +9,12 @@ import org.bukkit.plugin.Plugin;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.logging.Level;
 
 @SuppressWarnings("CanBeFinal")
 @Singleton
 public class EConfiguration extends Configuration {
+	public Level logLevel = Level.INFO;
 	public Location sections_mainHub = new Location(Bukkit.getWorld("world"), 0, 70, 0);
 	public String storage_sql_uri = "jdbc:mysql://localhost:3306/db";
 	public String storage_sql_username = "";
