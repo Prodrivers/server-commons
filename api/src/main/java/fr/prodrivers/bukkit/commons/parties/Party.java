@@ -11,15 +11,6 @@ import java.util.UUID;
  */
 public class Party {
 	/**
-	 * Generate a new party.
-	 *
-	 * @param ownerUniqueId Party owner's Unique ID
-	 */
-	Party(final UUID ownerUniqueId) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
 	 * Returns owner's unique id.
 	 *
 	 * @return Owner's unique id

@@ -1,6 +1,7 @@
 package fr.prodrivers.bukkit.commons.sections;
 
 import fr.prodrivers.bukkit.commons.exceptions.*;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -22,7 +23,7 @@ public class SectionManager {
 	 * @throws IllegalSectionLeavingException  The current section forbids the player to go to the parent section
 	 * @throws IllegalSectionEnteringException The player should not enter the parent section
 	 */
-	public static void enter(Player player) throws NoCurrentSectionException, NoParentSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
+	public void enter(Player player) throws NoCurrentSectionException, NoParentSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
 		throw new UnsupportedOperationException();
 	}
 
@@ -36,7 +37,7 @@ public class SectionManager {
 	 * @throws IllegalSectionLeavingException  A section along the path the player has to walk forbids the player to leave it
 	 * @throws IllegalSectionEnteringException A section along the path the player has to walk forbids the player from entering it
 	 */
-	public static void enter(Player player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
+	public void enter(Player player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
 		throw new UnsupportedOperationException();
 	}
 
@@ -46,7 +47,7 @@ public class SectionManager {
 	 * @param section Prodrivers Commons-compatible section to register
 	 * @throws NullPointerException Provided section is null
 	 */
-	public static void register(Section section) throws NullPointerException {
+	public void register(Section section) throws NullPointerException {
 		throw new UnsupportedOperationException();
 	}
 
@@ -57,7 +58,31 @@ public class SectionManager {
 	 * @param silent  if {@code true}, do not log a message on successful registration
 	 * @throws NullPointerException Provided section is null
 	 */
-	public static void register(Section section, boolean silent) throws NullPointerException {
+	public void register(Section section, boolean silent) throws NullPointerException {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Registers a player agaist the Prodrivers Commons infrastructure.
+	 *
+	 * Required before any interaction with ProdriversCommons and dependent plugins.
+	 * This action is automatically performed by the default section manager on player login.
+	 *
+	 * @param player Player to register
+	 */
+	public void register(Player player) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Unregisters a player from the Prodrivers Commons infrastructure.
+	 *
+	 * Once a player is unregistered, no further interaction with ProdriversCommons and dependent plugins should happen.
+	 * This action is automatically performed by the default section manager on player logout.
+	 *
+	 * @param player Player to unregister
+	 */
+	public void unregister(OfflinePlayer player) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -67,7 +92,26 @@ public class SectionManager {
 	 * @param player Player to consider
 	 * @return Player's section instance if possible or null
 	 */
-	public static Section getCurrentSection(Player player) {
+	public Section getCurrentSection(Player player) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Get a section instance by its name.
+	 *
+	 * @param name Name of the section instance to return
+	 * @return Section instance if possible or null
+	 */
+	public Section getSection(String name) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Get the root section instance. Should never be null.
+	 *
+	 * @return Root section instance
+	 */
+	public Section getRootSection() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -76,7 +120,7 @@ public class SectionManager {
 	 *
 	 * @return Section's players or null
 	 */
-	public static Collection<Player> getPlayers(Section section) {
+	public Collection<Player> getPlayers(Section section) {
 		throw new UnsupportedOperationException();
 	}
 }

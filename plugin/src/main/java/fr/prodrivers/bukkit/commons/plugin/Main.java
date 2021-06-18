@@ -2,12 +2,10 @@ package fr.prodrivers.bukkit.commons.plugin;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.Log;
+import fr.prodrivers.bukkit.commons.ProdriversCommons;
 import fr.prodrivers.bukkit.commons.commands.CommandsModule;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
-import fr.prodrivers.bukkit.commons.configuration.Messages;
-import fr.prodrivers.bukkit.commons.parties.PartyManager;
 import fr.prodrivers.bukkit.commons.parties.PartyModule;
 import fr.prodrivers.bukkit.commons.sections.MainHub;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
@@ -28,43 +26,17 @@ import java.net.URLClassLoader;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin implements Listener {
-	private static Main instance;
+	private Injector injector;
 
 	private EConfiguration configuration;
-	private EMessages messages;
-	private Chat chat;
 	private Logger logger;
 
 	private SectionManager sectionManager;
-	private PartyManager partyManager;
+
 	private SQLProvider sqlProvider;
 
-	public static Main getInstance() {
-		return instance;
-	}
-
-	public EConfiguration getConfiguration() {
-		return configuration;
-	}
-
-	public EMessages getMessages() {
-		return messages;
-	}
-
-	public Chat getChat() {
-		return chat;
-	}
-
-	public SectionManager getSectionManager() {
-		return sectionManager;
-	}
-
-	public PartyManager getPartyManager() {
-		return partyManager;
-	}
-
-	public SQLProvider getSqlProvider() {
-		return sqlProvider;
+	public Injector getInjector() {
+		return injector;
 	}
 
 	@Override
@@ -76,7 +48,7 @@ public class Main extends JavaPlugin implements Listener {
 			logger.warning("Configuration not saved because it is null.");
 		}
 		try {
-			SQLProvider.close();
+			sqlProvider.close();
 		} catch(IOException ex) {
 			logger.severe("Error while closing storage provider: " + ex.getLocalizedMessage());
 		}
@@ -115,7 +87,6 @@ public class Main extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
-		instance = this;
 		logger = getLogger();
 		Log.init(logger);
 
@@ -127,16 +98,14 @@ public class Main extends JavaPlugin implements Listener {
 
 		registerLibraries();
 
-		Injector injector = Guice.createInjector(
+		injector = Guice.createInjector(
 				new PluginModule(this),
 				new CommandsModule(),
 				new StorageModule(),
 				new PartyModule()
 		);
 
-		chat = injector.getInstance(Chat.class);
 		configuration = (EConfiguration) injector.getInstance(Configuration.class);
-		messages = (EMessages) injector.getInstance(Messages.class);
 
 		Log.setLevel(configuration);
 
@@ -145,7 +114,6 @@ public class Main extends JavaPlugin implements Listener {
 		sqlProvider = injector.getInstance(SQLProvider.class);
 
 		sectionManager = injector.getInstance(SectionManager.class);
-		partyManager = injector.getInstance(PartyManager.class);
 
 		MainHub hub = injector.getInstance(MainHub.class);
 		sectionManager.register(hub);
@@ -155,6 +123,8 @@ public class Main extends JavaPlugin implements Listener {
 			sectionManager.buildSectionTree();
 			logger.info("Section tree built.");
 		}, configuration.sectionTree_buildDelayTicks);
+
+		ProdriversCommons.init(this);
 
 		logger.info("" + this.getDescription().getName() + " has been enabled!");
 	}

@@ -21,7 +21,7 @@ public class SectionListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		final Player player = e.getPlayer();
 
-		sectionManager.enter(player, SectionManager.ROOT_NODE_NAME);
+		sectionManager.register(player);
 	}
 
 	@EventHandler

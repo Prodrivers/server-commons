@@ -217,6 +217,8 @@
 									<artifact>fr.prodrivers.bukkit:prodrivers-commons-api</artifact>
 									<excludes>
 										<exclude>fr/prodrivers/bukkit/commons/Chat*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/ProdriversCommons*</exclude>
+										<exclude>fr/prodrivers/bukkit/commons/ProdriversCommonsModule*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/configuration/Configuration*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/configuration/AbstractAttributeConfiguration*</exclude>
 										<exclude>fr/prodrivers/bukkit/commons/configuration/file/AbstractFileAttributeConfiguration*</exclude>

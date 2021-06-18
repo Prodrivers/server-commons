@@ -390,6 +390,13 @@ public class SectionManager {
 		return true;
 	}
 
+	/**
+	 * Find the last common node in the path between two nodes.
+	 *
+	 * @param left First node to consider
+	 * @param target Second node to consider
+	 * @return Last common node on the paths of both nodes.
+	 */
 	private Section findCommonNode(Section left, Section target) {
 		// Get tree branches for left and target sections
 		List<String> leftNodes = left.getSplitFullName();
@@ -449,6 +456,11 @@ public class SectionManager {
 		}
 	}
 
+	/**
+	 * Build the section tree.
+	 *
+	 * Fills, for each node, its parent and children. Creates intermediary nodes whenever needed.
+	 */
 	public void buildSectionTree() {
 		// First, go through all registered sections and build a tree from their names, based on the separators in their
 		// names
@@ -527,6 +539,10 @@ public class SectionManager {
 		} else {
 			Log.warning("Section " + section + " tried to be registered for a second time.");
 		}
+	}
+
+	public void register(Player player) {
+		enter(player, SectionManager.ROOT_NODE_NAME);
 	}
 
 	public void unregister(OfflinePlayer player) {

@@ -7,8 +7,6 @@ import fr.prodrivers.bukkit.commons.configuration.Messages;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.logging.Logger;
-
 public class PluginModule extends AbstractModule {
 	private final JavaPlugin plugin;
 
