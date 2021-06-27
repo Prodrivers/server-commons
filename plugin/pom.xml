@@ -218,7 +218,6 @@
                                     <excludes>
                                         <exclude>fr/prodrivers/bukkit/commons/Chat*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/ProdriversCommons*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/ProdriversCommonsModule*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/configuration/Configuration*</exclude>
                                         <exclude>
                                             fr/prodrivers/bukkit/commons/configuration/AbstractAttributeConfiguration*
@@ -230,8 +229,10 @@
                                             fr/prodrivers/bukkit/commons/configuration/file/FileAttributeConfiguration*
                                         </exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/configuration/Messages*</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/di/guice/ProdriversCommonsGuiceModule*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/parties/Party*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/parties/PartyManager*</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/storage/DataSourceConfigProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/EbeanProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/SQLProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/sections/Section.class</exclude>
