@@ -4,8 +4,8 @@ import java.util.UUID;
 
 /**
  * Prodrivers Commons Party Manager.
- * <br/>
- * Allows to interect with Prodrivers Commons global parties.
+ * <p>
+ * Allows to interact with Prodrivers Commons global parties.
  * Invites, kick, disband and others are directly handled by the plugin.
  */
 public class PartyManager {
@@ -53,7 +53,7 @@ public class PartyManager {
 	 *
 	 * @param playerUniqueId Player's UniqueId
 	 */
-	void addParty(UUID playerUniqueId, Party party) {
+	protected void addParty(UUID playerUniqueId, Party party) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -62,7 +62,7 @@ public class PartyManager {
 	 *
 	 * @param playerUniqueId Player's UniqueId
 	 */
-	void removeParty(UUID playerUniqueId) {
+	protected void removeParty(UUID playerUniqueId) {
 		throw new UnsupportedOperationException();
 	}
 

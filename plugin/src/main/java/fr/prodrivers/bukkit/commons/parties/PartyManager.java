@@ -44,11 +44,11 @@ public class PartyManager {
 		return party;
 	}
 
-	void addParty(UUID playerUniqueId, Party party) {
+	protected void addParty(UUID playerUniqueId, Party party) {
 		parties.put(playerUniqueId, party);
 	}
 
-	void removeParty(UUID playerUniqueId) {
+	protected void removeParty(UUID playerUniqueId) {
 		parties.remove(playerUniqueId);
 	}
 

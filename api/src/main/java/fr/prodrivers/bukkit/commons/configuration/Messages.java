@@ -15,6 +15,9 @@ import org.bukkit.plugin.Plugin;
  * the object, either at the end of the constructor or outside of it.
  */
 public class Messages extends FileAttributeConfiguration {
+	/**
+	 * Prefix to use in messages sent using {@link fr.prodrivers.bukkit.commons.Chat Chat}
+	 */
 	public String prefix = "[<name>]";
 
 	/**

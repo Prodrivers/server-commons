@@ -6,8 +6,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 /**
  * Field-based, Bukkit's FileConfiguration backed configuration framework for Prodrivers plugins.
  * <p>
- * AbstractFileAttributeConfiguration extends AbstractAttributeConfiguration to uses Bukkit's own FileConfiguration class as a storage.
- * It provides all the required configuration actions, and most logic for loading, saving and saving defaults.
+ * AbstractFileAttributeConfiguration extends AbstractAttributeConfiguration to uses Bukkit's own FileConfiguratio
+ * class as a storage. It provides all the required configuration actions, and most logic for loading, saving and
+ * saving defaults.
  * <p>
  * In your constructor, after super(), you have to provide a valid FileConfiguration instance in the configuration
  * field.

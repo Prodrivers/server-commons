@@ -5,10 +5,11 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Prodrivers Commons Section Manager
- * <br/>
+ * <p>
  * Contains methods to manage and interact with Prodrivers Commons Sections.
  * Use this class to gather information, about sections, players, move players between sections and register new
  * sections.
@@ -42,6 +43,21 @@ public class SectionManager {
 	}
 
 	/**
+	 * Make a player leave a section and enter another, entering and leaving all intermediate ones. Internal use only.
+	 *
+	 * @param player     Player to be moved
+	 * @param leftNode   Section left by player
+	 * @param targetNode Section entered by player
+	 * @throws InvalidSectionException         Invalid section name provided
+	 * @throws IllegalSectionLeavingException  A section along the path the player has to walk forbids the player to leave it
+	 * @throws IllegalSectionEnteringException A section along the path the player has to walk forbids the player from entering it
+	 * @throws NoParentSectionException        A section along the path has no parent and is not the root node, denoting a fault in the tree
+	 */
+	protected void enter(Player player, Section leftNode, Section targetNode) throws IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
 	 * Register a new section instance against the Prodrivers Commons infrastructure
 	 *
 	 * @param section Prodrivers Commons-compatible section to register
@@ -64,8 +80,8 @@ public class SectionManager {
 
 	/**
 	 * Registers a player agaist the Prodrivers Commons infrastructure.
-	 *
-	 * Required before any interaction with ProdriversCommons and dependent plugins.
+	 * <p>
+	 * Required before any interaction with Prodrivers Commons and dependent plugins.
 	 * This action is automatically performed by the default section manager on player login.
 	 *
 	 * @param player Player to register
@@ -76,8 +92,8 @@ public class SectionManager {
 
 	/**
 	 * Unregisters a player from the Prodrivers Commons infrastructure.
-	 *
-	 * Once a player is unregistered, no further interaction with ProdriversCommons and dependent plugins should happen.
+	 * <p>
+	 * Once a player is unregistered, no further interaction with Prodrivers Commons and dependent plugins should happen.
 	 * This action is automatically performed by the default section manager on player logout.
 	 *
 	 * @param player Player to unregister
@@ -116,11 +132,84 @@ public class SectionManager {
 	}
 
 	/**
-	 * Get a section's current players. This is provided by the plugin and should not be implemented.
+	 * Get a section's current players.
 	 *
+	 * @param section Section to consider
 	 * @return Section's players or null
 	 */
 	public Collection<Player> getPlayers(Section section) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Check if a player can go from a section by another, by calling in order every section's join and leave check that
+	 * is on the path the player needs to take (except for the left node, where only the left check is performed, and
+	 * the target node, where only the join check is performed).
+	 *
+	 * @param player     Player to be moved
+	 * @param leftNode   Section left by player
+	 * @param targetNode Section entered by player
+	 * @param fromParty  Indicate that the process was started by the party owner, passed to sections as some checks
+	 *                   may differ depending on the fact that a party player started it or the party owner started it
+	 * @throws InvalidSectionException  End node is a transitive node, which is invalid
+	 * @throws NoParentSectionException A section along the path has no parent and is not the root node, denoting a fault in the tree
+	 */
+	protected boolean canPlayerWalkAlongSectionPath(Player player, Section leftNode, Section targetNode, boolean fromParty) throws InvalidSectionException, NoParentSectionException {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Go from a section to another section higher in the tree. The last node is either the provided target node or
+	 * the top-most node of the left node's branch.
+	 * At the end, the player is registered in the final processed node.
+	 *
+	 * @param player       The player that should walk back nodes.
+	 * @param start        The node that we start from.
+	 * @param target       The node, higher in the tree, that we want the player to go to at the end of this function.
+	 * @param visitedNodes List that should receive all visited nodes
+	 * @param fromParty    Indicate that the process was started by the party owner
+	 * @return @{code true} success of walking back. @{code false} if any section did not authorized the player leaving or entering it.
+	 * @throws NoParentSectionException A section along the path has no parent and is not the root node, denoting a fault in the tree
+	 */
+	protected boolean walkBackward(Player player, Section start, Section target, List<Section> visitedNodes, boolean fromParty) throws NoParentSectionException {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Go from a section to another section lower in the tree. The last node is either the provided target node or
+	 * the bottom-most node of the left node's branch.
+	 * At the end, the player is registered in the final processed node.
+	 *
+	 * @param player       The player that should walk back nodes.
+	 * @param start        The node that we start from.
+	 * @param target       The node, lower in the tree, that we want the player to go to at the end of this function.
+	 * @param visitedNodes List that should receive all visited nodes
+	 * @param fromParty    Indicate that the process was started by the party owner
+	 * @return @{code true} success of walking back. @{code false} if any section did not authorized the player leaving or entering it.
+	 * @throws InvalidSectionException End node is a transitive node, which is invalid
+	 */
+	protected boolean walkForward(Player player, Section start, Section target, List<Section> visitedNodes, boolean fromParty) throws InvalidSectionException {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Find the last common node in the path between two nodes.
+	 *
+	 * @param left   First node to consider
+	 * @param target Second node to consider
+	 * @return Last common node on the paths of both nodes.
+	 */
+	protected Section findCommonNode(Section left, Section target) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Build the section tree.
+	 * Fills, for each node, its parent and children. Creates intermediary nodes whenever needed.
+	 * <p>
+	 * This method is automatically called by Prodrivers Commons on server activation.
+	 */
+	public void buildSectionTree() {
 		throw new UnsupportedOperationException();
 	}
 }

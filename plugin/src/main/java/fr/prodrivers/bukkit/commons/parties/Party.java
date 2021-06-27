@@ -4,12 +4,14 @@ import com.google.inject.assistedinject.Assisted;
 import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.plugin.EMessages;
-import fr.prodrivers.bukkit.commons.plugin.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 public class Party {
 	private UUID owner;

@@ -12,7 +12,6 @@ import javax.inject.Singleton;
  * Intended to be used with a dependency injector. It is already made available in
  * {@link ProdriversCommonsGuiceModule ProdriversCommons' public module}, no further action is
  * needed apart from adding the module to your own dependency injector instance.
- * </p>
  */
 @Singleton
 public class DataSourceConfigProvider implements Provider<DataSourceConfig> {

@@ -5,7 +5,6 @@ import fr.prodrivers.bukkit.commons.exceptions.*;
 import fr.prodrivers.bukkit.commons.parties.Party;
 import fr.prodrivers.bukkit.commons.parties.PartyManager;
 import fr.prodrivers.bukkit.commons.plugin.EMessages;
-import fr.prodrivers.bukkit.commons.plugin.Main;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,11 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.logging.Level;
 
-/**
- * Prodrivers Commons Section Manager
- */
 @Singleton
 public class SectionManager {
 	public final static String ROOT_NODE_NAME = "";
@@ -63,7 +58,7 @@ public class SectionManager {
 		enter(player, currentSection, parentSection);
 	}
 
-	public void enter(Player player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoRegisteredParentSectionException {
+	public void enter(Player player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
 		// Get the target section
 		Section targetNode = getSection(sectionName);
 
@@ -76,11 +71,11 @@ public class SectionManager {
 		enter(player, targetNode);
 	}
 
-	public void enter(Player player, Section targetNode) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoRegisteredParentSectionException {
+	public void enter(Player player, Section targetNode) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
 		enter(player, targetNode, false);
 	}
 
-	public void enter(Player player, Section targetNode, boolean fromParty) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoRegisteredParentSectionException {
+	public void enter(Player player, Section targetNode, boolean fromParty) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
 		// Check that all party players can enter, if necessary
 		// If the section does not handle party by itself and the player is not sent by the party owner
 		if(!fromParty && !targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
@@ -127,7 +122,7 @@ public class SectionManager {
 		enter(player, currentSection, targetNode);
 	}
 
-	private void enter(Player player, Section leftNode, Section targetNode) throws IllegalSectionLeavingException, IllegalSectionEnteringException, NoRegisteredParentSectionException {
+	protected void enter(Player player, Section leftNode, Section targetNode) throws IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
 		// If the player is already in an enter process
 		if(inEnter.contains(player.getUniqueId())) {
 			// Stop
@@ -222,7 +217,59 @@ public class SectionManager {
 		}
 	}
 
-	private boolean canPlayerWalkAlongSectionPath(Player player, Section leftNode, Section targetNode, boolean fromParty) {
+	public void register(Section section) throws NullPointerException {
+		register(section, false);
+	}
+
+	public void register(Section section, boolean silent) throws NullPointerException {
+		if(section == null)
+			throw new NullPointerException();
+
+		// If section is not already registered
+		if(!sections.containsKey(section.getFullName())) {
+			// Register section
+			sections.put(section.getFullName(), section);
+
+			if(!silent) {
+				Log.info("SectionManager registered section " + section + ".");
+			}
+		} else {
+			Log.warning("Section " + section + " tried to be registered for a second time.");
+		}
+	}
+
+	public void register(Player player) {
+		enter(player, SectionManager.ROOT_NODE_NAME);
+	}
+
+	public void unregister(OfflinePlayer player) {
+		Section section = getCurrentSection(player);
+
+		playersCurrentSection.remove(player.getUniqueId());
+		playersSectionPath.remove(player.getUniqueId());
+
+		if(section != null) {
+			if(section.preLeave(player, true)) {
+				section.leave(player);
+			} else {
+				Log.severe("Could not make player " + player.getName() + " leave section " + section);
+			}
+		}
+	}
+
+	public Section getCurrentSection(OfflinePlayer player) {
+		return playersCurrentSection.get(player.getUniqueId());
+	}
+
+	public Section getSection(String name) {
+		return sections.get(name);
+	}
+
+	public Section getRootSection() {
+		return getSection(ROOT_NODE_NAME);
+	}
+
+	protected boolean canPlayerWalkAlongSectionPath(Player player, Section leftNode, Section targetNode, boolean fromParty) throws InvalidSectionException, NoParentSectionException {
 		// If there is already a temporary path stored
 		if(playersSectionPath.containsKey(player.getUniqueId())) {
 			// Do not make the computation again
@@ -273,19 +320,7 @@ public class SectionManager {
 		return true;
 	}
 
-	/**
-	 * Go from a section to another section higher in the tree. The last node is either the provided target node or
-	 * the top-most node of the left node's branch.
-	 * At the end, the player is registered in the final processed node.
-	 *
-	 * @param player       The player that should walk back nodes.
-	 * @param start        The node that we start from.
-	 * @param target       The node, higher in the tree, that we want the player to go to at the end of this function.
-	 * @param visitedNodes List that should receive all visited nodes
-	 * @param fromParty    Indicate that the process was started by the party owner
-	 * @return @{code true} success of walking back. @{code false} if any section did not authorized the player leaving or entering it.
-	 */
-	private boolean walkBackward(Player player, Section start, Section target, List<Section> visitedNodes, boolean fromParty) {
+	protected boolean walkBackward(Player player, Section start, Section target, List<Section> visitedNodes, boolean fromParty) throws NoParentSectionException {
 		// Perform a leave check on the start node, as we consider the starting node of this function to be the node the
 		// player is in
 		if(!start.preLeave(player, fromParty)) {
@@ -324,26 +359,14 @@ public class SectionManager {
 			// Only the root node can have no parent, but we should not encounter the root node at this point.
 			if(node.getParentSection() == null) {
 				// If not, stop everything as the requested path is invalid
-				throw new InvalidSectionException("Section " + node + " has no parent, cannot walk back from it when going from " + start + " to " + target);
+				throw new NoParentSectionException("Section " + node + " has no parent, cannot walk back from it when going from " + start + " to " + target);
 			}
 		}
 
 		return true;
 	}
 
-	/**
-	 * Go from a section to another section lower in the tree. The last node is either the provided target node or
-	 * the bottom-most node of the left node's branch.
-	 * At the end, the player is registered in the final processed node.
-	 *
-	 * @param player       The player that should walk back nodes.
-	 * @param start        The node that we start from.
-	 * @param target       The node, lower in the tree, that we want the player to go to at the end of this function.
-	 * @param visitedNodes List that should receive all visited nodes
-	 * @param fromParty    Indicate that the process was started by the party owner
-	 * @return @{code true} success of walking back. @{code false} if any section did not authorized the player leaving or entering it.
-	 */
-	private boolean walkForward(Player player, Section start, Section target, List<Section> visitedNodes, boolean fromParty) {
+	protected boolean walkForward(Player player, Section start, Section target, List<Section> visitedNodes, boolean fromParty) throws InvalidSectionException {
 		// Get the sections to walk to
 		LinkedList<Section> sectionsToWalk = new LinkedList<>();
 		// Go up from the target node until we hit the start node, remembering all nodes we passed through
@@ -390,14 +413,7 @@ public class SectionManager {
 		return true;
 	}
 
-	/**
-	 * Find the last common node in the path between two nodes.
-	 *
-	 * @param left First node to consider
-	 * @param target Second node to consider
-	 * @return Last common node on the paths of both nodes.
-	 */
-	private Section findCommonNode(Section left, Section target) {
+	protected Section findCommonNode(Section left, Section target) {
 		// Get tree branches for left and target sections
 		List<String> leftNodes = left.getSplitFullName();
 		List<String> targetNodes = target.getSplitFullName();
@@ -458,7 +474,7 @@ public class SectionManager {
 
 	/**
 	 * Build the section tree.
-	 *
+	 * <p>
 	 * Fills, for each node, its parent and children. Creates intermediary nodes whenever needed.
 	 */
 	public void buildSectionTree() {
@@ -518,57 +534,5 @@ public class SectionManager {
 						.forEach(currentSection::addChildren);
 			}
 		});
-	}
-
-	public void register(Section section) throws NullPointerException {
-		register(section, false);
-	}
-
-	public void register(Section section, boolean silent) throws NullPointerException {
-		if(section == null)
-			throw new NullPointerException();
-
-		// If section is not already registered
-		if(!sections.containsKey(section.getFullName())) {
-			// Register section
-			sections.put(section.getFullName(), section);
-
-			if(!silent) {
-				Log.info("SectionManager registered section " + section + ".");
-			}
-		} else {
-			Log.warning("Section " + section + " tried to be registered for a second time.");
-		}
-	}
-
-	public void register(Player player) {
-		enter(player, SectionManager.ROOT_NODE_NAME);
-	}
-
-	public void unregister(OfflinePlayer player) {
-		Section section = getCurrentSection(player);
-
-		playersCurrentSection.remove(player.getUniqueId());
-		playersSectionPath.remove(player.getUniqueId());
-
-		if(section != null) {
-			if(section.preLeave(player, true)) {
-				section.leave(player);
-			} else {
-				Log.severe("Could not make player " + player.getName() + " leave section " + section);
-			}
-		}
-	}
-
-	public Section getCurrentSection(OfflinePlayer player) {
-		return playersCurrentSection.get(player.getUniqueId());
-	}
-
-	public Section getSection(String name) {
-		return sections.get(name);
-	}
-
-	public Section getRootSection() {
-		return getSection(ROOT_NODE_NAME);
 	}
 }

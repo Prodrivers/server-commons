@@ -3,7 +3,6 @@ package fr.prodrivers.bukkit.commons.commands;
 import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.plugin.EMessages;
-import fr.prodrivers.bukkit.commons.plugin.Main;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Inject;
-import java.util.logging.Level;
 
 public class HubCommands implements CommandExecutor {
 	private static final String label = "hub";

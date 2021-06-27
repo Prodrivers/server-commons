@@ -2,10 +2,6 @@ package fr.prodrivers.bukkit.commons.storage;
 
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.plugin.EConfiguration;
-import io.ebean.Database;
-import io.ebean.DatabaseFactory;
-import io.ebean.config.DatabaseConfig;
-import io.ebean.datasource.DataSourceConfig;
 
 import javax.inject.Inject;
 import javax.inject.Provider;

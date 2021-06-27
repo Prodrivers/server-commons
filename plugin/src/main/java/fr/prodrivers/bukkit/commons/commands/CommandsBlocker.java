@@ -1,7 +1,6 @@
 package fr.prodrivers.bukkit.commons.commands;
 
 import fr.prodrivers.bukkit.commons.Log;
-import fr.prodrivers.bukkit.commons.plugin.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

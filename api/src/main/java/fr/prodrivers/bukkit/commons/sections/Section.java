@@ -11,12 +11,12 @@ import java.util.Set;
 
 /**
  * Define the base Prodrivers Commons Section implementation. <i>Sections make plugins play nice together.</i>
- * <br/>
+ * <p>
  * A section is a logical subdivision of a server. A section can be a hub, a mini-game hub, a mini-game instance, or any
  * other needed subdivision. Sections are organized in a tree, with a root (default) section that is its point of entry.
  * Each section has event handlers to react to a player entering or leaving it, doing needed preparation and cleanup
  * work.
- * <br/>
+ * <p>
  * Its main use is to allow different plugins to play together by calling preparation and/or cleanup code when player
  * is moving between different subdivisions of the server without handling it themselves/having special code to handle
  * all cases, such as moving between a hub and a mini-game, or a mini-game to another mini-game. Prodrivers Commons'
@@ -24,15 +24,15 @@ import java.util.Set;
  * For example, it allows a player to move from one plugin's mini-game to another plugin's mini-game, on the same server
  * or across servers, with proper quit and join code called for each of them, without those plugins having to handle
  * themselves.
- * <br/>
+ * <p>
  * It ultimately allows plugins that where not built to handles other plugins on a server or across servers in mind to
  * implement those capabilities without much modifications, or even without any modifications by having another plugin
  * handle the interface for it.
- * <br/>
+ * <p>
  * Every new player enters the section mechanism by entering the root section. Each player, at any point in time, is
  * guaranteed to be part of a single section, as long as it is part of the mechanism.
- * <br/>
- * Sections implementing it shall register themselves using SectionManager.register
+ * <p>
+ * Sections implementing it shall register themselves using {@link SectionManager#register(Section) SectionManager.register}
  */
 public abstract class Section {
 	/**
@@ -118,7 +118,7 @@ public abstract class Section {
 	 * <p>
 	 * The return value should be a guarantee that the player can leave the section.
 	 *
-	 * @param player Player that should leave the section
+	 * @param player    Player that should leave the section
 	 * @param fromParty Indicate that the process was started by the party owner
 	 * @return {@code true} The user is authorized to leave the section
 	 */
@@ -150,7 +150,33 @@ public abstract class Section {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Checks if a player is inside this section.
+	 *
+	 * @param player Player to consider
+	 * @return {@code true} if the player is in this section
+	 */
 	public boolean contains(@NonNull OfflinePlayer player) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Adds a player to this section.
+	 *
+	 * @param player Player to add
+	 * @return {@code true} if the player was added to this section
+	 */
+	protected boolean add(@NonNull OfflinePlayer player) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Removes a player from this section.
+	 *
+	 * @param player Player to remove
+	 * @return {@code true} if the player was removed from this section
+	 */
+	protected boolean remove(@NonNull OfflinePlayer player) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -163,30 +189,48 @@ public abstract class Section {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Check if a section is a child to this section.
+	 *
+	 * @param child Section to consider
+	 * @return {@code true} if the section is a child to this section
+	 */
 	public boolean contains(@NonNull Section child) {
 		throw new UnsupportedOperationException();
 	}
 
-	protected boolean add(@NonNull OfflinePlayer player) {
-		throw new UnsupportedOperationException();
-	}
-
-	protected boolean remove(@NonNull OfflinePlayer player) {
-		throw new UnsupportedOperationException();
-	}
-
+	/**
+	 * Adds a section as a child to this section.
+	 *
+	 * @param section Section to add as a child
+	 */
 	protected void addChildren(@NonNull Section section) {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Removes a section as a child to this section.
+	 *
+	 * @param section Section to remove as a child
+	 */
 	protected void removeChildren(@NonNull Section section) {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Adds a section as a parent to this section.
+	 * A section can only have one parent a a time. Calling this will erase the previous parent.
+	 *
+	 * @param section Section to add as a parent
+	 */
 	protected void addParent(@NonNull Section section) {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Removes the parent from this section.
+	 * Ensure that you add another parent afterwards. Only the root section should have no parent.
+	 */
 	protected void removeParent() {
 		throw new UnsupportedOperationException();
 	}

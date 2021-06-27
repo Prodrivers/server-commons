@@ -1,7 +1,6 @@
 package fr.prodrivers.bukkit.commons.sections;
 
 import fr.prodrivers.bukkit.commons.plugin.EConfiguration;
-import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

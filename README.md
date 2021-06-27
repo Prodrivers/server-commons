@@ -6,9 +6,10 @@ This repository holds the common API that all implementations should follow, wit
 
 This new revision focus on a cleaner, idiomatic design, with heavy usage of dependency injection.
 
-The multiple independent modules that constitute ProdriversCommons are made to have limited side effects for calling code,
-focusing on doing one task but doing it well. Calling code should have limited specific code — as in, having close to
-zero preconditions, checks and exception thrown —  and usage of such code should  be explicitly indicated by ProdriversCommons.
+The multiple independent modules that constitute ProdriversCommons are made to have limited side effects for calling
+code, focusing on doing one task but doing it well. Calling code should have limited specific code — as in, having close
+to zero preconditions, checks and exception thrown — and usage of such code should be explicitly indicated by
+ProdriversCommons.
 
 ## Usage
 
@@ -35,4 +36,5 @@ Documentation is available on [Prodrivers Sources](http://commons.sources.prodri
 
 ## License
 
-ProdriversCommons API and its reference implementation is distributed under the LGPL version 3 license. A copy of the license is provided in LICENSE.md.
+ProdriversCommons API and its reference implementation is distributed under the LGPL version 3 license. A copy of the
+license is provided in LICENSE.md.

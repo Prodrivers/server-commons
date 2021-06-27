@@ -3,7 +3,7 @@ package fr.prodrivers.bukkit.commons.configuration;
 /**
  * Field-based configuration framework for Prodrivers plugins.
  * <p>
- * AbstractAttributeConfiguration lays the framework of configuration classes that uses fields to represents options,
+ * AbstractAttributeConfiguration lays the framework of configuration classes that uses fields to represens options,
  * loading and saving theses fields using Configuration Actions.
  * Provide your own Configuration Actions, override init()/load()/save()/saveDefaults()/reload() as necessary to create
  * a fully-managed field-based configuration class.

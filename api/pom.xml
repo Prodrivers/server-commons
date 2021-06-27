@@ -1,222 +1,250 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<artifactId>prodrivers-commons-api</artifactId>
-	<name>Prodrivers Commons API</name>
-	<description>API for common utilities for Prodrivers plugins</description>
-	<version>2.0.0-SNAPSHOT</version>
-	<url>https://prodrivers.fr/</url>
+    <artifactId>prodrivers-commons-api</artifactId>
+    <name>Prodrivers Commons API</name>
+    <description>A common set of tools for Bukkit plugins, designed to fulfill all Prodrivers plugin needs. This project contains the API.</description>
+    <version>2.0.0-SNAPSHOT</version>
+    <url>https://prodrivers.fr/</url>
 
-	<packaging>jar</packaging>
+    <packaging>jar</packaging>
 
-	<parent>
-		<groupId>fr.prodrivers.bukkit</groupId>
-		<artifactId>prodrivers-commons</artifactId>
-		<version>2.0.0-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>fr.prodrivers.bukkit</groupId>
+        <artifactId>prodrivers-commons</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
 
-	<repositories>
-		<repository>
-			<id>spigot-repo</id>
-			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-		</repository>
-	</repositories>
+    <repositories>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
 
-	<dependencies>
-		<!-- Guice -->
-		<dependency>
-			<groupId>com.google.inject</groupId>
-			<artifactId>guice</artifactId>
-			<version>5.0.1</version>
-		</dependency>
-		<!-- Checker Framework -->
-		<dependency>
-			<groupId>org.checkerframework</groupId>
-			<artifactId>checker-qual</artifactId>
-			<version>3.11.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.checkerframework</groupId>
-			<artifactId>checker</artifactId>
-			<version>3.11.0</version>
-		</dependency>
-		<!--Spigot API-->
-		<dependency>
-			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot-api</artifactId>
-			<version>1.14.4-R0.1-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-		<!--Bukkit API-->
-		<dependency>
-			<groupId>org.bukkit</groupId>
-			<artifactId>bukkit</artifactId>
-			<version>1.14.4-R0.1-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-		<!-- MySQL Connector/J -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.20</version>
-		</dependency>
-		<!-- MongoDB Driver -->
-		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongodb-driver</artifactId>
-			<version>3.12.5</version>
-		</dependency>
-		<!-- JavaX Validation Annotations -->
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
-		</dependency>
-		<!-- EBeans -->
-		<dependency>
-			<groupId>io.ebean</groupId>
-			<artifactId>ebean</artifactId>
-			<version>12.9.2</version>
-		</dependency>
-		<dependency>
-			<groupId>io.ebean</groupId>
-			<artifactId>ebean-querybean</artifactId>
-			<version>12.9.2</version>
-		</dependency>
-		<dependency>
-			<groupId>io.ebean</groupId>
-			<artifactId>querybean-generator</artifactId>
-			<version>12.9.2</version>
-			<scope>provided</scope>
-		</dependency>
-		<!-- SLF4J (for EBean) -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.30</version>
-		</dependency>
-		<!-- Apache Commons Collections -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
-			<version>4.4</version>
-		</dependency>
-		<!-- Jackson -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.11.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.11.0</version>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <!-- Guice -->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>5.0.1</version>
+        </dependency>
+        <!-- Checker Framework -->
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-qual</artifactId>
+            <version>3.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker</artifactId>
+            <version>3.11.0</version>
+        </dependency>
+        <!--Spigot API-->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.14.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--Bukkit API-->
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.14.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- MySQL Connector/J -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.20</version>
+        </dependency>
+        <!-- MongoDB Driver -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver</artifactId>
+            <version>3.12.5</version>
+        </dependency>
+        <!-- JavaX Validation Annotations -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+        </dependency>
+        <!-- EBeans -->
+        <dependency>
+            <groupId>io.ebean</groupId>
+            <artifactId>ebean</artifactId>
+            <version>12.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ebean</groupId>
+            <artifactId>ebean-querybean</artifactId>
+            <version>12.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ebean</groupId>
+            <artifactId>querybean-generator</artifactId>
+            <version>12.9.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- SLF4J (for EBean) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+        <!-- Apache Commons Collections -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+        <!-- Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<finalName>${project.artifactId}</finalName>
-		<defaultGoal>clean compile resources:resources package</defaultGoal>
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <defaultGoal>clean compile resources:resources package</defaultGoal>
 
-		<resources>
-			<resource>
-				<targetPath>.</targetPath>
-				<filtering>true</filtering>
-				<directory>${parent.basedir}</directory>
-				<includes>
-					<include>README.md</include>
-					<include>LICENSE.md</include>
-				</includes>
-			</resource>
-		</resources>
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>${parent.basedir}</directory>
+                <includes>
+                    <include>README.md</include>
+                    <include>LICENSE.md</include>
+                </includes>
+            </resource>
+        </resources>
 
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.0</version>
-				<configuration>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.source}</target>
-				</configuration>
-			</plugin>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.source}</target>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>ProdriversCommons/libs/</classpathPrefix>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>ProdriversCommons/libs/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.2.0</version>
-				<configuration>
-					<source>${maven.compiler.source}</source>
-					<show>public</show>
-					<nohelp>true</nohelp>
-					<header>ProdriversCommons for Bukkit API, ${project.version}</header>
-					<footer>ProdriversCommons for Bukkit API, ${project.version}</footer>
-					<doctitle>ProdriversCommons for Bukkit API, ${project.version}</doctitle>
-					<bottom><![CDATA[
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <outputDirectory>${project.build.directory}/api/${project.version}</outputDirectory>
+                    <show>public</show>
+                    <nohelp>false</nohelp>
+                    <header>ProdriversCommons for Bukkit API, ${project.version}</header>
+                    <doctitle>ProdriversCommons for Bukkit API, ${project.version}</doctitle>
+                    <bottom><![CDATA[
 					</small></p>
-					<div class="bottomNav" style="margin-top: 0;height: auto;">
-						<div>
-							<ul class="navList" style="float: none;">
-								<li style="float: none;display: inline-block;">
-									<a href="https://github.com/Prodrivers/bukkit-commons">Repository</a>
-								</li>
-								<li style="float: none;display: inline-block;">
-									<a href="https://projects.prodrivers.fr/">Issues</a>
-								</li>
-							</ul>
-						</div>
-						<div style="margin: 1em 5px;">
-							© <a href="https://prodrivers.fr/">Prodrivers</a>
-						</div>
-					</div>
+					<div class="top-nav">
+                        <ul class="nav-list" title="Bottom navigation">
+                            <li><a href="https://github.com/Prodrivers/bukkit-commons">Repository</a></li>
+                            <li><a href="https://github.com/Prodrivers/commons-bukkit/issues">Issues</a></li>
+                        </ul>
+                        <ul class="nav-list" title="Bottom navigation" style="float:right">
+                            <li>&copy; <a href="https://prodrivers.fr/">Prodrivers</a></li>
+                        </ul>
+                    </div>
 					<p><small>
 					]]></bottom>
-				</configuration>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-scm-publish-plugin</artifactId>
-				<version>1.1</version>
-				<configuration>
-					<checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
-					<checkinComment>Publishing documentation for ${project.artifactId}:${project.version}</checkinComment>
-					<content>${project.reporting.outputDirectory}/apidocs</content>
-					<skipDeletedFiles>true</skipDeletedFiles>
-					<pubScmUrl>scm:git:git@github.com:Prodrivers/bukkit-commons.git</pubScmUrl>
-					<scmBranch>gh-pages</scmBranch>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+                </configuration>
+            </plugin>
 
-	<distributionManagement>
-		<repository>
-			<id>prodrivers-repo</id>
-			<name>prodrivers-commons-releases</name>
-			<url>https://gitlab.com/api/v4/projects/12871060/packages/maven</url>
-		</repository>
-		<snapshotRepository>
-			<id>prodrivers-repo</id>
-			<name>prodrivers-commons-snapshots</name>
-			<url>https://gitlab.com/api/v4/projects/12871060/packages/maven</url>
-		</snapshotRepository>
-	</distributionManagement>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.9.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctor-maven-plugin</artifactId>
+                        <version>2.1.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>io.github.devacfr.maven.skins</groupId>
+                        <artifactId>reflow-velocity-tools</artifactId>
+                        <version>1.5.0</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <relativizeDecorationLinks>true</relativizeDecorationLinks>
+                    <generateReports>true</generateReports>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <version>1.1</version>
+                <configuration>
+                    <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
+                    <checkinComment>Publishing documentation for ${project.artifactId}:${project.version}
+                    </checkinComment>
+                    <content>${project.reporting.outputDirectory}/apidocs</content>
+                    <skipDeletedFiles>true</skipDeletedFiles>
+                    <pubScmUrl>scm:git:git@github.com:Prodrivers/bukkit-commons.git</pubScmUrl>
+                    <scmBranch>gh-pages</scmBranch>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.1.2</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>summary</report>
+                            <report>dependency-info</report>
+                            <report>distribution-management</report>
+                            <report>dependency-management</report>
+                            <report>dependencies</report>
+                            <report>issue-management</report>
+                            <report>licenses</report>
+                            <report>scm</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
