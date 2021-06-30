@@ -16,13 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin implements Listener {
@@ -55,51 +49,15 @@ public class Main extends JavaPlugin implements Listener {
 		logger.info("" + plugindescription.getName() + " has been disabled!");
 	}
 
-	private void registerLibraries() {
-		try {
-			logger.info("Loading libraries...");
-			URLClassLoader urlClassLoader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
-			Class urlClass = URLClassLoader.class;
-			Method method = urlClass.getDeclaredMethod("addURL", URL.class);
-			method.setAccessible(true);
-
-			String pluginFolderPath = getDataFolder().getAbsolutePath();
-			File libFolder = new File(pluginFolderPath + File.separator + "libs");
-			File[] libFiles = libFolder.listFiles((file, fileName) -> fileName.endsWith(".jar"));
-			int count = 0;
-			if(libFiles != null) {
-				for(File libFile : libFiles) {
-					try {
-						method.invoke(urlClassLoader, libFile.toURI().toURL());
-						logger.info("Loading library " + libFile.getName());
-						count++;
-					} catch(IllegalAccessException | InvocationTargetException | MalformedURLException e) {
-						logger.severe("Error while loading library " + libFile.getName() + ": " + e.getLocalizedMessage());
-					}
-				}
-			}
-			logger.info("Loaded " + count + " libraries.");
-		} catch(NoSuchMethodException e) {
-			logger.severe("Error while loading libraries (reflection error): " + e.getLocalizedMessage());
-			throw new InstantiationError("Library loading failed");
-		}
-	}
-
 	@Override
 	public void onEnable() {
 		logger = getLogger();
 		Log.init(logger);
 
 		logger.info("Java version is " + System.getProperty("java.version") + ".");
-		if(!System.getProperty("java.version").startsWith("1.8")) {
-			logger.severe("ProdriversCommons currently only supports Java 1.8.");
-			System.exit(10);
-		}
-
-		registerLibraries();
 
 		injector = Guice.createInjector(
-				new PluginModule(this),
+				new PluginModule(this, getClassLoader()),
 				new CommandsModule(),
 				new StorageModule(),
 				new PartyModule()

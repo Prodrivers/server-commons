@@ -432,7 +432,7 @@ public class SectionManager {
 		return getSection(commonNodeName.toString());
 	}
 
-	private class KeyTreeNode {
+	private static class KeyTreeNode {
 		public final String key;
 		public final String fullKey;
 		public String parentFullKey;

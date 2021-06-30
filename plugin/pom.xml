@@ -5,9 +5,7 @@
 
     <artifactId>prodrivers-commons-plugin</artifactId>
     <name>Prodrivers Commons Plugin</name>
-    <description>A common set of tools for Bukkit plugins, designed to fulfill all Prodrivers plugin needs. This project contains the implementation.</description>
-    <version>2.0.0-SNAPSHOT</version>
-    <url>https://prodrivers.fr/</url>
+    <description>A common set of tools for Bukkit plugins, designed to fulfill all Prodrivers plugin needs. This project contains the reference implementation.</description>
 
     <packaging>jar</packaging>
 
@@ -20,9 +18,6 @@
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
         <ebean-maven-plugin.args>debug=0</ebean-maven-plugin.args>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <maven.compiler.release>8</maven.compiler.release>
     </properties>
 
     <repositories>
@@ -37,6 +32,13 @@
     </repositories>
 
     <dependencies>
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>30.1-jre</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- Guice -->
         <dependency>
             <groupId>com.google.inject</groupId>
@@ -53,11 +55,13 @@
             <groupId>org.checkerframework</groupId>
             <artifactId>checker-qual</artifactId>
             <version>3.11.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker</artifactId>
             <version>3.11.0</version>
+            <scope>provided</scope>
         </dependency>
         <!--Spigot API-->
         <dependency>
@@ -79,23 +83,19 @@
             <artifactId>prodrivers-commons-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!-- MySQL Connector/J -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.20</version>
-        </dependency>
-        <!-- MongoDB Driver -->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver</artifactId>
-            <version>3.12.5</version>
-        </dependency>
         <!-- JavaX Validation Annotations -->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>1.0.0.GA</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+            <scope>provided</scope>
         </dependency>
         <!-- EBeans -->
         <dependency>
@@ -114,23 +114,17 @@
             <version>12.9.2</version>
             <scope>provided</scope>
         </dependency>
-        <!-- SLF4J (for EBean) -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.30</version>
-        </dependency>
         <!-- Apache Commons Collections -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
             <version>4.4</version>
         </dependency>
-        <!-- HikariCP -->
+        <!-- Apache Commons IO -->
         <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>3.4.5</version>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.10.0</version>
         </dependency>
         <!-- Jackson -->
         <dependency>

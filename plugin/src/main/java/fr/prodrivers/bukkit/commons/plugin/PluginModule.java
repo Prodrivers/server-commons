@@ -8,10 +8,12 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class PluginModule extends AbstractModule {
+	private final ClassLoader classLoader;
 	private final JavaPlugin plugin;
 
-	public PluginModule(JavaPlugin plugin) {
+	public PluginModule(JavaPlugin plugin, ClassLoader classLoader) {
 		this.plugin = plugin;
+		this.classLoader = classLoader;
 	}
 
 	@Override
@@ -21,5 +23,6 @@ public class PluginModule extends AbstractModule {
 		bind(Chat.class).toInstance(new Chat(this.plugin.getDescription().getName()));
 		bind(Configuration.class).to(EConfiguration.class);
 		bind(Messages.class).to(EMessages.class);
+		bind(DependenciesClassLoaderProvider.class).toInstance(new DependenciesClassLoaderProvider(this.classLoader));
 	}
 }

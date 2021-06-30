@@ -48,38 +48,22 @@ public class PartyCommands implements CommandExecutor {
 				if(sender.hasPermission(permission)) {
 					if(args.length > 0) {
 						switch(args[0]) {
-							case "invite":
-								partyInvite((Player) sender, args);
-								break;
-							case "accept":
-								partyAccept((Player) sender, args);
-								break;
-							case "kick":
-								partyKick((Player) sender, args);
-								break;
-							case "list":
-								partyList((Player) sender);
-								break;
-							case "disband":
-								partyDisband((Player) sender);
-								break;
-							case "leave":
-								partyLeave((Player) sender);
-								break;
-							case "owner":
-								partySetOwner((Player) sender, args);
-								break;
-							case "chat":
-								partyChat((Player) sender, args);
-								break;
-							default:
+							case "invite" -> partyInvite((Player) sender, args);
+							case "accept" -> partyAccept((Player) sender, args);
+							case "kick" -> partyKick((Player) sender, args);
+							case "list" -> partyList((Player) sender);
+							case "disband" -> partyDisband((Player) sender);
+							case "leave" -> partyLeave((Player) sender);
+							case "owner" -> partySetOwner((Player) sender, args);
+							case "chat" -> partyChat((Player) sender, args);
+							default -> {
 								Player invitedPlayer = Bukkit.getPlayer(args[0]);
 								if(invitedPlayer == null) {
 									sendPartyHelp(sender);
 								} else {
 									partyInvite((Player) sender, new String[]{"invite", args[0]});
 								}
-								break;
+							}
 						}
 					} else {
 						sendPartyHelp(sender);
@@ -303,7 +287,7 @@ public class PartyCommands implements CommandExecutor {
 			return;
 		}
 
-		LinkedList<String> msgList = new LinkedList<String>(Arrays.asList(args));
+		LinkedList<String> msgList = new LinkedList<>(Arrays.asList(args));
 		// Remove two first elements from arguments
 		if(msgList.size() > 1 && removeFirstArg) {
 			msgList.removeFirst();

@@ -2,6 +2,7 @@ package fr.prodrivers.bukkit.commons.di.guice;
 
 import com.google.inject.AbstractModule;
 import fr.prodrivers.bukkit.commons.parties.PartyManager;
+import fr.prodrivers.bukkit.commons.plugin.DependenciesClassLoaderProvider;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.storage.DataSourceConfigProvider;
 import fr.prodrivers.bukkit.commons.storage.EbeanProvider;
@@ -23,6 +24,9 @@ public class ProdriversCommonsGuiceModule extends AbstractModule {
 	@Inject
 	private DataSourceConfigProvider dataSourceConfigProvider;
 
+	@Inject
+	private DependenciesClassLoaderProvider dependenciesClassLoaderProvider;
+
 	@Override
 	protected void configure() {
 		bind(PartyManager.class).toInstance(partyManager);
@@ -30,5 +34,6 @@ public class ProdriversCommonsGuiceModule extends AbstractModule {
 		bind(Connection.class).toProvider(sqlProvider);
 		bind(Database.class).toProvider(EbeanProvider.class);
 		bind(DataSourceConfig.class).toProvider(dataSourceConfigProvider);
+		bind(DependenciesClassLoaderProvider.class).toInstance(dependenciesClassLoaderProvider);
 	}
 }

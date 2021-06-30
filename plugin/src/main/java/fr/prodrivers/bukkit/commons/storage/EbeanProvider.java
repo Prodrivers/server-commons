@@ -1,6 +1,7 @@
 package fr.prodrivers.bukkit.commons.storage;
 
 import fr.prodrivers.bukkit.commons.Log;
+import fr.prodrivers.bukkit.commons.plugin.DependenciesClassLoaderProvider;
 import io.ebean.Database;
 import io.ebean.DatabaseFactory;
 import io.ebean.config.DatabaseConfig;
@@ -17,14 +18,16 @@ public class EbeanProvider implements Provider<Database> {
 
 	private final DatabaseConfig dbConfig;
 	private final DataSourceConfig dataSourceConfig;
+	private final DependenciesClassLoaderProvider dependenciesClassLoaderProvider;
 
 	@Inject
-	public EbeanProvider(DataSourceConfig dataSourceConfig, DatabaseConfig dbConfig) {
+	public EbeanProvider(DataSourceConfig dataSourceConfig, DatabaseConfig dbConfig, DependenciesClassLoaderProvider dependenciesClassLoaderProvider) {
 		Log.info("DbConfig is: " + dbConfig.getClass().getCanonicalName());
 		Log.info("DbConfig has classes: " + dbConfig.getClasses());
 		this.dbConfig = dbConfig;
 		Log.info("DataSourceConfig is: " + dataSourceConfig.getClass().getCanonicalName());
 		this.dataSourceConfig = dataSourceConfig;
+		this.dependenciesClassLoaderProvider = dependenciesClassLoaderProvider;
 	}
 
 	@Override
@@ -33,7 +36,7 @@ public class EbeanProvider implements Provider<Database> {
 		dbConfig.setDataSourceConfig(dataSourceConfig);
 		dbConfig.setRegister(false);
 
-		return DatabaseFactory.create(dbConfig);
+		return DatabaseFactory.createWithContextClassLoader(dbConfig, dependenciesClassLoaderProvider.get());
 	}
 
 	private static String generateName() {
