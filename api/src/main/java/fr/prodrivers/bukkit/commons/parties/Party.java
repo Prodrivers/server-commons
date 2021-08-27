@@ -1,6 +1,7 @@
 package fr.prodrivers.bukkit.commons.parties;
 
 import fr.prodrivers.bukkit.commons.Chat;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,17 @@ public class Party {
 	}
 
 	/**
-	 * Send a message to all party players
+	 * Send a message to a single player
+	 *
+	 * @param player Receiving player
+	 * @param message message to send
+	 */
+	public void chat(Player player, String message) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Send a message to all party players using a specific chat module
 	 *
 	 * @param chat Chat plugin to use
 	 * @param msg  Message to send
@@ -104,7 +115,7 @@ public class Party {
 	}
 
 	/**
-	 * Send a message to all party players, except some defined ones
+	 * Send a message to all party players, except some defined ones, using a specific chat module
 	 *
 	 * @param chat     Chat plugin to use
 	 * @param msg      Message to send

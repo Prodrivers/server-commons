@@ -108,7 +108,7 @@ public class SectionManager {
 	 * @param player Player to consider
 	 * @return Player's section instance if possible or null
 	 */
-	public Section getCurrentSection(Player player) {
+	public Section getCurrentSection(OfflinePlayer player) {
 		throw new UnsupportedOperationException();
 	}
 
