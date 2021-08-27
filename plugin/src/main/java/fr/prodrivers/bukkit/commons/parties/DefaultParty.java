@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class Party {
+public class DefaultParty extends Party {
 	private UUID owner;
 	private final ArrayList<UUID> players = new ArrayList<>();
 
@@ -22,7 +22,7 @@ public class Party {
 	private final PartyManager partyManager;
 
 	@Inject
-	Party(final PartyManager partyManager, final EMessages messages, final Chat chat, @Assisted final UUID ownerUniqueId) {
+	DefaultParty(final PartyManager partyManager, final EMessages messages, final Chat chat, @Assisted final UUID ownerUniqueId) {
 		this.owner = ownerUniqueId;
 		this.players.add(this.owner);
 
@@ -141,26 +141,6 @@ public class Party {
 				final Player partyMemberPlayer = Bukkit.getPlayer(partyMember);
 				if(partyMemberPlayer != null) {
 					partyMemberPlayer.sendMessage(message);
-				}
-			}
-		}
-	}
-
-	public void broadcast(Chat chat, final String msg) {
-		for(final UUID partyMember : this.getPlayers()) {
-			final Player partyMemberPlayer = Bukkit.getPlayer(partyMember);
-			if(partyMemberPlayer != null) {
-				chat.send(partyMemberPlayer, msg);
-			}
-		}
-	}
-
-	public void broadcast(Chat chat, final String msg, final List<UUID> excluded) {
-		for(final UUID partyMember : this.getPlayers()) {
-			if(!excluded.contains(partyMember)) {
-				final Player partyMemberPlayer = Bukkit.getPlayer(partyMember);
-				if(partyMemberPlayer != null) {
-					chat.send(partyMemberPlayer, msg);
 				}
 			}
 		}

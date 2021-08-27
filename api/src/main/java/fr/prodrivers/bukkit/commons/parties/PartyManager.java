@@ -8,7 +8,7 @@ import java.util.UUID;
  * Allows to interact with Prodrivers Commons global parties.
  * Invites, kick, disband and others are directly handled by the plugin.
  */
-public class PartyManager {
+public abstract class PartyManager {
 	/**
 	 * Checks if given player is in a party.
 	 *

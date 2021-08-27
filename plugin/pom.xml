@@ -224,8 +224,6 @@
                                         </exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/configuration/Messages*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/di/guice/ProdriversCommonsGuiceModule*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/parties/Party*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/parties/PartyManager*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/DataSourceConfigProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/EbeanProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/SQLProvider*</exclude>

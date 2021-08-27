@@ -1,5 +1,6 @@
 package fr.prodrivers.bukkit.commons.plugin;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import fr.prodrivers.bukkit.commons.Log;
@@ -41,10 +42,12 @@ public class Main extends JavaPlugin implements Listener {
 		} else {
 			logger.warning("Configuration not saved because it is null.");
 		}
-		try {
-			sqlProvider.close();
-		} catch(IOException ex) {
-			logger.severe("Error while closing storage provider: " + ex.getLocalizedMessage());
+		if(sqlProvider != null) {
+			try {
+				sqlProvider.close();
+			} catch(IOException ex) {
+				logger.severe("Error while closing storage provider: " + ex.getLocalizedMessage());
+			}
 		}
 		logger.info("" + plugindescription.getName() + " has been disabled!");
 	}
@@ -56,11 +59,23 @@ public class Main extends JavaPlugin implements Listener {
 
 		logger.info("Java version is " + System.getProperty("java.version") + ".");
 
+		JavaPlugin plugin = this;
+
+		// Create an injector with only the plugin module, containing its configuration
 		injector = Guice.createInjector(
-				new PluginModule(this, getClassLoader()),
-				new CommandsModule(),
-				new StorageModule(),
-				new PartyModule()
+			new PluginModule(plugin, getClassLoader())
+		);
+
+		// Instantiate the other modules using injectors, as those modules may depends on configuration values
+		CommandsModule commandsModule = injector.getInstance(CommandsModule.class);
+		StorageModule storageModule = injector.getInstance(StorageModule.class);
+		PartyModule partyModule = injector.getInstance(PartyModule.class);
+
+		// Create a child injector that contains all those modules
+		injector = injector.createChildInjector(
+				commandsModule,
+				storageModule,
+				partyModule
 		);
 
 		configuration = (EConfiguration) injector.getInstance(Configuration.class);

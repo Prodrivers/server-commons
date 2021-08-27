@@ -10,20 +10,20 @@ import java.util.HashMap;
 import java.util.UUID;
 
 @Singleton
-public class PartyManager {
+public class DefaultPartyManager extends PartyManager {
 	private final HashMap<UUID, Party> parties = new HashMap<>();
 	private final HashMap<UUID, ArrayList<Party>> partyInvites = new HashMap<>();
 
 	private final Injector injector;
 
 	private final PartyListener partyListener;
-	private final PartyFactory partyFactory;
+	private final DefaultPartyFactory defaultPartyFactory;
 
 	@Inject
-	public PartyManager(Injector injector, Plugin plugin, PartyFactory partyFactory) {
+	public DefaultPartyManager(Injector injector, Plugin plugin, DefaultPartyFactory defaultPartyFactory) {
 		this.injector = injector;
 		this.partyListener = new PartyListener(plugin, this);
-		this.partyFactory = partyFactory;
+		this.defaultPartyFactory = defaultPartyFactory;
 	}
 
 	public boolean isInParty(UUID playerUniqueId) {
@@ -39,7 +39,7 @@ public class PartyManager {
 	}
 
 	public Party createParty(UUID ownerUniqueId) {
-		final Party party = this.partyFactory.create(ownerUniqueId);
+		final Party party = this.defaultPartyFactory.create(ownerUniqueId);
 		parties.put(ownerUniqueId, party);
 		return party;
 	}

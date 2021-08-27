@@ -3,6 +3,7 @@ package fr.prodrivers.bukkit.commons.plugin;
 import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.configuration.Messages;
+import fr.prodrivers.bukkit.commons.parties.DefaultPartyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
@@ -20,6 +21,7 @@ public class EConfiguration extends Configuration {
 	public String storage_sql_username = "";
 	public String storage_sql_password = "";
 	public long sectionTree_buildDelayTicks = 40L;
+	public String providers_PartyManager = DefaultPartyManager.class.getCanonicalName();
 
 	@Inject
 	public EConfiguration(Plugin plugin, Chat chat, Messages messages) {

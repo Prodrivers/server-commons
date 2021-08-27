@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * Prodrivers Commons Party instance
  */
-public class Party {
+public abstract class Party {
 	/**
 	 * Returns owner's unique id.
 	 *
