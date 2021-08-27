@@ -3,6 +3,7 @@ package fr.prodrivers.bukkit.commons.plugin;
 import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.configuration.Messages;
+import fr.prodrivers.bukkit.commons.hubs.DefaultMainHub;
 import fr.prodrivers.bukkit.commons.parties.DefaultPartyManager;
 import fr.prodrivers.bukkit.commons.sections.DefaultSectionManager;
 import org.bukkit.Bukkit;
@@ -24,6 +25,7 @@ public class EConfiguration extends Configuration {
 	public long sectionTree_buildDelayTicks = 40L;
 	public String providers_SectionManager = DefaultSectionManager.class.getCanonicalName();
 	public String providers_PartyManager = DefaultPartyManager.class.getCanonicalName();
+	public String providers_MainHub = DefaultMainHub.class.getCanonicalName();
 
 	@Inject
 	public EConfiguration(Plugin plugin, Chat chat, Messages messages) {

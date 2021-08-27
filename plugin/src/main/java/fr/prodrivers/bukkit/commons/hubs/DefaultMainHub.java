@@ -1,6 +1,9 @@
-package fr.prodrivers.bukkit.commons.sections;
+package fr.prodrivers.bukkit.commons.hubs;
 
 import fr.prodrivers.bukkit.commons.plugin.EConfiguration;
+import fr.prodrivers.bukkit.commons.sections.Section;
+import fr.prodrivers.bukkit.commons.sections.SectionCapabilities;
+import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -12,24 +15,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Singleton
-public class MainHub extends Section {
-	private final static Set<SectionCapabilities> capabilities = new HashSet<>();
-
+public class DefaultMainHub extends MainHub {
 	private final EConfiguration configuration;
 
-	static {
-		capabilities.add(SectionCapabilities.HUB);
-		capabilities.add(SectionCapabilities.PARTY_AWARE);
-	}
-
 	@Inject
-	MainHub(EConfiguration configuration) {
-		super(SectionManager.ROOT_NODE_NAME);
+	DefaultMainHub(EConfiguration configuration) {
+		super();
 		this.configuration = configuration;
-	}
-
-	public @NonNull Set<SectionCapabilities> getCapabilities() {
-		return capabilities;
 	}
 
 	public boolean preJoin(@NonNull Player player, boolean fromParty) {

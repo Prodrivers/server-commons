@@ -1,14 +1,14 @@
 package fr.prodrivers.bukkit.commons.plugin;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.ProdriversCommons;
 import fr.prodrivers.bukkit.commons.commands.CommandsModule;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
+import fr.prodrivers.bukkit.commons.hubs.MainHubModule;
 import fr.prodrivers.bukkit.commons.parties.PartyModule;
-import fr.prodrivers.bukkit.commons.sections.MainHub;
+import fr.prodrivers.bukkit.commons.hubs.MainHub;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.sections.SectionManagerModule;
 import fr.prodrivers.bukkit.commons.storage.SQLProvider;
@@ -72,13 +72,15 @@ public class Main extends JavaPlugin implements Listener {
 		StorageModule storageModule = injector.getInstance(StorageModule.class);
 		PartyModule partyModule = injector.getInstance(PartyModule.class);
 		SectionManagerModule sectionManagerModule = injector.getInstance(SectionManagerModule.class);
+		MainHubModule mainHubModule = injector.getInstance(MainHubModule.class);
 
 		// Create a child injector that contains all those modules
 		injector = injector.createChildInjector(
 				commandsModule,
 				storageModule,
 				partyModule,
-				sectionManagerModule
+				sectionManagerModule,
+				mainHubModule
 		);
 
 		configuration = (EConfiguration) injector.getInstance(Configuration.class);
