@@ -228,7 +228,6 @@
                                         <exclude>fr/prodrivers/bukkit/commons/storage/EbeanProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/SQLProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/sections/Section.class</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/sections/SectionManager*</exclude>
                                     </excludes>
                                 </filter>
                             </filters>

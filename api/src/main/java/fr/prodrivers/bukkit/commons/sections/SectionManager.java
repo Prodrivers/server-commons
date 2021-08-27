@@ -14,7 +14,12 @@ import java.util.List;
  * Use this class to gather information, about sections, players, move players between sections and register new
  * sections.
  */
-public class SectionManager {
+public abstract class SectionManager {
+	/**
+	 * Constant that contains the root node's name.
+	 */
+	public final static String ROOT_NODE_NAME = "";
+
 	/**
 	 * Make a player enter his current section's parent section.
 	 *

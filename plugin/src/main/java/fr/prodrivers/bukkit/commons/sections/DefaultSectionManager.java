@@ -15,8 +15,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 @Singleton
-public class SectionManager {
-	public final static String ROOT_NODE_NAME = "";
+public class DefaultSectionManager extends SectionManager {
 
 	private final Map<String, Section> sections = new HashMap<>();
 	private final Map<UUID, Section> playersCurrentSection = new HashMap<>();
@@ -28,7 +27,7 @@ public class SectionManager {
 	private final PartyManager partyManager;
 
 	@Inject
-	public SectionManager(JavaPlugin plugin, EMessages messages, PartyManager partyManager) {
+	public DefaultSectionManager(JavaPlugin plugin, EMessages messages, PartyManager partyManager) {
 		this.plugin = plugin;
 		this.messages = messages;
 		this.partyManager = partyManager;

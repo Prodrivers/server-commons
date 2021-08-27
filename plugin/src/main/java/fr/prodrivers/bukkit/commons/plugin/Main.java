@@ -10,6 +10,7 @@ import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.parties.PartyModule;
 import fr.prodrivers.bukkit.commons.sections.MainHub;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
+import fr.prodrivers.bukkit.commons.sections.SectionManagerModule;
 import fr.prodrivers.bukkit.commons.storage.SQLProvider;
 import fr.prodrivers.bukkit.commons.storage.StorageModule;
 import org.bukkit.Bukkit;
@@ -70,12 +71,14 @@ public class Main extends JavaPlugin implements Listener {
 		CommandsModule commandsModule = injector.getInstance(CommandsModule.class);
 		StorageModule storageModule = injector.getInstance(StorageModule.class);
 		PartyModule partyModule = injector.getInstance(PartyModule.class);
+		SectionManagerModule sectionManagerModule = injector.getInstance(SectionManagerModule.class);
 
 		// Create a child injector that contains all those modules
 		injector = injector.createChildInjector(
 				commandsModule,
 				storageModule,
-				partyModule
+				partyModule,
+				sectionManagerModule
 		);
 
 		configuration = (EConfiguration) injector.getInstance(Configuration.class);
