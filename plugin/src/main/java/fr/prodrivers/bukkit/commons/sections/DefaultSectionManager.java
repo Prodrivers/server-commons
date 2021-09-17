@@ -248,7 +248,7 @@ public class DefaultSectionManager extends SectionManager {
 		playersSectionPath.remove(player.getUniqueId());
 
 		if(section != null) {
-			if(section.preLeave(player, true)) {
+			if(section.preLeave(player, null, true)) {
 				section.leave(player);
 			} else {
 				Log.severe("Could not make player " + player.getName() + " leave section " + section);
@@ -299,13 +299,13 @@ public class DefaultSectionManager extends SectionManager {
 				commonNode = findCommonNode(leftNode, targetNode);
 
 				// Walk back player to common node with target node
-				if(!walkBackward(player, leftNode, commonNode, nodesToVisit, fromParty)) {
+				if(!walkBackward(player, leftNode, commonNode, nodesToVisit, fromParty, targetNode)) {
 					return false;
 				}
 			}
 
 			// Walk front player to common node with target node
-			if(!walkForward(player, commonNode, targetNode, nodesToVisit, fromParty)) {
+			if(!walkForward(player, commonNode, targetNode, nodesToVisit, fromParty, targetNode)) {
 				return false;
 			}
 		} catch(Exception e) {
@@ -319,10 +319,10 @@ public class DefaultSectionManager extends SectionManager {
 		return true;
 	}
 
-	protected boolean walkBackward(Player player, Section start, Section target, List<Section> visitedNodes, boolean fromParty) throws NoParentSectionException {
+	protected boolean walkBackward(Player player, Section start, Section target, List<Section> visitedNodes, boolean fromParty, Section finalNode) throws NoParentSectionException {
 		// Perform a leave check on the start node, as we consider the starting node of this function to be the node the
 		// player is in
-		if(!start.preLeave(player, fromParty)) {
+		if(!start.preLeave(player, finalNode, fromParty)) {
 			// The current node does not want us to leave it. Stop going back.
 			return false;
 		}
@@ -333,14 +333,14 @@ public class DefaultSectionManager extends SectionManager {
 		// Walk up the tree, starting from the parent node (the start node is handled above)
 		Section node;
 		for(node = start.getParentSection(); node != null; node = node.getParentSection()) {
-			if(!node.preJoin(player, fromParty)) {
+			if(!node.preJoin(player, finalNode, fromParty)) {
 				// The current node does not want us to enter it. Stop going back.
 				Log.severe("Node " + node + " refused player " + player + " to enter with its enter check.");
 				return false;
 			}
 
 			// Do a leave check for the parent
-			if(!node.preLeave(player, fromParty)) {
+			if(!node.preLeave(player, finalNode, fromParty)) {
 				// The current node does not want us to leave it. Stop going back.
 				Log.severe("Node " + node + " refused player " + player + " to leave with its leave check.");
 				return false;
@@ -365,7 +365,7 @@ public class DefaultSectionManager extends SectionManager {
 		return true;
 	}
 
-	protected boolean walkForward(Player player, Section start, Section target, List<Section> visitedNodes, boolean fromParty) throws InvalidSectionException {
+	protected boolean walkForward(Player player, Section start, Section target, List<Section> visitedNodes, boolean fromParty, Section finalNode) throws InvalidSectionException {
 		// Get the sections to walk to
 		LinkedList<Section> sectionsToWalk = new LinkedList<>();
 		// Go up from the target node until we hit the start node, remembering all nodes we passed through
@@ -392,13 +392,13 @@ public class DefaultSectionManager extends SectionManager {
 			// If we are not at the first iteration (we consider the starting node of this function to be the node the
 			// player is in)
 			if(node != start) {
-				if(!node.preJoin(player, fromParty)) {
+				if(!node.preJoin(player, finalNode, fromParty)) {
 					// The current node does not want us to enter it. Stop going back.
 					Log.severe("Node " + node + " refused player " + player + " to enter with its leave check.");
 					return false;
 				}
 			}
-			if(!node.preLeave(player, fromParty)) {
+			if(!node.preLeave(player, finalNode, fromParty)) {
 				// The current node does not want us to leave it. Stop going forward.
 				Log.severe("Node " + node + " refused player " + player + " to leave with its leave check.");
 				return false;

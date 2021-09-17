@@ -94,11 +94,12 @@ public abstract class Section {
 	 * <p>
 	 * The return value should be a guarantee that the player can enter the section.
 	 *
-	 * @param player    Player that should join the section
-	 * @param fromParty Indicate that the process was started by the party owner
+	 * @param player        Player that should join the section
+	 * @param targetSection Section where the player will end up
+	 * @param fromParty     Indicate that the process was started by the party owner
 	 * @return {@code true} The user is authorized to enter the section
 	 */
-	public abstract boolean preJoin(@NonNull Player player, boolean fromParty);
+	public abstract boolean preJoin(@NonNull Player player, Section targetSection, boolean fromParty);
 
 	/**
 	 * Section join callback. Should do the actions required when a player enters a section.
@@ -118,11 +119,12 @@ public abstract class Section {
 	 * <p>
 	 * The return value should be a guarantee that the player can leave the section.
 	 *
-	 * @param player    Player that should leave the section
-	 * @param fromParty Indicate that the process was started by the party owner
+	 * @param player        Player that should leave the section
+	 * @param targetSection Section where the player will end up
+	 * @param fromParty     Indicate that the process was started by the party owner
 	 * @return {@code true} The user is authorized to leave the section
 	 */
-	public abstract boolean preLeave(@NonNull OfflinePlayer player, boolean fromParty);
+	public abstract boolean preLeave(@NonNull OfflinePlayer player, Section targetSection, boolean fromParty);
 
 	/**
 	 * Section leave callback. Should do the actions required when a player leaves a section.

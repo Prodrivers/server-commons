@@ -24,7 +24,7 @@ public class DefaultMainHub extends MainHub {
 		this.configuration = configuration;
 	}
 
-	public boolean preJoin(@NonNull Player player, boolean fromParty) {
+	public boolean preJoin(@NonNull Player player, Section targetSection, boolean fromParty) {
 		return this.configuration.sections_mainHub != null;
 	}
 
@@ -34,7 +34,7 @@ public class DefaultMainHub extends MainHub {
 		return true;
 	}
 
-	public boolean preLeave(@NonNull OfflinePlayer player, boolean fromParty) {
+	public boolean preLeave(@NonNull OfflinePlayer player, Section targetSection, boolean fromParty) {
 		return true;
 	}
 

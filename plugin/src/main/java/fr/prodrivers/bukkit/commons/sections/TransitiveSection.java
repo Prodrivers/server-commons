@@ -28,7 +28,7 @@ public class TransitiveSection extends Section {
 	}
 
 	@Override
-	public boolean preJoin(@NonNull Player player, boolean fromParty) {
+	public boolean preJoin(@NonNull Player player, Section targetSection, boolean fromParty) {
 		return true;
 	}
 
@@ -38,7 +38,7 @@ public class TransitiveSection extends Section {
 	}
 
 	@Override
-	public boolean preLeave(@NonNull OfflinePlayer player, boolean fromParty) {
+	public boolean preLeave(@NonNull OfflinePlayer player, Section targetSection, boolean fromParty) {
 		return true;
 	}
 
