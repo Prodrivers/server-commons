@@ -42,7 +42,7 @@ public class DefaultSectionManager extends SectionManager {
 		// If it is null
 		if(currentSection == null) {
 			// Stop everything and inform
-			throw new NoCurrentSectionException("Player should indicate a section to join");
+			throw new NoCurrentSectionException("Player should be registered before using this method.");
 		}
 
 		Section parentSection = currentSection.getParentSection();
@@ -54,7 +54,7 @@ public class DefaultSectionManager extends SectionManager {
 		}
 
 		// Send the player to the parent section
-		enter(player, currentSection, parentSection);
+		enter(player, parentSection);
 	}
 
 	public void enter(Player player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
