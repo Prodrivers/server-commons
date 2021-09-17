@@ -84,10 +84,10 @@ public abstract class SectionManager {
 	}
 
 	/**
-	 * Registers a player agaist the Prodrivers Commons infrastructure.
+	 * Registers a player against the Prodrivers Commons infrastructure.
 	 * <p>
 	 * Required before any interaction with Prodrivers Commons and dependent plugins.
-	 * This action is automatically performed by the default section manager on player login.
+	 * This action is automatically performed by the default section manager on player login, if it is used.
 	 *
 	 * @param player Player to register
 	 */
@@ -99,7 +99,7 @@ public abstract class SectionManager {
 	 * Unregisters a player from the Prodrivers Commons infrastructure.
 	 * <p>
 	 * Once a player is unregistered, no further interaction with Prodrivers Commons and dependent plugins should happen.
-	 * This action is automatically performed by the default section manager on player logout.
+	 * This action is automatically performed by the default section manager on player logout, if it is used.
 	 *
 	 * @param player Player to unregister
 	 */
