@@ -47,8 +47,9 @@ public class DefaultSectionManager extends SectionManager {
 
 		Section parentSection = currentSection.getParentSection();
 
-		// If it is null
-		if(parentSection == null) {
+		// If it is null and we are not at the root section (we allow it on root section so that custom logic can be
+		// used to exit server)
+		if(parentSection == null && !SectionManager.ROOT_NODE_NAME.equals(currentSection.getFullName())) {
 			// Stop everything and inform
 			throw new NoParentSectionException("Current section doesn't have a parent section, player is probably at the root.");
 		}
@@ -77,7 +78,7 @@ public class DefaultSectionManager extends SectionManager {
 	public void enter(Player player, Section targetNode, boolean fromParty) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
 		// Check that all party players can enter, if necessary
 		// If the section does not handle party by itself and the player is not sent by the party owner
-		if(!fromParty && !targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
+		if(!fromParty && targetNode != null && !targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
 			Party party = this.partyManager.getParty(player.getUniqueId());
 
 			// If player is in party
@@ -160,6 +161,18 @@ public class DefaultSectionManager extends SectionManager {
 		Log.finest("Left : " + leftNode);
 		Log.finest("Target : " + targetNode);
 
+		// Special case for root node exit
+		// Path traversal will be skipped as it is empty
+		if(leftNode != null && leftNode.getFullName().equals(SectionManager.ROOT_NODE_NAME) && targetNode == null) {
+			if(!leftNode.leave(player)) {
+				// The node refused the player to leave, stop processing.
+				Log.severe("Section " + leftNode + " refused player " + player.getName() + " to leave.");
+			} else {
+				// Remove the corresponding section as this player's current section
+				playersCurrentSection.remove(player.getUniqueId());
+			}
+		}
+
 		// Successively enter and leave sections along the path
 		for(Section node : nodesToVisit) {
 			// If we are not considering the first node, as the player is already in this node
@@ -191,7 +204,8 @@ public class DefaultSectionManager extends SectionManager {
 		playersSectionPath.remove(player.getUniqueId());
 
 		// Make entering player party's players move if necessary
-		if(!targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
+		// Do not do this when exiting root node
+		if(targetNode != null && !targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
 			Party party = this.partyManager.getParty(player.getUniqueId());
 
 			// If player is in party
@@ -273,6 +287,27 @@ public class DefaultSectionManager extends SectionManager {
 		if(playersSectionPath.containsKey(player.getUniqueId())) {
 			// Do not make the computation again
 			return true;
+		}
+
+		// Special case for root node exit
+		if(leftNode != null && leftNode.getFullName().equals(SectionManager.ROOT_NODE_NAME) && targetNode == null) {
+			// Check preLeave for root node
+			// Do a leave check for the parent
+			if(!leftNode.preLeave(player, null, fromParty)) {
+				// The current node does not want us to leave it. Stop going back.
+				Log.severe("Node " + leftNode + " refused player " + player + " to leave with its leave check.");
+				return false;
+			}
+
+			// Put an empty path
+			playersSectionPath.put(player.getUniqueId(), Collections.emptyList());
+
+			return true;
+		}
+
+		// If target node is null (and we are not in an root node exit case), then we are improperly using this method
+		if(targetNode == null) {
+			throw new InvalidSectionException("Target node is null in a case where it should not be. Left node is " + leftNode);
 		}
 
 		// If the target node is the same as the left node

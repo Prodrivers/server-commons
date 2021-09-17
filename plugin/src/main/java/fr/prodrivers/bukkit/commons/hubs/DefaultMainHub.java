@@ -17,11 +17,13 @@ import java.util.Set;
 @Singleton
 public class DefaultMainHub extends MainHub {
 	private final EConfiguration configuration;
+	private final SectionManager sectionManager;
 
 	@Inject
-	DefaultMainHub(EConfiguration configuration) {
+	DefaultMainHub(EConfiguration configuration, SectionManager sectionManager) {
 		super();
 		this.configuration = configuration;
+		this.sectionManager = sectionManager;
 	}
 
 	public boolean preJoin(@NonNull Player player, Section targetSection, boolean fromParty) {
@@ -35,6 +37,14 @@ public class DefaultMainHub extends MainHub {
 	}
 
 	public boolean preLeave(@NonNull OfflinePlayer player, Section targetSection, boolean fromParty) {
+		Section currentSection = sectionManager.getCurrentSection(player);
+		if(currentSection != null && currentSection.getFullName().equals(SectionManager.ROOT_NODE_NAME) && targetSection == null) {
+			if(player instanceof Player) {
+				join((Player) player);
+			}
+			return false;
+		}
+
 		return true;
 	}
 
