@@ -6,7 +6,6 @@ import fr.prodrivers.bukkit.commons.plugin.DependenciesClassLoaderProvider;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.storage.DataSourceConfigProvider;
 import fr.prodrivers.bukkit.commons.storage.EbeanProvider;
-import fr.prodrivers.bukkit.commons.storage.SQLProvider;
 import io.ebean.Database;
 import io.ebean.datasource.DataSourceConfig;
 
@@ -20,8 +19,6 @@ public class ProdriversCommonsGuiceModule extends AbstractModule {
 	private SectionManager sectionManager;
 
 	@Inject
-	private SQLProvider sqlProvider;
-	@Inject
 	private DataSourceConfigProvider dataSourceConfigProvider;
 
 	@Inject
@@ -31,7 +28,6 @@ public class ProdriversCommonsGuiceModule extends AbstractModule {
 	protected void configure() {
 		bind(PartyManager.class).toInstance(partyManager);
 		bind(SectionManager.class).toInstance(sectionManager);
-		bind(Connection.class).toProvider(sqlProvider);
 		bind(Database.class).toProvider(EbeanProvider.class);
 		bind(DataSourceConfig.class).toProvider(dataSourceConfigProvider);
 		bind(DependenciesClassLoaderProvider.class).toInstance(dependenciesClassLoaderProvider);

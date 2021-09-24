@@ -11,14 +11,12 @@ import fr.prodrivers.bukkit.commons.parties.PartyModule;
 import fr.prodrivers.bukkit.commons.hubs.MainHub;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.sections.SectionManagerModule;
-import fr.prodrivers.bukkit.commons.storage.SQLProvider;
 import fr.prodrivers.bukkit.commons.storage.StorageModule;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin implements Listener {
@@ -28,8 +26,6 @@ public class Main extends JavaPlugin implements Listener {
 	private Logger logger;
 
 	private SectionManager sectionManager;
-
-	private SQLProvider sqlProvider;
 
 	public Injector getInjector() {
 		return injector;
@@ -42,13 +38,6 @@ public class Main extends JavaPlugin implements Listener {
 			configuration.save();
 		} else {
 			logger.warning("Configuration not saved because it is null.");
-		}
-		if(sqlProvider != null) {
-			try {
-				sqlProvider.close();
-			} catch(IOException ex) {
-				logger.severe("Error while closing storage provider: " + ex.getLocalizedMessage());
-			}
 		}
 		logger.info("" + plugindescription.getName() + " has been disabled!");
 	}
@@ -88,8 +77,6 @@ public class Main extends JavaPlugin implements Listener {
 		Log.setLevel(configuration);
 
 		getServer().getPluginManager().registerEvents(this, this);
-
-		sqlProvider = injector.getInstance(SQLProvider.class);
 
 		sectionManager = injector.getInstance(SectionManager.class);
 
