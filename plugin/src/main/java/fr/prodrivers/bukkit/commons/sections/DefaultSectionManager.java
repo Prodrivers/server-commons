@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 @Singleton
-public class DefaultSectionManager extends SectionManager {
+public class DefaultSectionManager implements SectionManager {
 
 	private final Map<String, Section> sections = new HashMap<>();
 	private final Map<UUID, Section> playersCurrentSection = new HashMap<>();
@@ -280,14 +280,17 @@ public class DefaultSectionManager extends SectionManager {
 		}
 	}
 
+	@Override
 	public Section getCurrentSection(OfflinePlayer player) {
 		return playersCurrentSection.get(player.getUniqueId());
 	}
 
+	@Override
 	public Section getSection(String name) {
 		return sections.get(name);
 	}
 
+	@Override
 	public Section getRootSection() {
 		return getSection(ROOT_NODE_NAME);
 	}

@@ -139,7 +139,7 @@ public abstract class Section {
 	 *
 	 * @return Section's players
 	 */
-	public @NonNull Collection<Player> getPlayers() {
+	public @NonNull Collection<OfflinePlayer> getPlayers() {
 		throw new UnsupportedOperationException();
 	}
 
