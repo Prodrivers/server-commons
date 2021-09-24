@@ -1,10 +1,12 @@
 package fr.prodrivers.bukkit.commons.sections;
 
 import fr.prodrivers.bukkit.commons.Log;
+import fr.prodrivers.bukkit.commons.events.PlayerChangeSectionEvent;
 import fr.prodrivers.bukkit.commons.exceptions.*;
 import fr.prodrivers.bukkit.commons.parties.Party;
 import fr.prodrivers.bukkit.commons.parties.PartyManager;
 import fr.prodrivers.bukkit.commons.plugin.EMessages;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -135,6 +137,14 @@ public class DefaultSectionManager extends SectionManager {
 		if(!canPlayerWalkAlongSectionPath(player, leftNode, targetNode, false)) {
 			System.out.print("Player cannot walk.");
 			// If not, stop everything
+			return;
+		}
+
+		// Trigger event and wait for result
+		PlayerChangeSectionEvent event = new PlayerChangeSectionEvent(player, leftNode, targetNode);
+		Bukkit.getPluginManager().callEvent(event);
+		if(event.isCancelled()) {
+			Log.warning("Section move of player " + player.getName() + " from " + leftNode + " to " + targetNode + " was canceled by event.");
 			return;
 		}
 

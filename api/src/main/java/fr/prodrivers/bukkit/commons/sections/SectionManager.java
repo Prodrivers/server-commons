@@ -13,6 +13,8 @@ import java.util.List;
  * Contains methods to manage and interact with Prodrivers Commons Sections.
  * Use this class to gather information, about sections, players, move players between sections and register new
  * sections.
+ *
+ * Before actually moving a player, a {@link fr.prodrivers.bukkit.commons.events.PlayerChangeSectionEvent} will be triggered and can be cancelled.
  */
 public abstract class SectionManager {
 	/**
