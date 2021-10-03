@@ -72,4 +72,8 @@ public class Chat {
 	public void error(CommandSender sender, BaseComponent[] components, String prefix) {
 		send(sender, (new ComponentBuilder("")).color(net.md_5.bungee.api.ChatColor.RED).append(components).create(), prefix);
 	}
+
+	public String getPrefix() {
+		return prefix;
+	}
 }

@@ -4,7 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.ProdriversCommons;
-import fr.prodrivers.bukkit.commons.commands.CommandsModule;
+import fr.prodrivers.bukkit.commons.plugin.commands.CommandsModule;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.hubs.MainHubModule;
 import fr.prodrivers.bukkit.commons.parties.PartyModule;

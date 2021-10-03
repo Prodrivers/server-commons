@@ -1,4 +1,4 @@
-package fr.prodrivers.bukkit.commons.commands;
+package fr.prodrivers.bukkit.commons.plugin.commands;
 
 import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.Log;
