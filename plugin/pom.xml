@@ -17,6 +17,7 @@
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
+        <maven.install.skip>true</maven.install.skip>
         <ebean-maven-plugin.args>debug=0</ebean-maven-plugin.args>
     </properties>
 
