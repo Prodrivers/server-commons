@@ -21,10 +21,10 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	 * Intended to be used with a dependency injector.
 	 *
 	 * @param plugin   Plugin initializing the helper
-	 * @param messages Messages instance to manage, uses this to provide your own inheriting class that adds its own message fields
 	 * @param chat     Chat instance to manage
+	 * @param messages Messages instance to manage, uses this to provide your own inheriting class that adds its own message fields
 	 */
-	public Configuration(Plugin plugin, Messages messages, Chat chat) {
+	public Configuration(Plugin plugin, Chat chat, Messages messages) {
 		throw new UnsupportedOperationException();
 	}
 
