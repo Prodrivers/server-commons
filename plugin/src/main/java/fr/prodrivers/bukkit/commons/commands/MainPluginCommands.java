@@ -4,6 +4,7 @@ import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.sections.Section;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
+import fr.prodrivers.bukkit.commons.storage.DataSourceConfigProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -20,13 +21,15 @@ public class MainPluginCommands implements CommandExecutor {
 	private final Chat chat;
 	private final CommandsModule manager;
 	private final Configuration configuration;
+	private final DataSourceConfigProvider dataSourceConfigProvider;
 
 	@Inject
-	MainPluginCommands(JavaPlugin plugin, SectionManager sectionManager, Chat chat, CommandsModule manager, Configuration configuration) {
+	MainPluginCommands(JavaPlugin plugin, SectionManager sectionManager, Chat chat, CommandsModule manager, Configuration configuration, DataSourceConfigProvider dataSourceConfigProvider) {
 		this.chat = chat;
 		this.manager = manager;
 		this.sectionManager = sectionManager;
 		this.configuration = configuration;
+		this.dataSourceConfigProvider = dataSourceConfigProvider;
 		plugin.getCommand(label).setExecutor(this);
 	}
 
@@ -37,6 +40,7 @@ public class MainPluginCommands implements CommandExecutor {
 					case "reload":
 						if(sender.hasPermission("pcommons.reload"))
 							this.configuration.reload();
+							this.dataSourceConfigProvider.reload();
 						break;
 					case "sections":
 						sectionsCommand(sender, args);

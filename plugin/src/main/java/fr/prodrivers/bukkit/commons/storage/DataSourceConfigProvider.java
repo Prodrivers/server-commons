@@ -12,14 +12,15 @@ import java.sql.SQLException;
 @Singleton
 public class DataSourceConfigProvider implements Provider<DataSourceConfig> {
 	private final EConfiguration configuration;
+	private DataSourceConfig dataSourceConfig;
 
 	@Inject
 	public DataSourceConfigProvider(EConfiguration configuration) {
 		this.configuration = configuration;
+		reload();
 	}
 
-	@Override
-	public DataSourceConfig get() {
+	private DataSourceConfig construct() {
 		DataSourceConfig dbSrcCfg = new DataSourceConfig();
 		try {
 			dbSrcCfg.setDriver(DriverManager.getDriver(this.configuration.storage_sql_uri).getClass().getName());
@@ -29,8 +30,20 @@ public class DataSourceConfigProvider implements Provider<DataSourceConfig> {
 		dbSrcCfg.setUsername(this.configuration.storage_sql_username);
 		dbSrcCfg.setPassword(this.configuration.storage_sql_password);
 		dbSrcCfg.setUrl(this.configuration.storage_sql_uri);
-		dbSrcCfg.addProperty("useSSL", false);
+		dbSrcCfg.addProperty("useSSL", this.configuration.storage_sql_useSSL);
+		dbSrcCfg.setMinConnections(this.configuration.storage_sql_minimumConnections);
+		dbSrcCfg.setMaxConnections(this.configuration.storage_sql_maximumConnections);
+		dbSrcCfg.setMaxInactiveTimeSecs(this.configuration.storage_sql_maxInactiveTimeSecs);
 
 		return dbSrcCfg;
+	}
+
+	public void reload() {
+		this.dataSourceConfig = construct();
+	}
+
+	@Override
+	public DataSourceConfig get() {
+		return this.dataSourceConfig;
 	}
 }

@@ -22,6 +22,10 @@ public class EConfiguration extends Configuration {
 	public String storage_sql_uri = "jdbc:mysql://localhost:3306/db";
 	public String storage_sql_username = "";
 	public String storage_sql_password = "";
+	public boolean storage_sql_useSSL = true;
+	public Integer storage_sql_minimumConnections = 2;
+	public Integer storage_sql_maximumConnections = 200;
+	public Integer storage_sql_maxInactiveTimeSecs = 300;
 	public long sectionTree_buildDelayTicks = 40L;
 	public String providers_SectionManager = DefaultSectionManager.class.getCanonicalName();
 	public String providers_PartyManager = DefaultPartyManager.class.getCanonicalName();
