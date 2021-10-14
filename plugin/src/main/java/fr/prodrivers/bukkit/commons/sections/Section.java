@@ -2,6 +2,7 @@ package fr.prodrivers.bukkit.commons.sections;
 
 import com.google.common.collect.Lists;
 import fr.prodrivers.bukkit.commons.exceptions.InvalidSectionException;
+import fr.prodrivers.bukkit.commons.ui.section.SelectionUI;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -140,5 +141,9 @@ public abstract class Section {
 		return this.getClass().getName() + "{" +
 				"fullName='" + fullName + '\'' +
 				'}';
+	}
+
+	protected SelectionUI getSelectionUI() {
+		return null;
 	}
 }

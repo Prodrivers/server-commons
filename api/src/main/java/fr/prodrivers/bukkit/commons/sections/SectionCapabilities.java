@@ -18,5 +18,9 @@ public enum SectionCapabilities {
 	/**
 	 * Inform Prodrivers Commons that the section handles scoreboards by itself and does not uses Prodrivers Commons's Scoreboard infrastructure.
 	 */
-	SCOREBOARD_EXCLUSIVE
+	SCOREBOARD_EXCLUSIVE,
+	/**
+	 * Inform Prodrivers Commons that the section handles its UI by itself.
+	 */
+	CUSTOM_SELECTION_UI
 }

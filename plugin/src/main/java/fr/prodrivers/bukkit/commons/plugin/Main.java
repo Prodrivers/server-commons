@@ -12,6 +12,7 @@ import fr.prodrivers.bukkit.commons.hubs.MainHub;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.sections.SectionManagerModule;
 import fr.prodrivers.bukkit.commons.storage.StorageModule;
+import fr.prodrivers.bukkit.commons.ui.UIModule;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -62,6 +63,7 @@ public class Main extends JavaPlugin implements Listener {
 		PartyModule partyModule = injector.getInstance(PartyModule.class);
 		SectionManagerModule sectionManagerModule = injector.getInstance(SectionManagerModule.class);
 		MainHubModule mainHubModule = injector.getInstance(MainHubModule.class);
+		UIModule uiModule = injector.getInstance(UIModule.class);
 
 		// Create a child injector that contains all those modules
 		injector = injector.createChildInjector(
@@ -69,7 +71,8 @@ public class Main extends JavaPlugin implements Listener {
 				storageModule,
 				partyModule,
 				sectionManagerModule,
-				mainHubModule
+				mainHubModule,
+				uiModule
 		);
 
 		configuration = (EConfiguration) injector.getInstance(Configuration.class);

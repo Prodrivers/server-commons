@@ -8,6 +8,7 @@ import fr.prodrivers.bukkit.commons.plugin.DependenciesClassLoaderProvider;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.storage.DataSourceConfigProvider;
 import fr.prodrivers.bukkit.commons.storage.EbeanProvider;
+import fr.prodrivers.bukkit.commons.ui.section.SelectionUI;
 import io.ebean.Database;
 import io.ebean.datasource.DataSourceConfig;
 
@@ -25,10 +26,14 @@ public class ProdriversCommonsGuiceModule extends AbstractModule {
 	@Inject
 	private DependenciesClassLoaderProvider dependenciesClassLoaderProvider;
 
+	@Inject
+	private SelectionUI selectionUI;
+
 	@Override
 	protected void configure() {
 		bind(PartyManager.class).toInstance(partyManager);
 		bind(SectionManager.class).toInstance(sectionManager);
+		bind(SelectionUI.class).toInstance(selectionUI);
 		bind(Database.class).toProvider(EbeanProvider.class);
 		bind(DataSourceConfig.class).toProvider(dataSourceConfigProvider);
 		bind(DependenciesClassLoaderProvider.class).toInstance(dependenciesClassLoaderProvider);

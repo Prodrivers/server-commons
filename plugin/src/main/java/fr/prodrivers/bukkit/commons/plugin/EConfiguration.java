@@ -6,6 +6,7 @@ import fr.prodrivers.bukkit.commons.configuration.Messages;
 import fr.prodrivers.bukkit.commons.hubs.DefaultMainHub;
 import fr.prodrivers.bukkit.commons.parties.DefaultPartyManager;
 import fr.prodrivers.bukkit.commons.sections.DefaultSectionManager;
+import fr.prodrivers.bukkit.commons.ui.section.DefaultSelectionUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
@@ -30,6 +31,7 @@ public class EConfiguration extends Configuration {
 	public String providers_SectionManager = DefaultSectionManager.class.getCanonicalName();
 	public String providers_PartyManager = DefaultPartyManager.class.getCanonicalName();
 	public String providers_MainHub = DefaultMainHub.class.getCanonicalName();
+	public String providers_SelectionUI = DefaultSelectionUI.class.getCanonicalName();
 
 	@Inject
 	public EConfiguration(Plugin plugin, Chat chat, Messages messages) {

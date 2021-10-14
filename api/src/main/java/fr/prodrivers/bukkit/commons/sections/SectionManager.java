@@ -109,4 +109,15 @@ public interface SectionManager {
 	 * This method is automatically called by Prodrivers Commons on server activation.
 	 */
 	void buildSectionTree();
+
+	/**
+	 * Opens a selection UI for a specific section.
+	 *
+	 * @param sectionName Section's full name to open UI for
+	 * @param player      Player that opened the selection UI
+	 *
+	 * @throws InvalidSectionException No corresponding section exists to provided name
+	 * @throws InvalidUIException      Section reports to have custom UI, but does not implement it
+	 */
+	void ui(String sectionName, Player player) throws InvalidSectionException, InvalidUIException;
 }

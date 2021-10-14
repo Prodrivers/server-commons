@@ -1,5 +1,6 @@
 package fr.prodrivers.bukkit.commons.sections;
 
+import fr.prodrivers.bukkit.commons.ui.section.SelectionUI;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -234,6 +235,17 @@ public abstract class Section {
 	 * Ensure that you add another parent afterwards. Only the root section should have no parent.
 	 */
 	protected void removeParent() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Returns this section's selection UI.
+	 * Called only when section returns capability {@link SectionCapabilities::CUSTOM_SELECTION_UI}. If not, the section
+	 * manager will call the default selection UI.
+	 *
+	 * @return This section's selection UI
+	 */
+	protected SelectionUI getSelectionUI() {
 		throw new UnsupportedOperationException();
 	}
 }

@@ -6,6 +6,7 @@ import fr.prodrivers.bukkit.commons.exceptions.*;
 import fr.prodrivers.bukkit.commons.parties.Party;
 import fr.prodrivers.bukkit.commons.parties.PartyManager;
 import fr.prodrivers.bukkit.commons.plugin.EMessages;
+import fr.prodrivers.bukkit.commons.ui.section.SelectionUI;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -27,12 +28,14 @@ public class DefaultSectionManager implements SectionManager {
 	private final JavaPlugin plugin;
 	private final EMessages messages;
 	private final PartyManager partyManager;
+	private final SelectionUI defaultSelectionUi;
 
 	@Inject
-	public DefaultSectionManager(JavaPlugin plugin, EMessages messages, PartyManager partyManager) {
+	public DefaultSectionManager(JavaPlugin plugin, EMessages messages, PartyManager partyManager, SelectionUI defaultSelectionUi) {
 		this.plugin = plugin;
 		this.messages = messages;
 		this.partyManager = partyManager;
+		this.defaultSelectionUi = defaultSelectionUi;
 
 		new SectionListener(plugin, this);
 	}
@@ -581,5 +584,32 @@ public class DefaultSectionManager implements SectionManager {
 						.forEach(currentSection::addChildren);
 			}
 		});
+	}
+
+	@Override
+	public void ui(String sectionName, Player player) throws InvalidSectionException, InvalidUIException {
+		// Get section
+		Section section = getSection(sectionName);
+
+		// If the section doesn't exist
+		if(section == null) {
+			// Stop everything and inform
+			throw new InvalidSectionException("Invalid section name");
+		}
+
+		// If section has custom UI
+		if(section.getCapabilities().contains(SectionCapabilities.CUSTOM_SELECTION_UI)) {
+			SelectionUI ui = section.getSelectionUI();
+			// If selection UI is null
+			if(ui == null) {
+				// Stop everything and inform
+				throw new InvalidUIException("Section " + section + " reports to have custom UI, but it is null.");
+			}
+			// Open it
+			ui.ui(section, player);
+		} else {
+			// Open default UI
+			this.defaultSelectionUi.ui(section, player);
+		}
 	}
 }
