@@ -1,7 +1,7 @@
 package fr.prodrivers.bukkit.commons.configuration;
 
-import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration;
+import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.configuration.file.AbstractFileAttributeConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -13,19 +13,25 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	@ExcludedFromConfiguration
 	private final Plugin plugin;
 	@ExcludedFromConfiguration
-	private final Chat chat;
+	private Chat chat;
 	@ExcludedFromConfiguration
 	private final Messages messages;
 
 	public Level logLevel = Level.INFO;
 
 	@Inject
-	public Configuration(Plugin plugin, Chat chat, Messages messages) {
+	public Configuration(Plugin plugin, Messages messages) {
 		super();
 		this.plugin = plugin;
-		this.chat = chat;
 		this.messages = messages;
 		this.configuration = this.plugin.getConfig();
+	}
+
+	public void setChat(Chat chat) {
+		this.chat = chat;
+		if(this.messages != null && this.chat != null) {
+			this.chat.load(this.messages);
+		}
 	}
 
 	@Override

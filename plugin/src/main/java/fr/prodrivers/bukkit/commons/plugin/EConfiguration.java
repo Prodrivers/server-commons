@@ -1,6 +1,7 @@
 package fr.prodrivers.bukkit.commons.plugin;
 
-import fr.prodrivers.bukkit.commons.Chat;
+import fr.prodrivers.bukkit.commons.chat.Chat;
+import fr.prodrivers.bukkit.commons.chat.SpigotMessageSender;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.configuration.Messages;
 import fr.prodrivers.bukkit.commons.hubs.DefaultMainHub;
@@ -32,10 +33,11 @@ public class EConfiguration extends Configuration {
 	public String providers_PartyManager = DefaultPartyManager.class.getCanonicalName();
 	public String providers_MainHub = DefaultMainHub.class.getCanonicalName();
 	public String providers_SelectionUI = DefaultSelectionUI.class.getCanonicalName();
+	public String providers_MessageSender = SpigotMessageSender.class.getCanonicalName();
 
 	@Inject
-	public EConfiguration(Plugin plugin, Chat chat, Messages messages) {
-		super(plugin, chat, messages);
+	public EConfiguration(Plugin plugin, Messages messages) {
+		super(plugin, messages);
 		init();
 	}
 }

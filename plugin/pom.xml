@@ -222,7 +222,8 @@
                                 <filter>
                                     <artifact>fr.prodrivers.bukkit:prodrivers-commons-api</artifact>
                                     <excludes>
-                                        <exclude>fr/prodrivers/bukkit/commons/Chat*</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/chat/Chat*</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/chat/SpigotMessageSender*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/ProdriversCommons*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/commands/ACFCommandManagerProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/configuration/Configuration*</exclude>

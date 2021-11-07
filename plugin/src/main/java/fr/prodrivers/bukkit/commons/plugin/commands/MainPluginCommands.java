@@ -1,6 +1,6 @@
 package fr.prodrivers.bukkit.commons.plugin.commands;
 
-import fr.prodrivers.bukkit.commons.Chat;
+import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.sections.Section;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;

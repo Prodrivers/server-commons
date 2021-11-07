@@ -3,7 +3,7 @@ package fr.prodrivers.bukkit.commons.commands;
 import co.aikar.commands.*;
 import co.aikar.locales.MessageKeyProvider;
 import com.google.common.collect.ImmutableMap;
-import fr.prodrivers.bukkit.commons.Chat;
+import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.configuration.Messages;
 import org.bukkit.ChatColor;

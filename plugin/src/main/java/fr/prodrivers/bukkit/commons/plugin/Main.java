@@ -4,6 +4,10 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.ProdriversCommons;
+import fr.prodrivers.bukkit.commons.chat.Chat;
+import fr.prodrivers.bukkit.commons.chat.ChatModule;
+import fr.prodrivers.bukkit.commons.chat.MessageSender;
+import fr.prodrivers.bukkit.commons.configuration.Messages;
 import fr.prodrivers.bukkit.commons.plugin.commands.CommandsModule;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.hubs.MainHubModule;
@@ -40,6 +44,12 @@ public class Main extends JavaPlugin implements Listener {
 		} else {
 			logger.warning("Configuration not saved because it is null.");
 		}
+		logger.info("Waiting for additional logging...");
+		try {
+			Thread.sleep(1000);
+		} catch(InterruptedException e) {
+			// Silently ignore
+		}
 		logger.info("" + plugindescription.getName() + " has been disabled!");
 	}
 
@@ -64,6 +74,7 @@ public class Main extends JavaPlugin implements Listener {
 		SectionManagerModule sectionManagerModule = injector.getInstance(SectionManagerModule.class);
 		MainHubModule mainHubModule = injector.getInstance(MainHubModule.class);
 		UIModule uiModule = injector.getInstance(UIModule.class);
+		ChatModule chatModule = injector.getInstance(ChatModule.class);
 
 		// Create a child injector that contains all those modules
 		injector = injector.createChildInjector(
@@ -72,12 +83,17 @@ public class Main extends JavaPlugin implements Listener {
 				partyModule,
 				sectionManagerModule,
 				mainHubModule,
+				chatModule,
 				uiModule
 		);
 
 		configuration = (EConfiguration) injector.getInstance(Configuration.class);
 
 		Log.setLevel(configuration);
+
+		Chat chat = injector.getInstance(Chat.class);
+		chat.setName(this.getDescription().getName());
+		chat.load(injector.getInstance(Messages.class));
 
 		getServer().getPluginManager().registerEvents(this, this);
 

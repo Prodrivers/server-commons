@@ -1,8 +1,8 @@
 package fr.prodrivers.bukkit.commons.parties;
 
 import com.google.inject.assistedinject.Assisted;
-import fr.prodrivers.bukkit.commons.Chat;
 import fr.prodrivers.bukkit.commons.Log;
+import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.plugin.EMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

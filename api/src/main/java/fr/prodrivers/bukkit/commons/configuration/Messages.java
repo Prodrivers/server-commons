@@ -1,5 +1,6 @@
 package fr.prodrivers.bukkit.commons.configuration;
 
+import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.configuration.file.FileAttributeConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -16,7 +17,7 @@ import org.bukkit.plugin.Plugin;
  */
 public class Messages extends FileAttributeConfiguration {
 	/**
-	 * Prefix to use in messages sent using {@link fr.prodrivers.bukkit.commons.Chat Chat}
+	 * Prefix to use in messages sent using {@link Chat Chat}
 	 */
 	public String prefix = "[<name>]";
 

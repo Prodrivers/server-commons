@@ -1,7 +1,7 @@
 package fr.prodrivers.bukkit.commons.commands;
 
 import co.aikar.commands.BukkitMessageFormatter;
-import fr.prodrivers.bukkit.commons.Chat;
+import fr.prodrivers.bukkit.commons.chat.Chat;
 import org.bukkit.ChatColor;
 
 public class ProdriversMessageFormatter extends BukkitMessageFormatter {
