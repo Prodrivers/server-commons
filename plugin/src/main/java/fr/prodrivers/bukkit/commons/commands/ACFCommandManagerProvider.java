@@ -22,14 +22,14 @@ public class ACFCommandManagerProvider implements Provider<BukkitCommandManager>
 
 	private static Map<MessageKeyProvider, String> getMessageMap() {
 		return new ImmutableMap.Builder<MessageKeyProvider, String>()
-				.put(MessageKeys.ERROR_GENERIC_LOGGED, "errorocurred")
-				.put(MessageKeys.COULD_NOT_FIND_PLAYER, "invalidplayer")
-				.put(MessageKeys.NOT_ALLOWED_ON_CONSOLE, "notaplayer")
-				.put(MessageKeys.MUST_BE_A_NUMBER, "invalidnumber")
-				.put(MessageKeys.PERMISSION_DENIED, "permissiondenied")
-				.put(MinecraftMessageKeys.NO_PLAYER_FOUND, "invalidplayer")
-				.put(MinecraftMessageKeys.NO_PLAYER_FOUND_OFFLINE, "invalidplayer")
-				.put(MinecraftMessageKeys.NO_PLAYER_FOUND_SERVER, "invalidplayer")
+				.put(MessageKeys.ERROR_GENERIC_LOGGED, "error_occurred")
+				.put(MessageKeys.COULD_NOT_FIND_PLAYER, "invalid_player")
+				.put(MessageKeys.NOT_ALLOWED_ON_CONSOLE, "not_a_player")
+				.put(MessageKeys.MUST_BE_A_NUMBER, "invalid_number")
+				.put(MessageKeys.PERMISSION_DENIED, "permission_denied")
+				.put(MinecraftMessageKeys.NO_PLAYER_FOUND, "invalid_player")
+				.put(MinecraftMessageKeys.NO_PLAYER_FOUND_OFFLINE, "invalid_player")
+				.put(MinecraftMessageKeys.NO_PLAYER_FOUND_SERVER, "invalid_player")
 				.build();
 	}
 
