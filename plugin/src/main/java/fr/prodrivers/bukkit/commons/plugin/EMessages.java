@@ -12,9 +12,12 @@ import java.util.Map;
 @SuppressWarnings("CanBeFinal")
 @Singleton
 public class EMessages extends Messages {
-	public String player_only_command = "This command can only be executed by players.";
-	public String no_permission = "&cYou do not have permission to execute this.";
-	public String kicked_because_no_safe_place = "You were kicked as the server found no secure place to put you in.";
+	public String permission_denied = "&cYou do not have permission to execute this.";
+	public String error_occurred = "An internal error occurred.";
+	public String invalid_hub_name = "Invalid hub name.";
+	public String invalid_player = "Invalid player.";
+	public String not_a_player = "Not a player.";
+	public String invalid_number = "Invalid number.";
 
 	public String party_prefix = "[Party]";
 	public String party_help_heading = ChatColor.DARK_GRAY + "------- " + ChatColor.BLUE + "Help" + ChatColor.DARK_GRAY + " -------";

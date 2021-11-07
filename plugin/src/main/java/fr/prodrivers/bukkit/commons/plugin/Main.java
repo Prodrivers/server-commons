@@ -1,5 +1,6 @@
 package fr.prodrivers.bukkit.commons.plugin;
 
+import co.aikar.commands.BukkitCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -7,13 +8,14 @@ import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.ProdriversCommons;
 import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.chat.ChatModule;
-import fr.prodrivers.bukkit.commons.chat.MessageSender;
 import fr.prodrivers.bukkit.commons.configuration.Messages;
-import fr.prodrivers.bukkit.commons.plugin.commands.CommandsModule;
+import fr.prodrivers.bukkit.commons.parties.PartyManager;
+import fr.prodrivers.bukkit.commons.plugin.commands.Commands;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.hubs.MainHubModule;
 import fr.prodrivers.bukkit.commons.parties.PartyModule;
 import fr.prodrivers.bukkit.commons.hubs.MainHub;
+import fr.prodrivers.bukkit.commons.plugin.commands.CommandsModule;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.sections.SectionManagerModule;
 import fr.prodrivers.bukkit.commons.storage.DataSourceConfigProvider;
@@ -105,10 +107,15 @@ public class Main extends JavaPlugin implements Listener {
 		MainHub hub = injector.getInstance(MainHub.class);
 		sectionManager.register(hub);
 
+		BukkitCommandManager bukkitCommandManager = injector.getInstance(BukkitCommandManager.class);
+		Commands commands = injector.getInstance(Commands.class);
+		PartyManager partyManager = injector.getInstance(PartyManager.class);
+
 		Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
 			logger.info("All plugins are loaded, building the section tree.");
 			sectionManager.buildSectionTree();
 			logger.info("Section tree built.");
+			commands.registerCompletions(bukkitCommandManager, sectionManager, partyManager);
 		}, configuration.sectionTree_buildDelayTicks);
 
 		ProdriversCommons.init(this);

@@ -1,63 +1,51 @@
 package fr.prodrivers.bukkit.commons.plugin.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.*;
 import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.plugin.EMessages;
+import fr.prodrivers.bukkit.commons.sections.Section;
+import fr.prodrivers.bukkit.commons.sections.SectionCapabilities;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-public class HubCommands implements CommandExecutor {
-	private static final String label = "hub";
-
+@Singleton
+@CommandAlias("hub")
+public class HubCommands extends BaseCommand {
 	private final SectionManager sectionManager;
 	private final Chat chat;
 	private final EMessages messages;
 
 	@Inject
-	HubCommands(JavaPlugin plugin, SectionManager sectionManager, Chat chat, EMessages messages) {
+	HubCommands(SectionManager sectionManager, Chat chat, EMessages messages) {
 		this.chat = chat;
 		this.messages = messages;
 		this.sectionManager = sectionManager;
-		plugin.getCommand(label).setExecutor(this);
 	}
 
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if(label.equalsIgnoreCase(HubCommands.label)) {
-			if(sender instanceof Player) {
-				if(args.length > 0) {
-					handledEnter((Player) sender, args[0]);
+	@Default
+	@CommandPermission("pcommons.hub")
+	@Syntax("[hub name]")
+	@CommandCompletion("@hubs")
+	private void handle(Player player, @Optional String sectionName) {
+		try {
+			if(sectionName != null) {
+				Section section = this.sectionManager.getSection(sectionName);
+				if(section != null && section.getCapabilities().contains(SectionCapabilities.HUB)) {
+					this.sectionManager.enter(player, sectionName);
 				} else {
-					handledEnter((Player) sender);
+					this.chat.error(player, this.messages.invalid_hub_name);
 				}
 			} else {
-				this.chat.error(sender, this.messages.player_only_command);
+				this.sectionManager.enter(player);
 			}
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private void handledEnter(Player player) {
-		try {
-			this.sectionManager.enter(player);
 		} catch(Exception e) {
 			Log.severe("Unexpected error during hub command.", e);
-		}
-	}
-
-	private void handledEnter(Player player, String name) {
-		try {
-			this.sectionManager.enter(player, name);
-		} catch(Exception e) {
-			Log.severe("Unexpected error during hub command.", e);
+			this.chat.error(player, this.messages.error_occurred);
 		}
 	}
 }

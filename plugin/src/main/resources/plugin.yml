@@ -16,12 +16,6 @@ commands:
     description: Blocked command
   pcommons:
     description: Prodrivers Commons main command
-  pcommons reload:
-    description: Reload Prodrivers Commons
-    permission: pcommons.reload
-  pcommons sections query:
-    description: Prodrivers Commons Section Player Query Command
-    permission: pcommons.section.query
   hub:
     description: Prodrivers Commons' Hub teleportation command
     permission: pcommons.hub
@@ -39,8 +33,32 @@ permissions:
   pcommons.commandblocker.bypass:
     description: Allows one to executed blocked commands.
     default: op
-  pcommons.party:
-    description: Allows one to use Prodrivers Commons' party command.
+  pcommons.party.help:
+    description: Allows one to see party commands help.
+    default: true
+  pcommons.party.invite:
+    description: Allows one to invite a player to its party.
+    default: true
+  pcommons.party.accept:
+    description: Allows one to accept a party invitation.
+    default: true
+  pcommons.party.kick:
+    description: Allows one to kick a player from its party.
+    default: true
+  pcommons.party.list:
+    description: Allows one to list its party members.
+    default: true
+  pcommons.party.disband:
+    description: Allows one to disband its party.
+    default: true
+  pcommons.party.leave:
+    description: Allows one to leave its party.
+    default: true
+  pcommons.party.owner:
+    description: Allows one to let its party to a new owner.
+    default: true
+  pcommons.party.chat:
+    description: Allows one to chat with its party.
     default: true
   pcommons.sections.query:
     description: Allows one to see which section the player is in.
