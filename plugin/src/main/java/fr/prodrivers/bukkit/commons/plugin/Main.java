@@ -2,6 +2,7 @@ package fr.prodrivers.bukkit.commons.plugin;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Singleton;
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.ProdriversCommons;
 import fr.prodrivers.bukkit.commons.chat.Chat;
@@ -24,6 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
 
+@Singleton
 public class Main extends JavaPlugin implements Listener {
 	private Injector injector;
 
@@ -60,11 +62,9 @@ public class Main extends JavaPlugin implements Listener {
 
 		logger.info("Java version is " + System.getProperty("java.version") + ".");
 
-		JavaPlugin plugin = this;
-
 		// Create an injector with only the plugin module, containing its configuration
 		injector = Guice.createInjector(
-			new PluginModule(plugin, getClassLoader())
+			new PluginModule(this, getClassLoader())
 		);
 
 		// Instantiate the other modules using injectors, as those modules may depends on configuration values

@@ -8,9 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class PluginModule extends AbstractModule {
 	private final ClassLoader classLoader;
-	private final JavaPlugin plugin;
+	private final Main plugin;
 
-	public PluginModule(JavaPlugin plugin, ClassLoader classLoader) {
+	public PluginModule(Main plugin, ClassLoader classLoader) {
 		this.plugin = plugin;
 		this.classLoader = classLoader;
 	}
@@ -19,6 +19,7 @@ public class PluginModule extends AbstractModule {
 	protected void configure() {
 		bind(Plugin.class).toInstance(this.plugin);
 		bind(JavaPlugin.class).toInstance(this.plugin);
+		bind(Main.class).toInstance(this.plugin);
 		bind(Configuration.class).to(EConfiguration.class);
 		bind(Messages.class).to(EMessages.class);
 		bind(DependenciesClassLoaderProvider.class).toInstance(new DependenciesClassLoaderProvider(this.classLoader));
