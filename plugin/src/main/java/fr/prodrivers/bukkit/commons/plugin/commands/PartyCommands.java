@@ -2,15 +2,14 @@ package fr.prodrivers.bukkit.commons.plugin.commands;
 
 import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.Log;
+import fr.prodrivers.bukkit.commons.exceptions.PartyCannotInviteYourselfException;
+import fr.prodrivers.bukkit.commons.exceptions.PlayerNotInvitedToParty;
 import fr.prodrivers.bukkit.commons.parties.Party;
 import fr.prodrivers.bukkit.commons.parties.PartyManager;
 import fr.prodrivers.bukkit.commons.plugin.EMessages;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -99,42 +98,14 @@ public class PartyCommands implements CommandExecutor {
 
 	private void partyInvite(final Player inviter, final String[] args) {
 		if(args.length > 1) {
-			final Player invited = Bukkit.getPlayer(args[1]);
-			if(invited == null) {
-				this.chat.error(inviter, this.messages.party_player_not_online.replaceAll("%PLAYER%", args[1]), this.messages.party_prefix);
-				return;
-			}
+			OfflinePlayer invited = Bukkit.getOfflinePlayer(args[1]);
 
-			if(inviter.getUniqueId().equals(invited.getUniqueId())) {
+			try {
+				this.partyManager.invite(inviter.getUniqueId(), invited.getUniqueId());
+			} catch(PartyCannotInviteYourselfException e) {
 				this.chat.error(inviter, this.messages.party_cannot_invite_yourself, this.messages.party_prefix);
-				return;
-			}
-
-			if(!this.partyManager.isInParty(invited.getUniqueId())) {
-				Party inviterParty = this.partyManager.getParty(inviter.getUniqueId());
-				if(inviterParty == null) {
-					inviterParty = this.partyManager.createParty(inviter.getUniqueId());
-				} else {
-					if(!inviterParty.isPartyOwner(inviter.getUniqueId())) {
-						this.chat.error(inviter, this.messages.party_player_not_party_owner, this.messages.party_prefix);
-						return;
-					}
-				}
-				this.partyManager.addPartyInvite(invited.getUniqueId(), inviterParty);
-				this.chat.success(inviter, this.messages.party_you_invited.replaceAll("%PLAYER%", invited.getName()), this.messages.party_prefix);
-
-				BaseComponent[] invite_message = TextComponent.fromLegacyText(this.messages.party_you_were_invited.replaceAll("%PLAYER%", inviter.getName()));
-				BaseComponent[] invite_message_hover_text = TextComponent.fromLegacyText(this.messages.party_you_were_invited_hover_text.replaceAll("%PLAYER%", inviter.getName()));
-				ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/party accept " + inviter.getName());
-				HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, invite_message_hover_text);
-				for(BaseComponent component : invite_message) {
-					component.setClickEvent(clickEvent);
-					component.setHoverEvent(hoverEvent);
-				}
-
-				this.chat.success(invited, invite_message, this.messages.party_prefix);
-			} else {
-				this.chat.error(inviter, this.messages.party_player_is_in_a_party.replaceAll("%PLAYER%", invited.getName()), this.messages.party_prefix);
+			} catch(IllegalArgumentException e) {
+				this.chat.error(inviter, this.messages.party_player_not_online.formatted(args[1]), this.messages.party_prefix);
 			}
 		} else {
 			this.chat.send(inviter, this.messages.party_usage_prefix + "/" + label + " invite <player>", this.messages.party_prefix);
@@ -143,36 +114,17 @@ public class PartyCommands implements CommandExecutor {
 
 	private void partyAccept(final Player invited, final String[] args) {
 		if(args.length > 1) {
-			Player inviter = Bukkit.getPlayer(args[1]);
-			if(inviter == null || !inviter.isOnline()) {
-				this.chat.error(invited, this.messages.party_player_not_online.replaceAll("%PLAYER%", args[1]), this.messages.party_prefix);
-				return;
-			}
-			if(!this.partyManager.hasPartyInvites(invited.getUniqueId())) {
-				this.chat.error(invited, this.messages.party_not_invited_to_any_party, this.messages.party_prefix);
-				return;
-			}
+			OfflinePlayer inviter = Bukkit.getOfflinePlayer(args[1]);
 
-			if(this.partyManager.isInParty(invited.getUniqueId())) {
-				this.chat.error(invited, this.messages.party_must_leave_party_before_joining_another, this.messages.party_prefix);
-				return;
-			}
-
-			Party party__ = null;
-			for(final Party party : this.partyManager.getPartyInvites(invited.getUniqueId())) {
-				if(party.getOwnerUniqueId().equals(inviter.getUniqueId())) {
-					party__ = party;
-					break;
-				}
-			}
-			if(party__ != null) {
-				party__.addPlayer(invited.getUniqueId());
-				this.partyManager.removePartyInvites(invited.getUniqueId());
-			} else {
-				this.chat.error(invited, this.messages.party_not_invited_to_players_party.replaceAll("%PLAYER%", args[1]), this.messages.party_prefix);
+			try {
+				this.partyManager.accept(inviter.getUniqueId(), invited.getUniqueId());
+			} catch(IllegalArgumentException e) {
+				this.chat.error(invited, this.messages.party_player_not_online.formatted(args[1]), this.messages.party_prefix);
+			} catch(PlayerNotInvitedToParty e) {
+				this.chat.error(invited, this.messages.party_not_invited_to_players_party.formatted(args[1]), this.messages.party_prefix);
 			}
 		} else {
-			this.chat.send(invited, this.messages.party_usage_prefix + "/" + label + " accept <player>", this.messages.party_prefix);
+			this.chat.error(invited, this.messages.party_not_invited_to_players_party.formatted(args[1]), this.messages.party_prefix);
 		}
 	}
 
@@ -180,16 +132,16 @@ public class PartyCommands implements CommandExecutor {
 		if(args.length > 1) {
 			final Player target = Bukkit.getPlayer(args[1]);
 			if(target == null || !target.isOnline()) {
-				this.chat.error(player, this.messages.party_player_not_online.replaceAll("%PLAYER%", args[1]), this.messages.party_prefix);
+				this.chat.error(player, this.messages.party_player_not_online.formatted(args[1]), this.messages.party_prefix);
 				return;
 			}
 
 			final Party party = this.partyManager.getParty(player.getUniqueId());
 			if(party != null && party.isPartyOwner(player.getUniqueId())) {
 				if(party.containsPlayer(target.getUniqueId())) {
-					party.removePlayer(target.getUniqueId());
+					partyManager.removeFromParty(target.getUniqueId());
 				} else {
-					this.chat.error(player, this.messages.party_player_not_in_party.replaceAll("%PLAYER%", args[1]), this.messages.party_prefix);
+					this.chat.error(player, this.messages.party_player_not_in_party.formatted(args[1]), this.messages.party_prefix);
 				}
 			} else {
 				this.chat.send(player, this.messages.party_you_are_not_a_party_owner, this.messages.party_prefix);
@@ -230,7 +182,7 @@ public class PartyCommands implements CommandExecutor {
 	private void partyDisband(final Player player) {
 		Party party = this.partyManager.getParty(player.getUniqueId());
 		if(party != null && party.isPartyOwner(player.getUniqueId())) {
-			party.disband();
+			partyManager.disband(party);
 		} else {
 			this.chat.send(player, this.messages.party_you_are_not_a_party_owner, this.messages.party_prefix);
 		}
@@ -243,7 +195,7 @@ public class PartyCommands implements CommandExecutor {
 			return;
 		}
 
-		party.removePlayer(player.getUniqueId());
+		partyManager.removeFromParty(player.getUniqueId());
 	}
 
 	private void partySetOwner(final Player player, final String[] args) {
@@ -261,7 +213,7 @@ public class PartyCommands implements CommandExecutor {
 
 			Player newOwner = Bukkit.getPlayer(args[1]);
 			if(newOwner == null || !newOwner.isOnline()) {
-				this.chat.error(player, this.messages.party_player_not_online.replaceAll("%PLAYER%", args[1]), this.messages.party_prefix);
+				this.chat.error(player, this.messages.party_player_not_online.formatted(args[1]), this.messages.party_prefix);
 				return;
 			}
 
@@ -270,7 +222,7 @@ public class PartyCommands implements CommandExecutor {
 				return;
 			}
 
-			party.electOwner(newOwner.getUniqueId());
+			partyManager.assignOwner(party, newOwner.getUniqueId());
 		} else {
 			this.chat.send(player, this.messages.party_usage_prefix + "/" + label + " accept <player>", this.messages.party_prefix);
 		}
@@ -294,6 +246,6 @@ public class PartyCommands implements CommandExecutor {
 		}
 		String msg = String.join(" ", msgList);
 
-		party.chat(player, msg);
+		party.chatAsPlayer(player, msg);
 	}
 }

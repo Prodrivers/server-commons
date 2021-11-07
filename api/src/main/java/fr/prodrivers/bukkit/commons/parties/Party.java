@@ -1,6 +1,5 @@
 package fr.prodrivers.bukkit.commons.parties;
 
-import fr.prodrivers.bukkit.commons.Chat;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -10,44 +9,34 @@ import java.util.UUID;
 /**
  * Prodrivers Commons Party instance
  */
-public abstract class Party {
+public interface Party {
 	/**
 	 * Returns owner's unique id.
 	 *
 	 * @return Owner's unique id
 	 */
-	public UUID getOwnerUniqueId() {
-		throw new UnsupportedOperationException();
-	}
+	UUID getOwnerUniqueId();
 
 	/**
 	 * Returns party members.
 	 *
 	 * @return List of party members
 	 */
-	public ArrayList<UUID> getPlayers() {
-		throw new UnsupportedOperationException();
-	}
+	ArrayList<UUID> getPlayers();
 
 	/**
-	 * Adds a player.
+	 * Register a player to the party.
 	 *
-	 * @param playerUniqueId Player to add's Unique ID
-	 * @return {@code true} if the player was added to the party
+	 * @param playerUniqueId Player to add Unique ID
 	 */
-	public boolean addPlayer(final UUID playerUniqueId) {
-		throw new UnsupportedOperationException();
-	}
+	void registerPlayer(final UUID playerUniqueId);
 
 	/**
-	 * Removes a player.
+	 * Unregister a player from the party.
 	 *
 	 * @param playerUniqueId Player to remove's Unique Id
-	 * @return {@code true} if the player was removed from the party
 	 */
-	public boolean removePlayer(final UUID playerUniqueId) {
-		throw new UnsupportedOperationException();
-	}
+	void unregisterPlayer(final UUID playerUniqueId);
 
 	/**
 	 * Checks if a player is present in party list.
@@ -55,9 +44,7 @@ public abstract class Party {
 	 * @param playerUniqueId Player's Unique ID
 	 * @return {@code true} if the player is within the party list.
 	 */
-	public boolean containsPlayer(final UUID playerUniqueId) {
-		throw new UnsupportedOperationException();
-	}
+	boolean containsPlayer(final UUID playerUniqueId);
 
 	/**
 	 * Checks if a player is the party owner
@@ -65,64 +52,75 @@ public abstract class Party {
 	 * @param playerUniqueId Player's Unique ID
 	 * @return {@code true} if the player is the party owner
 	 */
-	public boolean isPartyOwner(final UUID playerUniqueId) {
-		throw new UnsupportedOperationException();
-	}
+	boolean isPartyOwner(final UUID playerUniqueId);
 
 	/**
 	 * Set a player as the new party owner
 	 *
 	 * @param newOwner New owner
+	 * @return {@code true} if new owner has been assigned
 	 */
-	public void electOwner(UUID newOwner) {
-		throw new UnsupportedOperationException();
-	}
+	boolean assignOwner(final UUID newOwner);
 
 	/**
 	 * Returns the party's number of players.
 	 *
 	 * @return Party's number of players
 	 */
-	public int size() {
-		throw new UnsupportedOperationException();
-	}
+	int size();
 
 	/**
-	 * Disband/Delete the party.
+	 * Clear a party of all its players.
 	 */
-	public void disband() {
-		throw new UnsupportedOperationException();
-	}
+	void clear();
 
 	/**
-	 * Send a message to a single player
+	 * Send a message as a player.
 	 *
-	 * @param player Receiving player
-	 * @param message message to send
+	 * @param player  Sending player
+	 * @param message Message to send
 	 */
-	public void chat(Player player, String message) {
-		throw new UnsupportedOperationException();
-	}
+	void chatAsPlayer(final Player player, String message);
 
 	/**
-	 * Send a message to all party players using a specific chat module
+	 * Send a message to a player.
 	 *
-	 * @param chat Chat plugin to use
-	 * @param msg  Message to send
+	 * @param receiverUniqueId Sending player
+	 * @param message          Message to send
+	 * @param substitutions    Values to pass to string format function
 	 */
-	public void broadcast(Chat chat, final String msg) {
-		throw new UnsupportedOperationException();
-	}
+	void send(final UUID receiverUniqueId, final PartyMessage message, final Object... substitutions);
 
 	/**
-	 * Send a message to all party players, except some defined ones, using a specific chat module
+	 * Broadcast a message to the party.
 	 *
-	 * @param chat     Chat plugin to use
-	 * @param msg      Message to send
-	 * @param excluded Players to be excluded from the broadcast
+	 * @param message       Message to send
+	 * @param substitutions Values to pass to string format function
 	 */
-	public void broadcast(Chat chat, final String msg, final List<UUID> excluded) {
-		throw new UnsupportedOperationException();
-	}
+	void broadcast(final PartyMessage message, final Object... substitutions);
+
+	/**
+	 * Broadcast a message to the party, except some players.
+	 *
+	 * @param message       Message to send
+	 * @param excluded      Players that should not receive the message
+	 * @param substitutions Values to pass to string format function
+	 */
+	void broadcast(final PartyMessage message, final List<UUID> excluded, final Object... substitutions);
+
+	/**
+	 * Broadcast a message to the party.
+	 *
+	 * @param message       Message to send
+	 */
+	void broadcast(final String message);
+
+	/**
+	 * Broadcast a message to the party, except some players.
+	 *
+	 * @param message       Message to send
+	 * @param excluded      Players that should not receive the message
+	 */
+	void broadcast(final String message, final List<UUID> excluded);
 }
 

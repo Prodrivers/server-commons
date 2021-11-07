@@ -20,7 +20,7 @@ public class PartyListener implements Listener {
 		Party party = this.partyManager.getParty(event.getPlayer().getUniqueId());
 
 		if(party != null) {
-			party.removePlayer(event.getPlayer().getUniqueId());
+			this.partyManager.removeFromParty(event.getPlayer().getUniqueId());
 		}
 	}
 }

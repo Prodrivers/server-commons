@@ -23,7 +23,6 @@ public class EMessages extends Messages {
 	public String party_you_invited = "&aYou invited &2%PLAYER%&a!";
 	public String party_you_were_invited = "&2%PLAYER% &ainvited you to join his/her party! Click this message or type &2/party accept %PLAYER% &ato accept.";
 	public String party_you_were_invited_hover_text = "Click to join %PLAYER%'s party";
-	public String party_not_invited_to_any_party = "&cYou are not invited to any party.";
 	public String party_not_invited_to_players_party = "&cYou are not invited to the party of &4%PLAYER%&c.";
 	public String party_player_not_in_party = "&4%PLAYER% &cis not in your party.";
 	public String party_you_joined_party = "&7You joined the party of &8%PLAYER%&7.";

@@ -1,32 +1,31 @@
 package fr.prodrivers.bukkit.commons.parties;
 
 import com.google.inject.assistedinject.Assisted;
-import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.plugin.EMessages;
-import org.bukkit.Bukkit;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class DefaultParty extends Party {
+public class DefaultParty implements Party {
 	private UUID owner;
 	private final ArrayList<UUID> players = new ArrayList<>();
 
 	private final EMessages messages;
 	private final Chat chat;
-	private final PartyManager partyManager;
 
 	@Inject
-	DefaultParty(final PartyManager partyManager, final EMessages messages, final Chat chat, @Assisted final UUID ownerUniqueId) {
+	DefaultParty(final EMessages messages, final Chat chat, @Assisted final UUID ownerUniqueId) {
 		this.owner = ownerUniqueId;
 		this.players.add(this.owner);
 
-		this.partyManager = partyManager;
 		this.messages = messages;
 		this.chat = chat;
 	}
@@ -39,79 +38,20 @@ public class DefaultParty extends Party {
 		return this.players;
 	}
 
-	public boolean addPlayer(final UUID playerUniqueId) {
-		if(playerUniqueId != null) {
-			final Player player = Bukkit.getPlayer(playerUniqueId);
-			if(player != null) {
-				if(!this.partyManager.isInParty(playerUniqueId)) {
-					this.players.add(playerUniqueId);
-					this.partyManager.addParty(playerUniqueId, this);
-					Player ownerPlayer = Bukkit.getPlayer(this.getOwnerUniqueId());
-					if(ownerPlayer == null) {
-						Log.severe("Owner " + this.getOwnerUniqueId() + "  of party is null on party add of " + player);
-						return false;
-					}
-					this.chat.success(player, this.messages.party_you_joined_party.replaceAll("%PLAYER%", ownerPlayer.getName()), this.messages.party_prefix);
-					this.tellAll(this.messages.party_player_joined_party.replaceAll("%PLAYER%", player.getName()), Collections.singletonList(playerUniqueId));
-					return true;
-				}
-			}
-		}
-		return false;
+	public void registerPlayer(final UUID playerUniqueId) {
+		this.players.add(playerUniqueId);
 	}
 
-	public void electOwner(UUID newOwner) {
-		Log.fine("Electing owner " + newOwner);
-		// Tell the party who is the new leader
-		final Player newOwnerPlayer = Bukkit.getPlayer(newOwner);
-		if(newOwnerPlayer != null && this.players.contains(newOwner)) {
-			// Set new owner
+	public boolean assignOwner(final UUID newOwner) {
+		if(this.players.contains(newOwner)) {
 			owner = newOwner;
-			// Inform other party members
-			this.chat.send(newOwnerPlayer, this.messages.party_you_were_elected_as_new_leader, this.messages.party_prefix);
-			this.tellAll(this.messages.party_player_elected_as_new_leader.replaceAll("%PLAYER%", newOwnerPlayer.getName()), Collections.singletonList(newOwner));
-		}
-	}
-
-	public boolean removePlayer(final UUID playerUniqueId) {
-		if(playerUniqueId != null) {
-			if(isPartyOwner(playerUniqueId)) {
-				Log.fine("Party owner leaving");
-				// If there is still more than one player in the party
-				if(size() > 1) {
-					Log.fine("Still players in party");
-					// Remove the leaving player
-					this.players.remove(playerUniqueId);
-					this.partyManager.removeParty(playerUniqueId);
-					// Elect a player to be the new leader
-					electOwner(this.players.get(0));
-				} else {
-					Log.fine("Disbanding party");
-					disband();
-				}
-				return true;
-			}
-
-			if(this.players.contains(playerUniqueId)) {
-				this.players.remove(playerUniqueId);
-				this.partyManager.removeParty(playerUniqueId);
-				final Player removedPlayer = Bukkit.getPlayer(playerUniqueId);
-				if(removedPlayer != null) {
-					Player ownerPlayer = Bukkit.getPlayer(this.getOwnerUniqueId());
-					if(ownerPlayer == null) {
-						Log.severe("Owner " + this.getOwnerUniqueId() + "  of party is null on party remove of " + removedPlayer);
-						return false;
-					}
-					this.chat.success(removedPlayer, this.messages.party_you_left_party.replaceAll("%PLAYER%", ownerPlayer.getName()), this.messages.party_prefix);
-					this.tellAll(this.messages.party_player_left_party.replaceAll("%PLAYER%", removedPlayer.getName()), Collections.singletonList(playerUniqueId));
-				}
-				if(size() <= 1) {
-					disband();
-				}
-				return true;
-			}
+			return true;
 		}
 		return false;
+	}
+
+	public void unregisterPlayer(final UUID playerUniqueId) {
+		this.players.remove(playerUniqueId);
 	}
 
 	public boolean containsPlayer(final UUID playerUniqueId) {
@@ -126,42 +66,103 @@ public class DefaultParty extends Party {
 		return this.players.size();
 	}
 
-	public void disband() {
-		this.tellAll(this.messages.party_disbanded);
-		for(UUID p : this.players)
-			this.partyManager.removeParty(p);
-		//this.players.clear();
+	public void clear() {
+		this.players.clear();
 	}
 
-	public void chat(Player player, String message) {
+	public void chatAsPlayer(final Player player, String message) {
 		if(message.trim().length() > 0) {
 			String format = this.messages.party_chat_format;
 			message = format.replaceAll("%PLAYER%", player.getDisplayName()).replaceAll("%MESSAGE%", message);
 			for(final UUID partyMember : this.getPlayers()) {
-				final Player partyMemberPlayer = Bukkit.getPlayer(partyMember);
-				if(partyMemberPlayer != null) {
-					partyMemberPlayer.sendMessage(message);
-				}
+				this.chat.send(partyMember, message, this.messages.party_prefix);
 			}
 		}
 	}
 
-	private void tellAll(final String msg) {
+	private String getStringForMessage(PartyMessage message) {
+		return switch(message) {
+			case DISBANDED -> this.messages.party_disbanded;
+			case JOINED_YOU -> this.messages.party_you_joined_party;
+			case JOINED_OTHERS -> this.messages.party_player_joined_party;
+			case LEFT_YOU -> this.messages.party_you_left_party;
+			case LEFT_OTHERS -> this.messages.party_player_left_party;
+			case CANNOT_INVITE_YOURSELF -> this.messages.party_cannot_invite_yourself;
+			case NOT_PARTY_OWNER_YOU -> this.messages.party_player_not_party_owner;
+			case PLAYER_INVITED_INVITER -> this.messages.party_you_invited;
+			case PLAYER_INVITED_YOU -> this.messages.party_you_were_invited;
+			case PLAYER_IS_IN_PARTY -> this.messages.party_player_is_in_a_party;
+			case PARTY_LEAVE_BEFORE_JOINING_ANOTHER -> this.messages.party_must_leave_party_before_joining_another;
+			case PARTY_NOT_INVITED_YOU -> this.messages.party_not_invited_to_players_party;
+			case PARTY_LEADER_ASSIGNED_YOU -> this.messages.party_you_were_elected_as_new_leader;
+			case PARTY_LEADER_ASSIGNED_OTHERS -> this.messages.party_player_elected_as_new_leader;
+			default -> "NOT_DEFINED:" + message.toString().toUpperCase();
+		};
+	}
+
+	private BaseComponent[] getComponentsFromMessage(PartyMessage message, final Object... substitutions) {
+		if(message == PartyMessage.PLAYER_INVITED_YOU) {
+			BaseComponent[] invite_message = TextComponent.fromLegacyText(this.messages.party_you_were_invited.formatted(substitutions));
+			BaseComponent[] invite_message_hover_text = TextComponent.fromLegacyText(this.messages.party_you_were_invited_hover_text.formatted(substitutions));
+			ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/party accept " + substitutions[0]);
+			HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, invite_message_hover_text);
+			for(BaseComponent component : invite_message) {
+				component.setClickEvent(clickEvent);
+				component.setHoverEvent(hoverEvent);
+			}
+			return invite_message;
+		}
+
+		return TextComponent.fromLegacyText(getStringForMessage(message).formatted(substitutions));
+	}
+
+	public void send(final UUID receiverUniqueId, final PartyMessage message, final Object... substitutions) {
+		BaseComponent[] components = getComponentsFromMessage(message, substitutions);
+		switch(message) {
+			case JOINED_YOU:
+			case LEFT_YOU:
+			case PLAYER_INVITED_INVITER:
+			case PLAYER_INVITED_YOU:
+				this.chat.success(receiverUniqueId, components, this.messages.party_prefix);
+				return;
+			case CANNOT_INVITE_YOURSELF:
+			case NOT_PARTY_OWNER_YOU:
+			case PLAYER_IS_IN_PARTY:
+			case PARTY_LEAVE_BEFORE_JOINING_ANOTHER:
+			case PARTY_NOT_INVITED_YOU:
+				this.chat.error(receiverUniqueId, components, this.messages.party_prefix);
+				return;
+			default:
+				this.chat.send(receiverUniqueId, components, this.messages.party_prefix);
+		}
+	}
+
+	public void broadcast(final PartyMessage message, final Object... substitutions) {
 		for(final UUID partyMember : this.getPlayers()) {
-			final Player partyMemberPlayer = Bukkit.getPlayer(partyMember);
-			if(partyMemberPlayer != null) {
-				this.chat.send(partyMemberPlayer, msg, this.messages.party_prefix);
-			}
+			this.send(partyMember, message, substitutions);
 		}
 	}
 
-	private void tellAll(final String msg, final List<UUID> excluded) {
+	public void broadcast(final PartyMessage message, final List<UUID> excluded, final Object... substitutions) {
 		for(final UUID partyMember : this.getPlayers()) {
 			if(!excluded.contains(partyMember)) {
-				final Player partyMemberPlayer = Bukkit.getPlayer(partyMember);
-				if(partyMemberPlayer != null) {
-					this.chat.send(partyMemberPlayer, msg, this.messages.party_prefix);
-				}
+				this.send(partyMember, message, substitutions);
+			}
+		}
+	}
+
+	@Override
+	public void broadcast(String message) {
+		for(final UUID partyMember : this.getPlayers()) {
+			this.chat.send(partyMember, message, this.messages.party_prefix);
+		}
+	}
+
+	@Override
+	public void broadcast(String message, List<UUID> excluded) {
+		for(final UUID partyMember : this.getPlayers()) {
+			if(!excluded.contains(partyMember)) {
+				this.chat.send(partyMember, message, this.messages.party_prefix);
 			}
 		}
 	}
