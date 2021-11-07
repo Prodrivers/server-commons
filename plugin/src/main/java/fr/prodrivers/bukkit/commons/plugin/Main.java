@@ -16,6 +16,7 @@ import fr.prodrivers.bukkit.commons.parties.PartyModule;
 import fr.prodrivers.bukkit.commons.hubs.MainHub;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.sections.SectionManagerModule;
+import fr.prodrivers.bukkit.commons.storage.DataSourceConfigProvider;
 import fr.prodrivers.bukkit.commons.storage.StorageModule;
 import fr.prodrivers.bukkit.commons.ui.UIModule;
 import org.bukkit.Bukkit;
@@ -33,6 +34,7 @@ public class Main extends JavaPlugin implements Listener {
 	private Logger logger;
 
 	private SectionManager sectionManager;
+	private DataSourceConfigProvider dataSourceConfigProvider;
 
 	public Injector getInjector() {
 		return injector;
@@ -98,6 +100,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(this, this);
 
 		sectionManager = injector.getInstance(SectionManager.class);
+		dataSourceConfigProvider = injector.getInstance(DataSourceConfigProvider.class);
 
 		MainHub hub = injector.getInstance(MainHub.class);
 		sectionManager.register(hub);
@@ -111,5 +114,10 @@ public class Main extends JavaPlugin implements Listener {
 		ProdriversCommons.init(this);
 
 		logger.info("" + this.getDescription().getName() + " has been enabled!");
+	}
+
+	public void reload() {
+		this.configuration.reload();
+		this.dataSourceConfigProvider.reload();
 	}
 }
