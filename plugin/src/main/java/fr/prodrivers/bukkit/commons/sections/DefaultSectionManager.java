@@ -294,6 +294,11 @@ public class DefaultSectionManager implements SectionManager {
 	}
 
 	@Override
+	public Iterable<Section> getSections() {
+		return sections.values();
+	}
+
+	@Override
 	public Section getRootSection() {
 		return getSection(ROOT_NODE_NAME);
 	}

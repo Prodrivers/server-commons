@@ -88,6 +88,13 @@ public interface SectionManager {
 	Section getCurrentSection(OfflinePlayer player);
 
 	/**
+	 * Get all registered sections.
+	 *
+	 * @return Iterator going through to all sections
+	 */
+	Iterable<Section> getSections();
+
+	/**
 	 * Get a section instance by its name.
 	 *
 	 * @param name Name of the section instance to return
