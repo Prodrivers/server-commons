@@ -169,58 +169,63 @@ public class DefaultSectionManager implements SectionManager {
 		// Register that the player is in an enter process
 		inEnter.add(player.getUniqueId());
 
-		Log.finest("Path to travel : " + nodesToVisit);
+		try {
+			Log.finest("Path to travel : " + nodesToVisit);
 
-		Log.finest("Left : " + leftNode);
-		Log.finest("Target : " + targetNode);
+			Log.finest("Left : " + leftNode);
+			Log.finest("Target : " + targetNode);
 
-		// Special case for root node exit
-		// Path traversal will be skipped as it is empty
-		if(leftNode != null && leftNode.getFullName().equals(SectionManager.ROOT_NODE_NAME) && targetNode == null) {
-			if(!leftNode.leave(player)) {
-				// The node refused the player to leave, stop processing.
-				Log.severe("Section " + leftNode + " refused player " + player + " to leave.");
-				return false;
-			} else {
-				// Remove the corresponding section as this player's current section
-				playersCurrentSection.remove(player.getUniqueId());
-			}
-		}
-
-		// Successively enter and leave sections along the path
-		for(Section node : nodesToVisit) {
-			// If we are not considering the first node, as the player is already in this node
-			if(node != leftNode) {
-				if(!node.join(player)) {
-					// The node refused the player to enter, stop processing.
-					Log.severe("Section " + node + " refused player " + player + " to join.");
-					// If this is the root node
-					if(ROOT_NODE_NAME.equals(node.getFullName())) {
-						// Kick the player
-						player.kickPlayer("An internal error occurred.");
-					}
-					return false;
-				}
-
-				// Register the target section as current section for the player
-				playersCurrentSection.put(player.getUniqueId(), node);
-			}
-			// If we are not considering the last node, as the player should stay in it
-			if(node != targetNode) {
-				if(!node.leave(player)) {
+			// Special case for root node exit
+			// Path traversal will be skipped as it is empty
+			if(leftNode != null && leftNode.getFullName().equals(SectionManager.ROOT_NODE_NAME) && targetNode == null) {
+				if(!leftNode.leave(player)) {
 					// The node refused the player to leave, stop processing.
-					Log.severe("Section " + node + " refused player " + player + " to leave.");
+					Log.severe("Section " + leftNode + " refused player " + player + " to leave.");
 					return false;
+				} else {
+					// Remove the corresponding section as this player's current section
+					playersCurrentSection.remove(player.getUniqueId());
 				}
-
-				// Remove the corresponding section as this player's current section
-				playersCurrentSection.remove(player.getUniqueId());
 			}
-		}
 
-		// Indicate that the player finished its enter process, remove temporary values
-		inEnter.remove(player.getUniqueId());
-		playersSectionPath.remove(player.getUniqueId());
+			// Successively enter and leave sections along the path
+			for(Section node : nodesToVisit) {
+				// If we are not considering the first node, as the player is already in this node
+				if(node != leftNode) {
+					if(!node.join(player)) {
+						// The node refused the player to enter, stop processing.
+						Log.severe("Section " + node + " refused player " + player + " to join.");
+						// If this is the root node
+						if(ROOT_NODE_NAME.equals(node.getFullName())) {
+							// Kick the player
+							player.kickPlayer("An internal error occurred.");
+						}
+						return false;
+					}
+
+					// Register the target section as current section for the player
+					playersCurrentSection.put(player.getUniqueId(), node);
+				}
+				// If we are not considering the last node, as the player should stay in it
+				if(node != targetNode) {
+					if(!node.leave(player)) {
+						// The node refused the player to leave, stop processing.
+						Log.severe("Section " + node + " refused player " + player + " to leave.");
+						return false;
+					}
+
+					// Remove the corresponding section as this player's current section
+					playersCurrentSection.remove(player.getUniqueId());
+				}
+			}
+		} catch(Throwable e) {
+			Log.severe("Error when moving player " + player + " along path from " + leftNode + " to " + targetNode + ".", e);
+			return false;
+		} finally {
+			// Indicate that the player finished its enter process, remove temporary values
+			inEnter.remove(player.getUniqueId());
+			playersSectionPath.remove(player.getUniqueId());
+		}
 
 		// Make entering player party's players move if necessary
 		// Do not do this when exiting root node
