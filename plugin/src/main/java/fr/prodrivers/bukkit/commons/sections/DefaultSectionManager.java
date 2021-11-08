@@ -194,6 +194,11 @@ public class DefaultSectionManager implements SectionManager {
 				if(!node.join(player)) {
 					// The node refused the player to enter, stop processing.
 					Log.severe("Section " + node + " refused player " + player.getName() + " to enter.");
+					// If this is the root node
+					if(ROOT_NODE_NAME.equals(node.getFullName())) {
+						// Kick the player
+						player.kickPlayer("An internal error occurred.");
+					}
 					return false;
 				}
 
