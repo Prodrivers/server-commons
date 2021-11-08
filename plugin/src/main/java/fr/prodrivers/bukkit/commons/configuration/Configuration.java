@@ -36,10 +36,6 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 
 	@Override
 	protected void init() {
-		System.out.println("Injection result:");
-		System.out.println(plugin);
-		System.out.println(chat);
-		System.out.println(messages);
 		super.init();
 		if(this.messages != null) {
 			this.messages.init();

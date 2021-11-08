@@ -104,12 +104,12 @@ public class DefaultSectionManager implements SectionManager {
 							// Get party player
 							Player partyPlayer = this.plugin.getServer().getPlayer(partyPlayerUUID);
 							if(partyPlayer != null) {
-								System.out.print("Check player " + partyPlayer);
+								Log.fine("Checking section walk for party player " + partyPlayer);
 								// Get player current section
 								Section currentSection = playersCurrentSection.get(partyPlayer.getUniqueId());
 								// Check that the player can go to the section
 								if(!canPlayerWalkAlongSectionPath(partyPlayer, currentSection, targetNode, true)) {
-									System.out.print("Player " + partyPlayer + " cannot join or leave.");
+									Log.severe("Party player " + partyPlayer + " cannot join or leave, stopping everything.");
 									// If not, stop everything
 									return false;
 								}
@@ -134,11 +134,11 @@ public class DefaultSectionManager implements SectionManager {
 			return false;
 		}
 
-		Log.fine(player.getName() + " entering section : " + targetNode);
+		Log.fine(player + " entering section : " + targetNode);
 
 		// Check that the player can walk along the path
 		if(!canPlayerWalkAlongSectionPath(player, leftNode, targetNode, false)) {
-			System.out.print("Player cannot walk.");
+			// Logging is already done for here
 			// If not, stop everything
 			return false;
 		}
@@ -147,7 +147,7 @@ public class DefaultSectionManager implements SectionManager {
 		PlayerChangeSectionEvent event = new PlayerChangeSectionEvent(player, leftNode, targetNode);
 		Bukkit.getPluginManager().callEvent(event);
 		if(event.isCancelled()) {
-			Log.warning("Section move of player " + player.getName() + " from " + leftNode + " to " + targetNode + " was canceled by event.");
+			Log.warning("Section move of player " + player + " from " + leftNode + " to " + targetNode + " was canceled by event.");
 			return false;
 		}
 
@@ -179,7 +179,7 @@ public class DefaultSectionManager implements SectionManager {
 		if(leftNode != null && leftNode.getFullName().equals(SectionManager.ROOT_NODE_NAME) && targetNode == null) {
 			if(!leftNode.leave(player)) {
 				// The node refused the player to leave, stop processing.
-				Log.severe("Section " + leftNode + " refused player " + player.getName() + " to leave.");
+				Log.severe("Section " + leftNode + " refused player " + player + " to leave.");
 				return false;
 			} else {
 				// Remove the corresponding section as this player's current section
@@ -193,7 +193,7 @@ public class DefaultSectionManager implements SectionManager {
 			if(node != leftNode) {
 				if(!node.join(player)) {
 					// The node refused the player to enter, stop processing.
-					Log.severe("Section " + node + " refused player " + player.getName() + " to enter.");
+					Log.severe("Section " + node + " refused player " + player + " to join.");
 					// If this is the root node
 					if(ROOT_NODE_NAME.equals(node.getFullName())) {
 						// Kick the player
@@ -209,7 +209,7 @@ public class DefaultSectionManager implements SectionManager {
 			if(node != targetNode) {
 				if(!node.leave(player)) {
 					// The node refused the player to leave, stop processing.
-					Log.severe("Section " + node + " refused player " + player.getName() + " to leave.");
+					Log.severe("Section " + node + " refused player " + player + " to leave.");
 					return false;
 				}
 
@@ -234,11 +234,11 @@ public class DefaultSectionManager implements SectionManager {
 					// Move all party players, except the owner, to the target section
 					for(UUID partyPlayerUUID : party.getPlayers()) {
 						if(partyPlayerUUID != party.getOwnerUniqueId()) {
-							System.out.print("Moving " + partyPlayerUUID);
+							Log.fine("Moving party player " + partyPlayerUUID + " to " + targetNode);
 							// Get party player
 							Player partyPlayer = this.plugin.getServer().getPlayer(partyPlayerUUID);
 							if(partyPlayer != null) {
-								System.out.print("Moving " + partyPlayer);
+								Log.fine("Moving party player " + partyPlayer + " to " + targetNode);
 								// Move player to section
 								enter(partyPlayer, targetNode, true);
 							}
@@ -286,7 +286,7 @@ public class DefaultSectionManager implements SectionManager {
 			if(section.preLeave(player, null, true)) {
 				section.leave(player);
 			} else {
-				Log.severe("Could not make player " + player.getName() + " leave section " + section);
+				Log.severe("Could not make player " + player + " leave section " + section);
 			}
 		}
 	}
@@ -399,7 +399,7 @@ public class DefaultSectionManager implements SectionManager {
 		for(node = start.getParentSection(); node != null; node = node.getParentSection()) {
 			if(!node.preJoin(player, finalNode, fromParty)) {
 				// The current node does not want us to enter it. Stop going back.
-				Log.severe("Node " + node + " refused player " + player + " to enter with its enter check.");
+				Log.severe("Node " + node + " refused player " + player + " to enter with its join check.");
 				return false;
 			}
 
@@ -458,7 +458,7 @@ public class DefaultSectionManager implements SectionManager {
 			if(node != start) {
 				if(!node.preJoin(player, finalNode, fromParty)) {
 					// The current node does not want us to enter it. Stop going back.
-					Log.severe("Node " + node + " refused player " + player + " to enter with its leave check.");
+					Log.severe("Node " + node + " refused player " + player + " to enter with its join check.");
 					return false;
 				}
 			}
