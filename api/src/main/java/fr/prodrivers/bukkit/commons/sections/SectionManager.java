@@ -23,12 +23,13 @@ public interface SectionManager {
 	 * Make a player enter his current section's parent section.
 	 *
 	 * @param player Player to be moved
+	 * @return {@code true} if player was correctly moved to parent section
 	 * @throws NoCurrentSectionException       The player does not have a current section
 	 * @throws NoParentSectionException        The player's current section does not have a parent section
 	 * @throws IllegalSectionLeavingException  The current section forbids the player to go to the parent section
 	 * @throws IllegalSectionEnteringException The player should not enter the parent section
 	 */
-	void enter(Player player) throws NoCurrentSectionException, NoParentSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException;
+	boolean enter(Player player) throws NoCurrentSectionException, NoParentSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException;
 
 	/**
 	 * Make a player enter a section by section name.
@@ -36,11 +37,12 @@ public interface SectionManager {
 	 *
 	 * @param player      Player to be moved
 	 * @param sectionName Section name to go to
+	 * @return {@code true} if player was correctly moved to specified section
 	 * @throws InvalidSectionException         Invalid section name provided
 	 * @throws IllegalSectionLeavingException  A section along the path the player has to walk forbids the player to leave it
 	 * @throws IllegalSectionEnteringException A section along the path the player has to walk forbids the player from entering it
 	 */
-	void enter(Player player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException;
+	boolean enter(Player player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException;
 
 	/**
 	 * Register a new section instance against the Prodrivers Commons infrastructure
@@ -66,8 +68,9 @@ public interface SectionManager {
 	 * This action is automatically performed by the default section manager on player login, if it is used.
 	 *
 	 * @param player Player to register
+	 * @return {@code true} if player was correctly registered
 	 */
-	void register(Player player);
+	boolean register(Player player);
 
 	/**
 	 * Unregisters a player from the Prodrivers Commons infrastructure.

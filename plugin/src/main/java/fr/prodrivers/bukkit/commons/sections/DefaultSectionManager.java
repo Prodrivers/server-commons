@@ -40,7 +40,7 @@ public class DefaultSectionManager implements SectionManager {
 		new SectionListener(plugin, this);
 	}
 
-	public void enter(Player player) throws NoCurrentSectionException, NoParentSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
+	public boolean enter(Player player) throws NoCurrentSectionException, NoParentSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
 		// Get the current player section
 		Section currentSection = playersCurrentSection.get(player.getUniqueId());
 
@@ -60,10 +60,10 @@ public class DefaultSectionManager implements SectionManager {
 		}
 
 		// Send the player to the parent section
-		enter(player, parentSection);
+		return enter(player, parentSection);
 	}
 
-	public void enter(Player player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
+	public boolean enter(Player player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
 		// Get the target section
 		Section targetNode = getSection(sectionName);
 
@@ -73,14 +73,14 @@ public class DefaultSectionManager implements SectionManager {
 			throw new InvalidSectionException("Invalid section name");
 		}
 
-		enter(player, targetNode);
+		return enter(player, targetNode);
 	}
 
-	public void enter(Player player, Section targetNode) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
-		enter(player, targetNode, false);
+	public boolean enter(Player player, Section targetNode) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
+		return enter(player, targetNode, false);
 	}
 
-	public void enter(Player player, Section targetNode, boolean fromParty) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
+	public boolean enter(Player player, Section targetNode, boolean fromParty) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
 		// Check that all party players can enter, if necessary
 		// If the section does not handle party by itself and the player is not sent by the party owner
 		if(!fromParty && targetNode != null && !targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
@@ -111,7 +111,7 @@ public class DefaultSectionManager implements SectionManager {
 								if(!canPlayerWalkAlongSectionPath(partyPlayer, currentSection, targetNode, true)) {
 									System.out.print("Player " + partyPlayer + " cannot join or leave.");
 									// If not, stop everything
-									return;
+									return false;
 								}
 							}
 						}
@@ -124,14 +124,14 @@ public class DefaultSectionManager implements SectionManager {
 		Section currentSection = playersCurrentSection.get(player.getUniqueId());
 
 		// Process player entering
-		enter(player, currentSection, targetNode);
+		return enter(player, currentSection, targetNode);
 	}
 
-	protected void enter(Player player, Section leftNode, Section targetNode) throws IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
+	protected boolean enter(Player player, Section leftNode, Section targetNode) throws IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
 		// If the player is already in an enter process
 		if(inEnter.contains(player.getUniqueId())) {
 			// Stop
-			return;
+			return false;
 		}
 
 		Log.fine(player.getName() + " entering section : " + targetNode);
@@ -140,7 +140,7 @@ public class DefaultSectionManager implements SectionManager {
 		if(!canPlayerWalkAlongSectionPath(player, leftNode, targetNode, false)) {
 			System.out.print("Player cannot walk.");
 			// If not, stop everything
-			return;
+			return false;
 		}
 
 		// Trigger event and wait for result
@@ -148,7 +148,7 @@ public class DefaultSectionManager implements SectionManager {
 		Bukkit.getPluginManager().callEvent(event);
 		if(event.isCancelled()) {
 			Log.warning("Section move of player " + player.getName() + " from " + leftNode + " to " + targetNode + " was canceled by event.");
-			return;
+			return false;
 		}
 
 		// Get the path that the player have to follow
@@ -180,6 +180,7 @@ public class DefaultSectionManager implements SectionManager {
 			if(!leftNode.leave(player)) {
 				// The node refused the player to leave, stop processing.
 				Log.severe("Section " + leftNode + " refused player " + player.getName() + " to leave.");
+				return false;
 			} else {
 				// Remove the corresponding section as this player's current section
 				playersCurrentSection.remove(player.getUniqueId());
@@ -193,7 +194,7 @@ public class DefaultSectionManager implements SectionManager {
 				if(!node.join(player)) {
 					// The node refused the player to enter, stop processing.
 					Log.severe("Section " + node + " refused player " + player.getName() + " to enter.");
-					break;
+					return false;
 				}
 
 				// Register the target section as current section for the player
@@ -204,7 +205,7 @@ public class DefaultSectionManager implements SectionManager {
 				if(!node.leave(player)) {
 					// The node refused the player to leave, stop processing.
 					Log.severe("Section " + node + " refused player " + player.getName() + " to leave.");
-					break;
+					return false;
 				}
 
 				// Remove the corresponding section as this player's current section
@@ -241,6 +242,8 @@ public class DefaultSectionManager implements SectionManager {
 				}
 			}
 		}
+
+		return true;
 	}
 
 	public void register(Section section) throws NullPointerException {
@@ -264,8 +267,8 @@ public class DefaultSectionManager implements SectionManager {
 		}
 	}
 
-	public void register(Player player) {
-		enter(player, SectionManager.ROOT_NODE_NAME);
+	public boolean register(Player player) {
+		return enter(player, SectionManager.ROOT_NODE_NAME);
 	}
 
 	public void unregister(OfflinePlayer player) {
