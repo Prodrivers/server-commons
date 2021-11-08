@@ -19,6 +19,8 @@ public class EMessages extends Messages {
 	public String not_a_player = "Not a player.";
 	public String invalid_number = "Invalid number.";
 
+	public String player_kicked_invalid_hub = "The server is currently unavailable.";
+
 	public String party_prefix = "[Party]";
 	public String party_help_heading = ChatColor.DARK_GRAY + "------- " + ChatColor.BLUE + "Help" + ChatColor.DARK_GRAY + " -------";
 	public String party_cannot_invite_yourself = "&cYou can not invite yourself!";

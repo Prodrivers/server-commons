@@ -1,12 +1,16 @@
 package fr.prodrivers.bukkit.commons.hubs;
 
+import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.plugin.EConfiguration;
+import fr.prodrivers.bukkit.commons.plugin.EMessages;
 import fr.prodrivers.bukkit.commons.sections.Section;
 import fr.prodrivers.bukkit.commons.sections.SectionCapabilities;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.inject.Inject;
@@ -17,12 +21,14 @@ import java.util.Set;
 @Singleton
 public class DefaultMainHub extends MainHub {
 	private final EConfiguration configuration;
+	private final EMessages messages;
 	private final SectionManager sectionManager;
 
 	@Inject
-	DefaultMainHub(EConfiguration configuration, SectionManager sectionManager) {
+	DefaultMainHub(EConfiguration configuration, EMessages messages, SectionManager sectionManager) {
 		super();
 		this.configuration = configuration;
+		this.messages = messages;
 		this.sectionManager = sectionManager;
 	}
 
@@ -31,8 +37,14 @@ public class DefaultMainHub extends MainHub {
 	}
 
 	public boolean join(@NonNull Player player) {
-		player.teleport(this.configuration.sections_mainHub);
-		player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10, 5);
+		try {
+			player.teleport(this.configuration.sections_mainHub);
+			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10, 5);
+		} catch(Throwable e) {
+			Log.severe("Error while trying to make player " + player + " enter hub. Kicking him.", e);
+			player.kickPlayer(this.messages.player_kicked_invalid_hub);
+			return false;
+		}
 		return true;
 	}
 
