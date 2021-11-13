@@ -41,6 +41,12 @@ public class DefaultSectionManager implements SectionManager {
 	}
 
 	public boolean enter(Player player) throws NoCurrentSectionException, NoParentSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException {
+		// If the player is already in an enter process
+		if(inEnter.contains(player.getUniqueId())) {
+			// Stop
+			return false;
+		}
+
 		// Get the current player section
 		Section currentSection = playersCurrentSection.get(player.getUniqueId());
 
@@ -81,6 +87,12 @@ public class DefaultSectionManager implements SectionManager {
 	}
 
 	public boolean enter(Player player, Section targetNode, boolean fromParty) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
+		// If the player is already in an enter process
+		if(inEnter.contains(player.getUniqueId())) {
+			// Stop
+			return false;
+		}
+
 		// Check that all party players can enter, if necessary
 		// If the section does not handle party by itself and the player is not sent by the party owner
 		if(!fromParty && targetNode != null && !targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
