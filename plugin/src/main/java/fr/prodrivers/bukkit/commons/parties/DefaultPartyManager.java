@@ -99,9 +99,21 @@ public class DefaultPartyManager implements PartyManager {
 
 	@Override
 	public boolean removeFromParty(@NonNull final UUID playerToRemoveUniqueId) {
+		return removeFromParty(playerToRemoveUniqueId, false);
+	}
+
+	public boolean removeFromParty(@NonNull final UUID playerToRemoveUniqueId, boolean fromDisband) {
 		Party party = getParty(playerToRemoveUniqueId);
 		if(party == null) {
 			return false;
+		}
+
+		if(fromDisband) {
+			// Remove the leaving player
+			party.unregisterPlayer(playerToRemoveUniqueId);
+			this.parties.remove(playerToRemoveUniqueId);
+
+			return true;
 		}
 
 		if(party.isPartyOwner(playerToRemoveUniqueId)) {
@@ -217,8 +229,8 @@ public class DefaultPartyManager implements PartyManager {
 
 	public void disband(@NonNull final Party party) {
 		party.broadcast(PartyMessage.DISBANDED);
-		for(UUID p : party.getPlayers()) {
-			removeFromParty(p);
+		for(UUID p : new ArrayList<>(party.getPlayers())) {
+			removeFromParty(p, true);
 		}
 		party.clear();
 	}
