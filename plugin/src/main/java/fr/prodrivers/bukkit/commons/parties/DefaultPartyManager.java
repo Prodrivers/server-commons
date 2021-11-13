@@ -185,7 +185,7 @@ public class DefaultPartyManager implements PartyManager {
 			addPartyInvite(invitedPlayerUniqueId, inviterParty);
 
 			inviterParty.send(inviterPlayerUniqueId, PartyMessage.PLAYER_INVITED_INVITER, invited.getName());
-			inviterParty.send(inviterPlayerUniqueId, PartyMessage.PLAYER_INVITED_YOU, inviter.getName());
+			inviterParty.send(invitedPlayerUniqueId, PartyMessage.PLAYER_INVITED_YOU, inviter.getName());
 
 			return true;
 		} else {
