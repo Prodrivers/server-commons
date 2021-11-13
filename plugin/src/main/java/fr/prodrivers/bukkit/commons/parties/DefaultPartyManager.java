@@ -2,6 +2,7 @@ package fr.prodrivers.bukkit.commons.parties;
 
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.exceptions.PartyCannotInviteYourselfException;
+import fr.prodrivers.bukkit.commons.exceptions.PlayerNotConnectedException;
 import fr.prodrivers.bukkit.commons.exceptions.PlayerNotInvitedToParty;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -144,19 +145,19 @@ public class DefaultPartyManager implements PartyManager {
 	}
 
 	@Override
-	public boolean invite(@NonNull final UUID inviterPlayerUniqueId, @NonNull final UUID invitedPlayerUniqueId) throws IllegalArgumentException, PartyCannotInviteYourselfException {
+	public boolean invite(@NonNull final UUID inviterPlayerUniqueId, @NonNull final UUID invitedPlayerUniqueId) throws PlayerNotConnectedException, PartyCannotInviteYourselfException {
 		if(inviterPlayerUniqueId.equals(invitedPlayerUniqueId)) {
 			throw new PartyCannotInviteYourselfException(inviterPlayerUniqueId + "tried to invite itself.");
 		}
 
 		Player inviter = Bukkit.getPlayer(inviterPlayerUniqueId);
 		if(inviter == null) {
-			throw new IllegalArgumentException("Inviter player is not connected.");
+			throw new PlayerNotConnectedException("Inviter player is not connected.");
 		}
 
 		Player invited = Bukkit.getPlayer(invitedPlayerUniqueId);
 		if(invited == null) {
-			throw new IllegalArgumentException("Invited player is not connected.");
+			throw new PlayerNotConnectedException("Invited player is not connected.");
 		}
 
 		if(!isInParty(invitedPlayerUniqueId)) {
@@ -183,10 +184,10 @@ public class DefaultPartyManager implements PartyManager {
 		return false;
 	}
 
-	public void accept(@NonNull final UUID inviterPlayerUniqueId, @NonNull final UUID invitedPlayerUniqueId) throws IllegalArgumentException, PlayerNotInvitedToParty {
+	public void accept(@NonNull final UUID inviterPlayerUniqueId, @NonNull final UUID invitedPlayerUniqueId) throws PlayerNotConnectedException, PlayerNotInvitedToParty {
 		Player inviter = Bukkit.getPlayer(inviterPlayerUniqueId);
 		if(inviter == null || !inviter.isOnline()) {
-			throw new IllegalArgumentException("Inviter player is not connected.");
+			throw new PlayerNotConnectedException("Inviter player is not connected.");
 		}
 
 		if(!hasPartyInvites(invitedPlayerUniqueId)) {

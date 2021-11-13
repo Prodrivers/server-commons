@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.Optional;
 import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.exceptions.PartyCannotInviteYourselfException;
+import fr.prodrivers.bukkit.commons.exceptions.PlayerNotConnectedException;
 import fr.prodrivers.bukkit.commons.exceptions.PlayerNotInvitedToParty;
 import fr.prodrivers.bukkit.commons.parties.Party;
 import fr.prodrivers.bukkit.commons.parties.PartyManager;
@@ -84,7 +85,7 @@ public class PartyCommands extends BaseCommand {
 			this.partyManager.invite(inviter.getUniqueId(), invited.getUniqueId());
 		} catch(PartyCannotInviteYourselfException e) {
 			this.chat.error(inviter, this.messages.party_cannot_invite_yourself, this.messages.party_prefix);
-		} catch(IllegalArgumentException e) {
+		} catch(PlayerNotConnectedException e) {
 			this.chat.error(inviter, this.messages.party_player_not_online.formatted(invited.getName()), this.messages.party_prefix);
 		}
 	}
@@ -95,7 +96,7 @@ public class PartyCommands extends BaseCommand {
 	private void partyAccept(final Player invited, final OfflinePlayer inviter) {
 		try {
 			this.partyManager.accept(inviter.getUniqueId(), invited.getUniqueId());
-		} catch(IllegalArgumentException e) {
+		} catch(PlayerNotConnectedException e) {
 			this.chat.error(invited, this.messages.party_player_not_online.formatted(inviter.getName()), this.messages.party_prefix);
 		} catch(PlayerNotInvitedToParty e) {
 			this.chat.error(invited, this.messages.party_not_invited_to_players_party.formatted(inviter.getName()), this.messages.party_prefix);

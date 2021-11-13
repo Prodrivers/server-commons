@@ -1,6 +1,7 @@
 package fr.prodrivers.bukkit.commons.parties;
 
 import fr.prodrivers.bukkit.commons.exceptions.PartyCannotInviteYourselfException;
+import fr.prodrivers.bukkit.commons.exceptions.PlayerNotConnectedException;
 import fr.prodrivers.bukkit.commons.exceptions.PlayerNotInvitedToParty;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -74,20 +75,20 @@ public interface PartyManager {
 	 * @param inviterPlayerUniqueId Inviter player
 	 * @param invitedPlayerUniqueId Invited player
 	 * @return {@code true} if invite was sent with success
-	 * @throws IllegalArgumentException           Inviter or invited player ID is invalid or not connected
+	 * @throws PlayerNotConnectedException        Inviter or invited player ID is invalid or not connected
 	 * @throws PartyCannotInviteYourselfException Player trie sto invite itself
 	 */
-	boolean invite(@NonNull final UUID inviterPlayerUniqueId, @NonNull final UUID invitedPlayerUniqueId) throws IllegalArgumentException, PartyCannotInviteYourselfException;
+	boolean invite(@NonNull final UUID inviterPlayerUniqueId, @NonNull final UUID invitedPlayerUniqueId) throws PlayerNotConnectedException, PartyCannotInviteYourselfException;
 
 	/**
 	 * Invites a player to a party
 	 *
 	 * @param inviterPlayerUniqueId Inviter player
 	 * @param invitedPlayerUniqueId Invited player
-	 * @throws IllegalArgumentException Inviter or invited player ID is invalid or not connected
-	 * @throws PlayerNotInvitedToParty  Player is not invited to party
+	 * @throws PlayerNotConnectedException Inviter or invited player ID is invalid or not connected
+	 * @throws PlayerNotInvitedToParty     Player is not invited to party
 	 */
-	void accept(@NonNull final UUID inviterPlayerUniqueId, @NonNull final UUID invitedPlayerUniqueId) throws IllegalArgumentException, PlayerNotInvitedToParty;
+	void accept(@NonNull final UUID inviterPlayerUniqueId, @NonNull final UUID invitedPlayerUniqueId) throws PlayerNotConnectedException, PlayerNotInvitedToParty;
 
 	/**
 	 * Assigns a new owner to a party.
