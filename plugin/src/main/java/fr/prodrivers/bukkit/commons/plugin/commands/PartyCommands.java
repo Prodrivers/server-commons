@@ -87,6 +87,9 @@ public class PartyCommands extends BaseCommand {
 			this.chat.error(inviter, this.messages.party_cannot_invite_yourself, this.messages.party_prefix);
 		} catch(PlayerNotConnectedException e) {
 			this.chat.error(inviter, this.messages.party_player_not_online.formatted(invited.getName()), this.messages.party_prefix);
+		} catch(Exception e) {
+			this.chat.error(inviter, this.messages.error_occurred);
+			Log.severe("Error while player " + inviter + " invited player " + invited + " .", e);
 		}
 	}
 
@@ -100,6 +103,9 @@ public class PartyCommands extends BaseCommand {
 			this.chat.error(invited, this.messages.party_player_not_online.formatted(inviter.getName()), this.messages.party_prefix);
 		} catch(PlayerNotInvitedToParty e) {
 			this.chat.error(invited, this.messages.party_not_invited_to_players_party.formatted(inviter.getName()), this.messages.party_prefix);
+		} catch(Exception e) {
+			this.chat.error(invited, this.messages.error_occurred);
+			Log.severe("Error while player " + invited + " accepted invitet from player " + inviter + " .", e);
 		}
 	}
 
