@@ -137,22 +137,16 @@ public class PartyCommands extends BaseCommand {
 
 		if(party != null) {
 			this.chat.send(player, this.messages.party_list_heading, this.messages.party_prefix);
-			StringBuilder ret = new StringBuilder(ChatColor.DARK_GREEN.toString());
-			Player owner = Bukkit.getPlayer(party.getOwnerUniqueId());
-			if(owner == null) {
-				Log.severe("Owner " + party.getOwnerUniqueId() + "  of party is null on party list command by " + player);
-				return;
-			}
-			ret.append(owner.getName());
-			for(final UUID p_ : party.getPlayers()) {
-				ret.append(ChatColor.GREEN);
-				ret.append(", ");
-				Player other = Bukkit.getPlayer(p_);
-				if(other == null) {
-					Log.severe("Party player " + p_ + "  of party is null on party list command by " + player);
+			StringBuilder ret = new StringBuilder();
+			for(final UUID partyPlayer : party.getPlayers()) {
+				if(partyPlayer == party.getOwnerUniqueId()) {
+					ret.append(ChatColor.DARK_GREEN);
 				} else {
-					ret.append(other.getName());
+					ret.append(ChatColor.GREEN);
 				}
+				ret.append(", ");
+				OfflinePlayer other = Bukkit.getOfflinePlayer(partyPlayer);
+				ret.append(other.getName());
 			}
 			this.chat.send(player, ret.toString(), this.messages.party_prefix);
 		} else {
