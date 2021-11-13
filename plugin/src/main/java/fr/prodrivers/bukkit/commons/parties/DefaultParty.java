@@ -102,7 +102,7 @@ public class DefaultParty implements Party {
 
 	private BaseComponent[] getComponentsFromMessage(PartyMessage message, final Object... substitutions) {
 		if(message == PartyMessage.PLAYER_INVITED_YOU) {
-			BaseComponent[] invite_message = TextComponent.fromLegacyText(this.messages.party_you_were_invited.formatted(substitutions));
+			BaseComponent[] invite_message = TextComponent.fromLegacyText(getStringForMessage(PartyMessage.PLAYER_INVITED_YOU).formatted(substitutions));
 			BaseComponent[] invite_message_hover_text = TextComponent.fromLegacyText(this.messages.party_you_were_invited_hover_text.formatted(substitutions));
 			ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/party accept " + substitutions[0]);
 			HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, invite_message_hover_text);
