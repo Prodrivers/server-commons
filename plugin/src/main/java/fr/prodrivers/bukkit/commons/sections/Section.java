@@ -66,6 +66,15 @@ public abstract class Section {
 		return parent;
 	}
 
+	public @Nullable Section getFirstNonTransitiveSection() {
+		Section nonTransitiveParent;
+		for(nonTransitiveParent = this; nonTransitiveParent instanceof TransitiveSection; ) {
+			nonTransitiveParent = nonTransitiveParent.getParentSection();
+		}
+
+		return nonTransitiveParent;
+	}
+
 	public @NonNull Collection<Section> getChildSections() {
 		return children.values();
 	}

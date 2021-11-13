@@ -93,9 +93,22 @@ public class DefaultSectionManager implements SectionManager {
 			return false;
 		}
 
+		// Get first non-transitive target section, either target itself or one of its parents, as those
+		// will automatically be handled by section manager afterwards (blocked if walking down to it, going to
+		// parent if walking up to it)
+		Section nonTransitiveTarget = null;
+		if(targetNode != null) {
+			nonTransitiveTarget = targetNode.getFirstNonTransitiveSection();
+			if(nonTransitiveTarget == null) {
+				Log.severe("Party player " + player.getUniqueId() + " asked to join section " + targetNode + ", bu it is transitive and it has no non-transitive parent.");
+				// If not, stop everything
+				return false;
+			}
+		}
+
 		// Check that all party players can enter, if necessary
 		// If the section does not handle party by itself and the player is not sent by the party owner
-		if(!fromParty && targetNode != null && !targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
+		if(!fromParty && targetNode != null && !nonTransitiveTarget.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
 			Party party = this.partyManager.getParty(player.getUniqueId());
 
 			// If player is in party
@@ -103,27 +116,31 @@ public class DefaultSectionManager implements SectionManager {
 				// Check party owner
 				if(party.getOwnerUniqueId() != player.getUniqueId()) {
 					// Player is not party owner
-					if(!targetNode.getCapabilities().contains(SectionCapabilities.HUB)) {
+					if(!nonTransitiveTarget.getCapabilities().contains(SectionCapabilities.HUB)) {
 						// Target section is not a hub, forbid moving
 						throw new NotPartyOwnerException("Player tried to join a section while not being party owner.");
 					}
 					// Target section is a hub, proceed normally
 				} else {
 					// Player is party owner
-					// Move all party players, except the owner, to the target section
-					for(UUID partyPlayerUUID : party.getPlayers()) {
-						if(partyPlayerUUID != party.getOwnerUniqueId()) {
-							// Get party player
-							Player partyPlayer = this.plugin.getServer().getPlayer(partyPlayerUUID);
-							if(partyPlayer != null) {
-								Log.fine("Checking section walk for party player " + partyPlayer);
-								// Get player current section
-								Section currentSection = playersCurrentSection.get(partyPlayer.getUniqueId());
-								// Check that the player can go to the section
-								if(!canPlayerWalkAlongSectionPath(partyPlayer, currentSection, targetNode, true)) {
-									Log.severe("Party player " + partyPlayer + " cannot join or leave, stopping everything.");
-									// If not, stop everything
-									return false;
+					// Move all party players, except the owner, to the target section, except if it is a hub
+					if(!nonTransitiveTarget.getCapabilities().contains(SectionCapabilities.HUB)) {
+						for(UUID partyPlayerUUID : party.getPlayers()) {
+							if(partyPlayerUUID != party.getOwnerUniqueId()) {
+								// Get party player
+								Player partyPlayer = this.plugin.getServer().getPlayer(partyPlayerUUID);
+								if(partyPlayer != null) {
+									// Get player current section
+									Section currentSection = playersCurrentSection.get(partyPlayer.getUniqueId());
+
+									Log.fine("Checking section walk for party player " + partyPlayer + " from " + currentSection + " to " + targetNode);
+
+									// Check that the player can go to the section
+									if(!canPlayerWalkAlongSectionPath(partyPlayer, currentSection, targetNode, true)) {
+										Log.severe("Party player " + partyPlayer + " cannot join or leave, stopping everything.");
+										// If not, stop everything
+										return false;
+									}
 								}
 							}
 						}
