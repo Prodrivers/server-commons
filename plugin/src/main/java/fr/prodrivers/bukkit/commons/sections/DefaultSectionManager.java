@@ -160,6 +160,7 @@ public class DefaultSectionManager implements SectionManager {
 		// If the player is already in an enter process
 		if(inEnter.contains(player.getUniqueId())) {
 			// Stop
+			Log.fine( player + " is already in enter process");
 			return false;
 		}
 
@@ -199,10 +200,10 @@ public class DefaultSectionManager implements SectionManager {
 		inEnter.add(player.getUniqueId());
 
 		try {
-			Log.finest("Path to travel : " + nodesToVisit);
+			Log.finest("Player " + player + ": path to travel : " + nodesToVisit);
 
-			Log.finest("Left : " + leftNode);
-			Log.finest("Target : " + targetNode);
+			Log.finest("Player " + player + ": left : " + leftNode);
+			Log.finest("Player " + player + ": target : " + targetNode);
 
 			// Special case for root node exit
 			// Path traversal will be skipped as it is empty
@@ -221,6 +222,8 @@ public class DefaultSectionManager implements SectionManager {
 			for(Section node : nodesToVisit) {
 				// If we are not considering the first node, as the player is already in this node
 				if(node != leftNode) {
+					Log.finest("Player " + player + " joining node : " + node);
+
 					if(!node.join(player)) {
 						// The node refused the player to enter, stop processing.
 						Log.severe("Section " + node + " refused player " + player + " to join.");
@@ -234,9 +237,12 @@ public class DefaultSectionManager implements SectionManager {
 
 					// Register the target section as current section for the player
 					playersCurrentSection.put(player.getUniqueId(), node);
+					Log.finest("Player " + player + " joined node : " + node);
 				}
 				// If we are not considering the last node, as the player should stay in it
 				if(node != targetNode) {
+					Log.finest("Player " + player + " leaving node : " + node);
+
 					if(!node.leave(player)) {
 						// The node refused the player to leave, stop processing.
 						Log.severe("Section " + node + " refused player " + player + " to leave.");
@@ -245,6 +251,7 @@ public class DefaultSectionManager implements SectionManager {
 
 					// Remove the corresponding section as this player's current section
 					playersCurrentSection.remove(player.getUniqueId());
+					Log.finest("Player " + player + " left node : " + node);
 				}
 			}
 		} catch(Throwable e) {
@@ -281,6 +288,8 @@ public class DefaultSectionManager implements SectionManager {
 				}
 			}
 		}
+
+		Log.finest("===== Movement ended for player " + player + " ==");
 
 		return true;
 	}
@@ -349,8 +358,10 @@ public class DefaultSectionManager implements SectionManager {
 		// If there is already a temporary path stored
 		if(playersSectionPath.containsKey(player.getUniqueId())) {
 			// Do not make the computation again
+			Log.fine("Path already computed for " + player + ": " + playersSectionPath.get(player.getUniqueId()));
 			return true;
 		}
+		Log.fine("Computing path for " + player +   " from " + leftNode + " to " + targetNode);
 
 		// Special case for root node exit
 		if(leftNode != null && leftNode.getFullName().equals(SectionManager.ROOT_NODE_NAME) && targetNode == null) {
@@ -395,6 +406,7 @@ public class DefaultSectionManager implements SectionManager {
 			if(leftNode != null) {
 				// Find the common node with left node and target node
 				commonNode = findCommonNode(leftNode, targetNode);
+				Log.finest("For player " + player + ", common node is " + commonNode);
 
 				// Walk back player to common node with target node
 				if(!walkBackward(player, leftNode, commonNode, nodesToVisit, fromParty, targetNode)) {
