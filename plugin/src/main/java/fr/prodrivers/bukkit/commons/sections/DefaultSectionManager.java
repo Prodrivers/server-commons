@@ -264,8 +264,8 @@ public class DefaultSectionManager implements SectionManager {
 		}
 
 		// Make entering player party's players move if necessary
-		// Do not do this when exiting root node
-		if(targetNode != null && !targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
+		// Do not do this when exiting root node or if going to a hub
+		if(!fromParty && targetNode != null && !targetNode.getCapabilities().contains(SectionCapabilities.PARTY_AWARE) && !targetNode.getCapabilities().contains(SectionCapabilities.HUB)) {
 			Party party = this.partyManager.getParty(player.getUniqueId());
 
 			// If player is in party
