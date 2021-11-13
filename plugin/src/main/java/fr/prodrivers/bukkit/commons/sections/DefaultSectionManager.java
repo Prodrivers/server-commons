@@ -153,10 +153,10 @@ public class DefaultSectionManager implements SectionManager {
 		Section currentSection = playersCurrentSection.get(player.getUniqueId());
 
 		// Process player entering
-		return enter(player, currentSection, targetNode);
+		return enter(player, currentSection, targetNode, fromParty);
 	}
 
-	protected boolean enter(Player player, Section leftNode, Section targetNode) throws IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
+	protected boolean enter(final Player player, final Section leftNode, Section targetNode, boolean fromParty) throws IllegalSectionLeavingException, IllegalSectionEnteringException, NoParentSectionException {
 		// If the player is already in an enter process
 		if(inEnter.contains(player.getUniqueId())) {
 			// Stop
@@ -166,7 +166,7 @@ public class DefaultSectionManager implements SectionManager {
 		Log.fine(player + " entering section : " + targetNode);
 
 		// Check that the player can walk along the path
-		if(!canPlayerWalkAlongSectionPath(player, leftNode, targetNode, false)) {
+		if(!canPlayerWalkAlongSectionPath(player, leftNode, targetNode, fromParty)) {
 			// Logging is already done for here
 			// If not, stop everything
 			return false;
