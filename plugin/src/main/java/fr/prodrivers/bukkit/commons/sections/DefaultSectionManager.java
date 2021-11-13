@@ -261,6 +261,10 @@ public class DefaultSectionManager implements SectionManager {
 			// Indicate that the player finished its enter process, remove temporary values
 			inEnter.remove(player.getUniqueId());
 			playersSectionPath.remove(player.getUniqueId());
+			// Force player to join hub if it is left in an unregistered state
+			if(getCurrentSection(player) == null) {
+				register(player);
+			}
 		}
 
 		// Make entering player party's players move if necessary
