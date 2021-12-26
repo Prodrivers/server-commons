@@ -3,6 +3,7 @@ package fr.prodrivers.bukkit.commons.chat;
 import fr.prodrivers.bukkit.commons.configuration.Messages;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.command.CommandSender;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ public class Chat {
 	 *
 	 * @param messageSender {@link MessageSender} instance to use as backend
 	 */
-	public Chat(MessageSender messageSender) {
+	public Chat(@NonNull MessageSender messageSender) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -27,7 +28,7 @@ public class Chat {
 	 *
 	 * @param name Name to be used in prefix
 	 */
-	public void setName(String name) {
+	public void setName(@NonNull String name) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -36,7 +37,7 @@ public class Chat {
 	 *
 	 * @param messages Message instance
 	 */
-	public void load(Messages messages) {
+	public void load(@NonNull Messages messages) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -46,7 +47,7 @@ public class Chat {
 	 * @param receiver Receiving entity
 	 * @param message  Message to send
 	 */
-	public void send(CommandSender receiver, String message) {
+	public void send(@NonNull CommandSender receiver, @NonNull String message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -57,7 +58,7 @@ public class Chat {
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	public void send(CommandSender receiver, String message, String prefix) {
+	public void send(@NonNull CommandSender receiver, @NonNull String message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -67,7 +68,7 @@ public class Chat {
 	 * @param receiver Receiving entity
 	 * @param message  Success message to send
 	 */
-	public void success(CommandSender receiver, String message) {
+	public void success(@NonNull CommandSender receiver, @NonNull String message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -78,7 +79,7 @@ public class Chat {
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	public void success(CommandSender receiver, String message, String prefix) {
+	public void success(@NonNull CommandSender receiver, @NonNull String message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -88,7 +89,7 @@ public class Chat {
 	 * @param receiver Receiving entity
 	 * @param message  Error message to send
 	 */
-	public void error(CommandSender receiver, String message) {
+	public void error(@NonNull CommandSender receiver, @NonNull String message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -99,7 +100,7 @@ public class Chat {
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	public void error(CommandSender receiver, String message, String prefix) {
+	public void error(@NonNull CommandSender receiver, @NonNull String message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -109,7 +110,7 @@ public class Chat {
 	 * @param receiver Receiving entity
 	 * @param message  Message to send
 	 */
-	public void send(CommandSender receiver, BaseComponent[] message) {
+	public void send(@NonNull CommandSender receiver, @NonNull BaseComponent[] message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -120,7 +121,7 @@ public class Chat {
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	public void send(CommandSender receiver, BaseComponent[] message, String prefix) {
+	public void send(@NonNull CommandSender receiver, @NonNull BaseComponent[] message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -130,7 +131,7 @@ public class Chat {
 	 * @param receiver Receiving entity
 	 * @param message  Success message to send
 	 */
-	public void success(CommandSender receiver, BaseComponent[] message) {
+	public void success(@NonNull CommandSender receiver, @NonNull BaseComponent[] message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -141,7 +142,7 @@ public class Chat {
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	public void success(CommandSender receiver, BaseComponent[] message, String prefix) {
+	public void success(@NonNull CommandSender receiver, @NonNull BaseComponent[] message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -151,7 +152,7 @@ public class Chat {
 	 * @param receiver Receiving entity
 	 * @param message  Error message to send
 	 */
-	public void error(CommandSender receiver, BaseComponent[] message) {
+	public void error(@NonNull CommandSender receiver, @NonNull BaseComponent[] message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -162,7 +163,7 @@ public class Chat {
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	public void error(CommandSender receiver, BaseComponent[] message, String prefix) {
+	public void error(@NonNull CommandSender receiver, @NonNull BaseComponent[] message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -172,7 +173,7 @@ public class Chat {
 	 * @param receiverPlayerUniqueId Receiving player
 	 * @param message                Message to send
 	 */
-	public void send(UUID receiverPlayerUniqueId, String message) {
+	public void send(@NonNull UUID receiverPlayerUniqueId, @NonNull String message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -183,7 +184,7 @@ public class Chat {
 	 * @param message                Message to send
 	 * @param prefix                 Prefix to use
 	 */
-	public void send(UUID receiverPlayerUniqueId, String message, String prefix) {
+	public void send(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -193,7 +194,7 @@ public class Chat {
 	 * @param receiverPlayerUniqueId Receiving player
 	 * @param message                Success message to send
 	 */
-	public void success(UUID receiverPlayerUniqueId, String message) {
+	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull String message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -204,7 +205,7 @@ public class Chat {
 	 * @param message                Success message to send
 	 * @param prefix                 Prefix to use
 	 */
-	public void success(UUID receiverPlayerUniqueId, String message, String prefix) {
+	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -214,7 +215,7 @@ public class Chat {
 	 * @param receiverPlayerUniqueId Receiving player
 	 * @param message                Error message to send
 	 */
-	public void error(UUID receiverPlayerUniqueId, String message) {
+	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull String message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -225,7 +226,7 @@ public class Chat {
 	 * @param message                Success message to send
 	 * @param prefix                 Prefix to use
 	 */
-	public void error(UUID receiverPlayerUniqueId, String message, String prefix) {
+	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -235,7 +236,7 @@ public class Chat {
 	 * @param receiverPlayerUniqueId Receiving player
 	 * @param message                Message to send
 	 */
-	public void send(UUID receiverPlayerUniqueId, BaseComponent[] message) {
+	public void send(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -246,7 +247,7 @@ public class Chat {
 	 * @param message                Message to send
 	 * @param prefix                 Prefix to use
 	 */
-	public void send(UUID receiverPlayerUniqueId, BaseComponent[] message, String prefix) {
+	public void send(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -256,7 +257,7 @@ public class Chat {
 	 * @param receiverPlayerUniqueId Receiving player
 	 * @param message                Success message to send
 	 */
-	public void success(UUID receiverPlayerUniqueId, BaseComponent[] message) {
+	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -267,7 +268,7 @@ public class Chat {
 	 * @param message                Message to send
 	 * @param prefix                 Prefix to use
 	 */
-	public void success(UUID receiverPlayerUniqueId, BaseComponent[] message, String prefix) {
+	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -277,7 +278,7 @@ public class Chat {
 	 * @param receiverPlayerUniqueId Receiving player
 	 * @param message                Error message to send
 	 */
-	public void error(UUID receiverPlayerUniqueId, BaseComponent[] message) {
+	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -288,7 +289,7 @@ public class Chat {
 	 * @param message                Message to send
 	 * @param prefix                 Prefix to use
 	 */
-	public void error(UUID receiverPlayerUniqueId, BaseComponent[] message, String prefix) {
+	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix) {
 		throw new UnsupportedOperationException();
 	}
 }

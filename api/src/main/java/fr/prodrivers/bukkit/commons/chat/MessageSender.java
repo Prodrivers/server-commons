@@ -2,6 +2,7 @@ package fr.prodrivers.bukkit.commons.chat;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.command.CommandSender;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public interface MessageSender {
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	void send(CommandSender receiver, String message, String prefix);
+	void send(@NonNull CommandSender receiver, @NonNull String message, @NonNull String prefix);
 
 	/**
 	 * Generic message receiver, using a defined prefix
@@ -31,7 +32,7 @@ public interface MessageSender {
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	void send(CommandSender receiver, BaseComponent[] message, String prefix);
+	void send(@NonNull CommandSender receiver, @NonNull BaseComponent[] message, @NonNull String prefix);
 
 	/**
 	 * Generic message receiver, that potentially supports non-local players, using a defined prefix
@@ -40,7 +41,7 @@ public interface MessageSender {
 	 * @param message                Message to send
 	 * @param prefix                 Prefix to use
 	 */
-	void send(UUID receiverPlayerUniqueId, String message, String prefix);
+	void send(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix);
 
 	/**
 	 * Generic message receiver, that potentially supports non-local players, using a defined prefix
@@ -49,5 +50,5 @@ public interface MessageSender {
 	 * @param message                Message to send
 	 * @param prefix                 Prefix to use
 	 */
-	void send(UUID receiverPlayerUniqueId, BaseComponent[] message, String prefix);
+	void send(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix);
 }
