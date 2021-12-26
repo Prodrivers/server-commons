@@ -1,0 +1,52 @@
+name: Deploy JavaDoc
+
+on:
+  push:
+    branches:
+      - master
+  release:
+    types:
+      - created
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Prepare generation
+        run: touch empty.css && mkdir -p api/src/main/javadoc
+      - name: Create JavaDoc overview page
+        uses: docker://pandoc/core:2.16.1
+        with:
+          entrypoint: /usr/local/bin/pandoc
+          args: >-
+            --standalone
+            -c empty.css
+            --metadata title="Prodrivers Commons"
+            --output=api/src/main/javadoc/overview.html
+            README.md
+      - uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: maven
+      - name: Generate JavaDoc
+        run: mvn -pl api javadoc:javadoc
+      - name: Deploy JavaDoc (release)
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          clean: true
+          folder: api/target/site/apidocs
+          target-folder: release/apidocs
+        if: ${{ github.event_name == 'release' }}
+      - name: Deploy Javadoc (snapshot)
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          clean: true
+          folder: api/target/site/apidocs
+          target-folder: snapshot/apidocs
+        if: ${{ github.event_name == 'push' }}
