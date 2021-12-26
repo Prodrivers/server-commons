@@ -2,6 +2,7 @@ name: ProdriversCommons
 main: fr.prodrivers.bukkit.commons.plugin.Main
 version: ${project.version}
 description: ${project.description}
+api-version: ${spigot.api.version}
 
 commands:
   plugin:
