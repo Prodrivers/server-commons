@@ -240,7 +240,7 @@ public abstract class Section {
 
 	/**
 	 * Returns this section's selection UI.
-	 * Called only when section returns capability {@link SectionCapabilities::CUSTOM_SELECTION_UI}. If not, the section
+	 * Called only when section returns capability {@link SectionCapabilities#CUSTOM_SELECTION_UI}. If not, the section
 	 * manager will call the default selection UI.
 	 *
 	 * @return This section's selection UI

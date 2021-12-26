@@ -5,15 +5,17 @@ import java.io.File;
 /**
  * Fully managed, field-based, Bukkit's FileConfiguration backed configuration class for Prodrivers plugins.
  * <p>
- * FileAttributeConfiguration extends AbstractFileAttributeConfiguration to handle all the loading and saving parts left
- * to the programmer.
+ * FileAttributeConfiguration extends {@link AbstractFileAttributeConfiguration} to handle all the loading and saving
+ * parts left to the programmer.
  * No action is required apart from providing a valid File instance that points to the YAML file to be used, and calling
- * init().
- * You, of course, still need to make call by yourself to reload() and save() when required.
+ * {@link #init()}.
+ * You, of course, still need to make call by yourself to {@link #reload()} and {@link #save()} when required.
  * <p>
- * ExcludedFromConfiguration annotation allows specific fields not to be used by the field processor.
- * As with every AbstractAttributeConfiguration derivative, init() have to be called immediately after constructing the
- * object, either at the end of the constructor or outside of it.
+ * {@link fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration} annotation allows specific fields not to
+ * be used by the field processor.
+ * As with every {@link fr.prodrivers.bukkit.commons.configuration.AbstractAttributeConfiguration} derivative,
+ * {@link #init()} have to be called immediately after constructing the object, either at the end of the constructor or
+ * outside of it.
  */
 
 public class FileAttributeConfiguration extends AbstractFileAttributeConfiguration {

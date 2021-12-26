@@ -5,10 +5,10 @@ package fr.prodrivers.bukkit.commons.configuration;
  * <p>
  * AbstractAttributeConfiguration lays the framework of configuration classes that uses fields to represent options,
  * loading and saving these fields using Configuration Actions.
- * Provide your own Configuration Actions, override init()/load()/save()/saveDefaults()/reload() as necessary to create
- * a fully-managed field-based configuration class.
- * Call then reload() and save() in your plugin when required. Direct calling of load() and saveDefaults() is strongly
- * discouraged.
+ * Provide your own Configuration Actions, override {@link #init()}/{@link #load()}/{@link #save()}/{@link #saveDefaults()}/{@link #reload()}
+ * as necessary to create a fully-managed field-based configuration class.
+ * Call then {@link #reload()} and {@link #save()} in your plugin when required. Direct calling of {@link #load()} and
+ * {@link #saveDefaults()} is strongly discouraged.
  * <p>
  * If a specific class does not provide a Configuration Action for a field's type, AbstractAttributeConfiguration
  * serialize it if possible, or resorts to toString/valueOf to store it nonetheless. It allows a wide variety of classes
@@ -16,9 +16,10 @@ package fr.prodrivers.bukkit.commons.configuration;
  * As such, each class have to provide at least a String Configuration Action in order for AbstractConfigurationAction
  * to work properly in the majority of cases.
  * <p>
- * ExcludedFromConfiguration annotation allows specific fields not to be used by the field processor.
- * As with every AbstractAttributeConfiguration derivative, init() have to be called immediately after constructing the
- * object, either at the end of the constructor or outside of it.
+ * {@link fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration} annotation allows specific fields not to
+ * be used by the field processor.
+ * As with every AbstractAttributeConfiguration derivative, {@link #init()} have to be called immediately after
+ * constructing the object, either at the end of the constructor or outside of it.
  */
 public abstract class AbstractAttributeConfiguration {
 	/**

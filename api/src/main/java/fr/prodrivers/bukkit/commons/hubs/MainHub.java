@@ -17,7 +17,7 @@ import java.util.Set;
  * Used implementation can be changed in configuration.
  */
 public abstract class MainHub extends Section {
-	protected final static Set<SectionCapabilities> capabilities = new HashSet<>();
+	private final static Set<SectionCapabilities> capabilities = new HashSet<>();
 
 	static {
 		capabilities.add(SectionCapabilities.HUB);

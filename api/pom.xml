@@ -180,7 +180,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
-                    <show>public</show>
+                    <show>protected</show>
                     <nohelp>false</nohelp>
                     <header>Prodrivers Commons for Bukkit API, ${project.version}</header>
                     <doctitle>Prodrivers Commons for Bukkit API, ${project.version}</doctitle>

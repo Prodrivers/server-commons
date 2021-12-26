@@ -8,12 +8,13 @@ import org.bukkit.plugin.Plugin;
  * Configuration helper for Prodrivers plugins.
  * <p>
  * It represents configuration options using class fields, by saving and loading fields from and inside the plugin's
- * configuration file, using an underlying AbstractAttributeConfiguration.
- * It supports all data types supported by Bukkit's FileConfiguration.
+ * configuration file, using an underlying {@link AbstractAttributeConfiguration}.
+ * It supports all data types supported by Bukkit's {@link org.bukkit.configuration.file.FileConfiguration}.
  * <p>
- * ExcludedFromConfiguration annotation allows specific fields not to be used by the field processor.
- * As with every AbstractAttributeConfiguration derivative, init() have to be called immediately after constructing the
- * object, either at the end of the constructor or outside of it.
+ * {@link fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration} annotation allows specific fields not to
+ * be used by the field processor.
+ * As with every {@link AbstractAttributeConfiguration} derivative, {@link #init()} have to be called immediately after
+ * constructing the object, either at the end of the constructor or outside of it.
  */
 public class Configuration extends AbstractFileAttributeConfiguration {
 	/**
