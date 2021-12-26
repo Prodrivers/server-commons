@@ -1,0 +1,14 @@
+fr.prodrivers.bukkit.commons
+fr.prodrivers.bukkit.commons.annotations
+fr.prodrivers.bukkit.commons.chat
+fr.prodrivers.bukkit.commons.commands
+fr.prodrivers.bukkit.commons.configuration
+fr.prodrivers.bukkit.commons.configuration.file
+fr.prodrivers.bukkit.commons.di.guice
+fr.prodrivers.bukkit.commons.events
+fr.prodrivers.bukkit.commons.exceptions
+fr.prodrivers.bukkit.commons.hubs
+fr.prodrivers.bukkit.commons.parties
+fr.prodrivers.bukkit.commons.sections
+fr.prodrivers.bukkit.commons.storage
+fr.prodrivers.bukkit.commons.ui.section
