@@ -21,6 +21,11 @@ import javax.inject.Singleton;
 @Singleton
 public class ACFCommandManagerProvider implements Provider<BukkitCommandManager> {
 	/**
+	 * Make class non-instantiable
+	 */
+	private ACFCommandManagerProvider() {}
+
+	/**
 	 * Gets a new ACF Bukkit Command Manager.
 	 *
 	 * @return Database or null

@@ -27,6 +27,11 @@ import java.util.List;
 @Singleton
 public class EbeanProvider implements Provider<Database> {
 	/**
+	 * Make class non-instantiable
+	 */
+	private EbeanProvider() {}
+
+	/**
 	 * Gets a new Ebean Database instance.
 	 *
 	 * @return Database or null

@@ -21,4 +21,8 @@ import fr.prodrivers.bukkit.commons.parties.PartyManager;
  * </ul>
  */
 public class ProdriversCommonsGuiceModule extends AbstractModule {
+	/**
+	 * Make class non-instantiable
+	 */
+	private ProdriversCommonsGuiceModule() {}
 }

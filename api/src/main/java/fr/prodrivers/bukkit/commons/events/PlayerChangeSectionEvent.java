@@ -11,25 +11,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  * Event triggered when a player moves from one section to another, before the moving is actually done.
  */
 public class PlayerChangeSectionEvent extends Event implements Cancellable {
-	private static final HandlerList handlers = new HandlerList();
-
-	private boolean cancelled;
-
-	private final Player player;
-	private final Section leftSection;
-	private final Section targetSection;
-
 	/**
-	 * Constructs a new event.
-	 *
-	 * @param player Player that is moving
-	 * @param leftSection Left section
-	 * @param targetSection Target section
+	 * Make class non-instantiable
 	 */
-	public PlayerChangeSectionEvent(Player player, Section leftSection, Section targetSection) {
-		this.player = player;
-		this.leftSection = leftSection;
-		this.targetSection = targetSection;
+	private PlayerChangeSectionEvent() {
 	}
 
 	/**
@@ -38,7 +23,7 @@ public class PlayerChangeSectionEvent extends Event implements Cancellable {
 	 * @return Player that is moving
 	 */
 	public Player getPlayer() {
-		return this.player;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -47,7 +32,7 @@ public class PlayerChangeSectionEvent extends Event implements Cancellable {
 	 * @return Left section
 	 */
 	public Section getLeftSection() {
-		return this.leftSection;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -56,22 +41,22 @@ public class PlayerChangeSectionEvent extends Event implements Cancellable {
 	 * @return Target section
 	 */
 	public Section getTargetSection() {
-		return this.targetSection;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean isCancelled() {
-		return this.cancelled;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public @NonNull HandlerList getHandlers() {
-		return handlers;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -80,6 +65,6 @@ public class PlayerChangeSectionEvent extends Event implements Cancellable {
 	 * @return Handler list
 	 */
 	public static HandlerList getHandlerList() {
-		return handlers;
+		throw new UnsupportedOperationException();
 	}
 }

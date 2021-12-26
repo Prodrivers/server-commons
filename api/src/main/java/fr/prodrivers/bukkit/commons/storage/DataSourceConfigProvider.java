@@ -16,6 +16,11 @@ import javax.inject.Singleton;
 @Singleton
 public class DataSourceConfigProvider implements Provider<DataSourceConfig> {
 	/**
+	 * Make class non-instantiable
+	 */
+	private DataSourceConfigProvider() {}
+
+	/**
 	 * Gets a new Ebean Database source configuration instance.
 	 *
 	 * @return Database source configuration or null

@@ -231,6 +231,7 @@
                                         <exclude>fr/prodrivers/bukkit/commons/configuration/file/FileAttributeConfiguration*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/configuration/Messages*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/di/guice/ProdriversCommonsGuiceModule*</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/events/PlayerChangeSectionEvent*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/hubs/DefaultMainHub*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/DataSourceConfigProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/EbeanProvider*</exclude>
