@@ -222,21 +222,6 @@
                     <generateReports>true</generateReports>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-scm-publish-plugin</artifactId>
-                <version>1.1</version>
-                <configuration>
-                    <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
-                    <checkinComment>Publishing documentation for ${project.artifactId}:${project.version}
-                    </checkinComment>
-                    <content>${project.reporting.outputDirectory}/apidocs</content>
-                    <skipDeletedFiles>true</skipDeletedFiles>
-                    <pubScmUrl>scm:git:git@github.com:Prodrivers/bukkit-commons.git</pubScmUrl>
-                    <scmBranch>gh-pages</scmBranch>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
