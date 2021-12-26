@@ -71,7 +71,7 @@ public class Main extends JavaPlugin implements Listener {
 			new PluginModule(this, getClassLoader())
 		);
 
-		// Instantiate the other modules using injectors, as those modules may depends on configuration values
+		// Instantiate the other modules using injectors, as those modules may depend on configuration values
 		CommandsModule commandsModule = injector.getInstance(CommandsModule.class);
 		StorageModule storageModule = injector.getInstance(StorageModule.class);
 		PartyModule partyModule = injector.getInstance(PartyModule.class);
@@ -105,7 +105,11 @@ public class Main extends JavaPlugin implements Listener {
 		dataSourceConfigProvider = injector.getInstance(DataSourceConfigProvider.class);
 
 		MainHub hub = injector.getInstance(MainHub.class);
-		sectionManager.register(hub);
+		if(hub != null) {
+			sectionManager.register(hub);
+		} else {
+			Log.info("No main hub available to ProdriversCommons.");
+		}
 
 		BukkitCommandManager bukkitCommandManager = injector.getInstance(BukkitCommandManager.class);
 		Commands commands = injector.getInstance(Commands.class);

@@ -8,10 +8,12 @@ import org.bukkit.entity.Player;
  * <p>
  * Section Manager allows to open a selection UI for a section. Implements this class to specify a default
  * implementation or custom UI for a section.
+ *
+ * Used default implementation can be changed in configuration.
  */
 public interface SelectionUI {
 	/**
-	 * Opens a selection UI for a specific section. If you returns this as a custom UI for one or several sections, you
+	 * Opens a selection UI for a specific section. If you return this as a custom UI for one or several sections, you
 	 * are guaranteed to only be called for those sections.
 	 *
 	 * @param section Section to open UI for

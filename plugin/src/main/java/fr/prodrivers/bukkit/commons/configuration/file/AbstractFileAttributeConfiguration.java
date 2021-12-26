@@ -19,13 +19,6 @@ public abstract class AbstractFileAttributeConfiguration extends AbstractAttribu
 		super.init();
 	}
 
-	/**
-	 * Field name fitler. Allows to translate from field name to configuration path.
-	 * Default behavior is to replace every "_" with ".", meaning that every "_" will actually separate into sub-fields.
-	 *
-	 * @param fieldName Field name
-	 * @return Filtered field name
-	 */
 	public static String filterFieldName(String fieldName) {
 		return fieldName.replaceAll("_", ".");
 	}

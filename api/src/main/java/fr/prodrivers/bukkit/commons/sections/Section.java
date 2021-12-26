@@ -26,8 +26,8 @@ import java.util.Set;
  * or across servers, with proper quit and join code called for each of them, without those plugins having to handle
  * themselves.
  * <p>
- * It ultimately allows plugins that where not built to handles other plugins on a server or across servers in mind to
- * implement those capabilities without much modifications, or even without any modifications by having another plugin
+ * It ultimately allows plugins, that where not built to handle other plugins on a server or across servers in mind, to
+ * implement those capabilities without many modifications, or even without any modifications by having another plugin
  * handle the interface for it.
  * <p>
  * Every new player enters the section mechanism by entering the root section. Each player, at any point in time, is
@@ -72,7 +72,7 @@ public abstract class Section {
 	}
 
 	/**
-	 * Get all the section's parents full names, including the section's fuull name
+	 * Get all the section's parents full names, including the section's full name
 	 *
 	 * @return Section's parents full name
 	 */
@@ -88,7 +88,7 @@ public abstract class Section {
 	public abstract @NonNull Set<SectionCapabilities> getCapabilities();
 
 	/**
-	 * Section pre join callback, called to check whether or not the player should enter the section.
+	 * Section pre join callback, called to check whether the player should enter the section.
 	 * <p>
 	 * This could be called at any point in the section's lifetime.
 	 * The player is not guaranteed to actually enter the section.
@@ -111,7 +111,7 @@ public abstract class Section {
 	public abstract boolean join(@NonNull Player player);
 
 	/**
-	 * Section pre leave callback, called to check whether or not the player can leave the section.
+	 * Section pre leave callback, called to check whether the player can leave the section.
 	 * <p>
 	 * This could be called at any point in the section's lifetime.
 	 * The player is not guaranteed to actually leave the section.
@@ -222,7 +222,7 @@ public abstract class Section {
 
 	/**
 	 * Adds a section as a parent to this section.
-	 * A section can only have one parent a a time. Calling this will erase the previous parent.
+	 * A section can only have one parent a time. Calling this will erase the previous parent.
 	 *
 	 * @param section Section to add as a parent
 	 */

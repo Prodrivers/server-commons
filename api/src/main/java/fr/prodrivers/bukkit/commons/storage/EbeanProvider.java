@@ -18,7 +18,7 @@ import java.util.List;
  * {@link ProdriversCommonsGuiceModule Prodrivers Commons' public module}, while plugins should
  * offer their own provider for DatabaseConfig. Your DatabaseConfig provider should, at least, register all classes
  * (entities, ...) that you intend to use with Ebean, using for example the
- * {@link io.ebean.config.DatabaseConfig#setClasses(List)}  setClasses} method.
+ * {@link io.ebean.config.DatabaseConfig#setClasses(List) setClasses} method.
  * <p>
  * EbeanProvider is an optional part of the plugin, meaning that the result of its methods, on top of the underlying SQL
  * database internal quirks and wrong queries, is not guaranteed to be correct.  One must check for errors when

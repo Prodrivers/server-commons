@@ -8,6 +8,8 @@ import java.util.UUID;
 
 /**
  * Prodrivers Commons Party instance
+ *
+ * Used implementation can be changed in configuration.
  */
 public interface Party {
 	/**
@@ -34,7 +36,7 @@ public interface Party {
 	/**
 	 * Unregister a player from the party.
 	 *
-	 * @param playerUniqueId Player to remove's Unique Id
+	 * @param playerUniqueId Player to remove's Unique ID
 	 */
 	void unregisterPlayer(final UUID playerUniqueId);
 

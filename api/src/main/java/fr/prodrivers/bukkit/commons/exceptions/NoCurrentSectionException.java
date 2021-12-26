@@ -1,7 +1,7 @@
 package fr.prodrivers.bukkit.commons.exceptions;
 
 /**
- * Exception thrown when a player has no current section, ie. is not registered against Prodrivers Commons
+ * Exception thrown when a player has no current section, i.e. is not registered against Prodrivers Commons
  * infrastructure.
  */
 public class NoCurrentSectionException extends RuntimeException {

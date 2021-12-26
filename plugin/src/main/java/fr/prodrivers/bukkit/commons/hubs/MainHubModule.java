@@ -12,7 +12,11 @@ public class MainHubModule extends AbstractModule {
 	@SuppressWarnings("unchecked")
 	public MainHubModule(EConfiguration configuration) {
 		try {
-			this.mainHubClass = (Class<? extends MainHub>) Class.forName(configuration.providers_MainHub);
+			if(!"null".equals(configuration.providers_MainHub)) {
+				this.mainHubClass = (Class<? extends MainHub>) Class.forName(configuration.providers_MainHub);
+			} else {
+				this.mainHubClass = null;
+			}
 		} catch(ClassNotFoundException|ClassCastException e) {
 			throw new RuntimeException("Invalid main hub provider: " + configuration.providers_MainHub, e);
 		}
@@ -20,6 +24,10 @@ public class MainHubModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(MainHub.class).to(mainHubClass);
+		if(mainHubClass != null) {
+			bind(MainHub.class).to(mainHubClass);
+		} else {
+			bind(MainHub.class).toInstance(null);
+		}
 	}
 }

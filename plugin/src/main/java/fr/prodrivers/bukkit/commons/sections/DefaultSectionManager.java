@@ -58,7 +58,7 @@ public class DefaultSectionManager implements SectionManager {
 
 		Section parentSection = currentSection.getParentSection();
 
-		// If it is null and we are not at the root section (we allow it on root section so that custom logic can be
+		// If it is null, and we are not at the root section (we allow it on root section so that custom logic can be
 		// used to exit server)
 		if(parentSection == null && !SectionManager.ROOT_NODE_NAME.equals(currentSection.getFullName())) {
 			// Stop everything and inform
@@ -107,6 +107,7 @@ public class DefaultSectionManager implements SectionManager {
 		}
 
 		// Check that all party players can enter, if necessary
+
 		// If the section does not handle party by itself and the player is not sent by the party owner
 		if(!fromParty && targetNode != null && !nonTransitiveTarget.getCapabilities().contains(SectionCapabilities.PARTY_AWARE)) {
 			Party party = this.partyManager.getParty(player.getUniqueId());
@@ -383,7 +384,7 @@ public class DefaultSectionManager implements SectionManager {
 			return true;
 		}
 
-		// If target node is null (and we are not in an root node exit case), then we are improperly using this method
+		// If target node is null (and we are not in a root node exit case), then we are improperly using this method
 		if(targetNode == null) {
 			throw new InvalidSectionException("Target node is null in a case where it should not be. Left node is " + leftNode);
 		}
@@ -604,7 +605,7 @@ public class DefaultSectionManager implements SectionManager {
 			for(int i = 0; i < section.getSplitFullName().size(); i++) {
 				final String nodeName = section.getSplitFullName().get(i);
 				final String currentNodeFullName = section.getParentsFullName().get(i);
-				// Add a corresponding node in the tree if it does not exists already
+				// Add a corresponding node in the tree if it does not exist already
 				keyTreeNode.children.computeIfAbsent(nodeName, k -> new KeyTreeNode(k, currentNodeFullName));
 				// Go to the corresponding key node
 				keyTreeNode = keyTreeNode.children.get(nodeName);
@@ -614,11 +615,11 @@ public class DefaultSectionManager implements SectionManager {
 
 		// Now that we have a tree of all section nodes name, we can use it to fill all missing nodes : we create
 		// transitive sections whenever we have a non-existent section for a key node, because it implies one should
-		// exists
+		// exist
 		keyTreeRoot.explore(currentKeyNode -> {
 			// Get the corresponding section
 			Section currentSection = getSection(currentKeyNode.fullKey);
-			// Proceed only if the node does not exists
+			// Proceed only if the node does not exist
 			if(currentSection == null) {
 				// Fill in a transitive node
 				currentSection = new TransitiveSection(currentKeyNode.fullKey);

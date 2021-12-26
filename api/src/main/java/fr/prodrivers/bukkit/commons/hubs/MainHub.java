@@ -10,6 +10,12 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Base class for Prodrivers Commons-managed main hub.
+ *
+ * Implement this class if you want to use Prodrivers Commons' managed main hub with your own logic.
+ * Used implementation can be changed in configuration.
+ */
 public abstract class MainHub extends Section {
 	protected final static Set<SectionCapabilities> capabilities = new HashSet<>();
 
@@ -26,7 +32,7 @@ public abstract class MainHub extends Section {
 		return capabilities;
 	}
 
-	public boolean preJoin(@NonNull Player player, boolean fromParty) {
+	public boolean preJoin(@NonNull Player player, Section targetSection, boolean fromParty) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -34,7 +40,7 @@ public abstract class MainHub extends Section {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean preLeave(@NonNull OfflinePlayer player, boolean fromParty) {
+	public boolean preLeave(@NonNull OfflinePlayer player, Section targetSection, boolean fromParty) {
 		throw new UnsupportedOperationException();
 	}
 

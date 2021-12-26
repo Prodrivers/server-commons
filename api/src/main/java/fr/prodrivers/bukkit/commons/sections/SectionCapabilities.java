@@ -16,7 +16,7 @@ public enum SectionCapabilities {
 	 */
 	PARTY_AWARE,
 	/**
-	 * Inform Prodrivers Commons that the section handles scoreboards by itself and does not uses Prodrivers Commons's Scoreboard infrastructure.
+	 * Inform Prodrivers Commons that the section handles scoreboards by itself and does not use Prodrivers Commons's Scoreboard infrastructure.
 	 */
 	SCOREBOARD_EXCLUSIVE,
 	/**

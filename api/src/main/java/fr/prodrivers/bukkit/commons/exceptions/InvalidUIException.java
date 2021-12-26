@@ -1,7 +1,7 @@
 package fr.prodrivers.bukkit.commons.exceptions;
 
 /**
- * Exception thrown by the section manager when asection reports to have custom UI but does not implements it.
+ * Exception thrown by the section manager when a section reports to have custom UI but does not implement it.
  */
 public class InvalidUIException extends RuntimeException {
 	/**

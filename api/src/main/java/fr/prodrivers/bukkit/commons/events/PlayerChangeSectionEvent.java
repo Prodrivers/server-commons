@@ -74,6 +74,11 @@ public class PlayerChangeSectionEvent extends Event implements Cancellable {
 		return handlers;
 	}
 
+	/**
+	 * Return handlers of this event. Mandated by Bukkit.
+	 *
+	 * @return Handler list
+	 */
 	public static HandlerList getHandlerList() {
 		return handlers;
 	}

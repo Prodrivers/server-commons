@@ -6,7 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 /**
  * Field-based, Bukkit's FileConfiguration backed configuration framework for Prodrivers plugins.
  * <p>
- * AbstractFileAttributeConfiguration extends AbstractAttributeConfiguration to uses Bukkit's own FileConfiguratio
+ * AbstractFileAttributeConfiguration extends AbstractAttributeConfiguration to uses Bukkit's own {@link FileConfiguration}
  * class as a storage. It provides all the required configuration actions, and most logic for loading, saving and
  * saving defaults.
  * <p>
@@ -27,8 +27,8 @@ public abstract class AbstractFileAttributeConfiguration extends AbstractAttribu
 	protected FileConfiguration configuration;
 
 	/**
-	 * Field name fitler. Allows to translate from field name to configuration path.
-	 * Default behavior is to replace every "_" with ".", meaning that every "_" will actually separate into sub-fields.
+	 * Field name filter. Allows translating from field name to configuration path.
+	 * Default behavior is to replace every "_" with ".", meaning that every "_" will actually separate into subfields.
 	 *
 	 * @param fieldName Field name
 	 * @return Filtered field name

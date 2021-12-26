@@ -9,12 +9,14 @@ import java.util.UUID;
 /**
  * Chat helper for Prodrivers plugins.
  * <p>
- * Expose simple send functions to send messages to players.
+ * Expose more advanced functions to send messages to players.
  * Handles prefix and colors directly.
  */
 public class Chat {
 	/**
 	 * Constructor for the Chat helper for Prodrivers plugins
+	 *
+	 * @param messageSender {@link MessageSender} instance to use as backend
 	 */
 	public Chat(MessageSender messageSender) {
 		throw new UnsupportedOperationException();

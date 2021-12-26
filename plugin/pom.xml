@@ -226,21 +226,17 @@
                                         <exclude>fr/prodrivers/bukkit/commons/ProdriversCommons*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/commands/ACFCommandManagerProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/configuration/Configuration*</exclude>
-                                        <exclude>
-                                            fr/prodrivers/bukkit/commons/configuration/AbstractAttributeConfiguration*
-                                        </exclude>
-                                        <exclude>
-                                            fr/prodrivers/bukkit/commons/configuration/file/AbstractFileAttributeConfiguration*
-                                        </exclude>
-                                        <exclude>
-                                            fr/prodrivers/bukkit/commons/configuration/file/FileAttributeConfiguration*
-                                        </exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/configuration/AbstractAttributeConfiguration*</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/configuration/file/AbstractFileAttributeConfiguration*</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/configuration/file/FileAttributeConfiguration*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/configuration/Messages*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/di/guice/ProdriversCommonsGuiceModule*</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/hubs/DefaultMainHub*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/DataSourceConfigProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/EbeanProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/SQLProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/sections/Section.class</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/ui/sections/DefaultSelectionUI*</exclude>
                                     </excludes>
                                 </filter>
                             </filters>

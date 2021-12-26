@@ -13,9 +13,11 @@ import fr.prodrivers.bukkit.commons.parties.PartyManager;
  * <ul>
  *     <li>{@link PartyManager PartyManager}
  *     <li>{@link fr.prodrivers.bukkit.commons.sections.SectionManager SectionManager}
- *     <li>{@link java.sql.Connection Connection} through {@link fr.prodrivers.bukkit.commons.storage.SQLProvider SQLProvider}
+ *     <li>{@link fr.prodrivers.bukkit.commons.chat.MessageSender MessageSender}
+ *     <li>{@link fr.prodrivers.bukkit.commons.ui.section.SelectionUI SelectionUI}
  *     <li>{@link io.ebean.Database Database} through {@link fr.prodrivers.bukkit.commons.storage.EbeanProvider EbeanProvider}
  *     <li>{@link io.ebean.datasource.DataSourceConfig DataSourceConfig} through {@link fr.prodrivers.bukkit.commons.storage.DataSourceConfigProvider DataSourceConfigProvider}
+ *     <li>{@link co.aikar.commands.BukkitCommandManager BukkitCommandManager} through {@link fr.prodrivers.bukkit.commons.commands.ACFCommandManagerProvider ACFCommandManagerProvider}
  * </ul>
  */
 public class ProdriversCommonsGuiceModule extends AbstractModule {

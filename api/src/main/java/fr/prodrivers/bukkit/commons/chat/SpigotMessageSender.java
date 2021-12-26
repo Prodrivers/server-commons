@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  * Default implementation of message sender helper that uses Bukkit/Spigot functions.
  *
- * This implementation is enough for single servers.
+ * This implementation is intended for single servers.
  */
 public class SpigotMessageSender implements MessageSender {
 	public void send(CommandSender sender, String message, String prefix) {

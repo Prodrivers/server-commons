@@ -8,16 +8,19 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
+ * Transitive Section
+ *
  * A transitive section is a section automatically created by Prodrivers Commons to fill holes in the section tree.
+ * It is final and non-instantiable, as it is used internally only.
  * It does nothing on its own, designed to allow players to pass through to non-transitive sections, but has special
  * handling code to ensure that:
- * - players can not walk down the tree to a transitive section, ie. a transitive section can not be the target node
+ * - players can not walk down the tree to a transitive section, i.e. a transitive section can not be the target node
  * when the player has to walk up and down the tree.
  * - players walking up the tree to a transitive section ends up walking to its parent until it encounters a
- * non-transitive section, ie. a transitive section, when it is the target node and is attained only by walking up the
+ * non-transitive section, i.e. a transitive section, when it is the target node and is attained only by walking up the
  * tree, acts a proxy for the non-transitive parent section.
  */
-public class TransitiveSection extends Section {
+public final class TransitiveSection extends Section {
 	public TransitiveSection(String fullName) {
 		super(fullName);
 	}

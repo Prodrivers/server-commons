@@ -13,7 +13,7 @@ import javax.inject.Singleton;
  * behind powerful annotations. It provides out-of-the-box, among other things, Validation, Tab Completion, Help
  * Documentation, Syntax Advice, and Stateful Conditions.
  * <p>
- * ACFProvider is intended to be used with a dependency injector. The commaand manager returned by it contains
+ * ACFProvider is intended to be used with a dependency injector. The command manager returned by it contains
  * integrations with {@link fr.prodrivers.bukkit.commons.configuration.Messages} facility, so that all messages are
  * correctly prefixed and strings from your {@link fr.prodrivers.bukkit.commons.configuration.Messages} instance can be
  * used in ACF as you would with other strings from it.

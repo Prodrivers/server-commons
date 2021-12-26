@@ -12,6 +12,8 @@ import org.bukkit.entity.Player;
  * sections.
  *
  * Before actually moving a player, a {@link fr.prodrivers.bukkit.commons.events.PlayerChangeSectionEvent} will be triggered and can be cancelled.
+ *
+ * Used implementation can be changed in configuration.
  */
 public interface SectionManager {
 	/**
