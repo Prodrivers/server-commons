@@ -180,16 +180,15 @@
                 <version>3.2.0</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
-                    <outputDirectory>${project.build.directory}/api/${project.version}</outputDirectory>
                     <show>public</show>
                     <nohelp>false</nohelp>
-                    <header>ProdriversCommons for Bukkit API, ${project.version}</header>
-                    <doctitle>ProdriversCommons for Bukkit API, ${project.version}</doctitle>
+                    <header>Prodrivers Commons for Bukkit API, ${project.version}</header>
+                    <doctitle>Prodrivers Commons for Bukkit API, ${project.version}</doctitle>
                     <bottom><![CDATA[
 					</small></p>
 					<div class="top-nav">
                         <ul class="nav-list" title="Bottom navigation">
-                            <li><a href="https://github.com/Prodrivers/bukkit-commons">Repository</a></li>
+                            <li><a href="https://github.com/Prodrivers/commons-bukkit">Repository</a></li>
                             <li><a href="https://github.com/Prodrivers/commons-bukkit/issues">Issues</a></li>
                         </ul>
                         <ul class="nav-list" title="Bottom navigation" style="float:right">
