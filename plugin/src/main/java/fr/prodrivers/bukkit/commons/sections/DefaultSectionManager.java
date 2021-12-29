@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 
 @Singleton
 public class DefaultSectionManager implements SectionManager {
+	private static final long SECTION_TREE_REBUILD_DELAY_TICKS = 20;
 
 	private final Map<String, Section> sections = new HashMap<>();
 	private final Map<UUID, Section> playersCurrentSection = new HashMap<>();
@@ -29,6 +30,9 @@ public class DefaultSectionManager implements SectionManager {
 	private final EMessages messages;
 	private final PartyManager partyManager;
 	private final SelectionUI defaultSelectionUi;
+
+	private boolean treeBuilt = false;
+	private boolean treeBuildingScheduled = false;
 
 	@Inject
 	public DefaultSectionManager(JavaPlugin plugin, EMessages messages, PartyManager partyManager, SelectionUI defaultSelectionUi) {
@@ -315,6 +319,15 @@ public class DefaultSectionManager implements SectionManager {
 			if(!silent) {
 				Log.info("SectionManager registered section " + section + ".");
 			}
+
+			if(this.treeBuilt && !this.treeBuildingScheduled) {
+				this.treeBuildingScheduled = true;
+				Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, () -> {
+					Log.info("Recreating section tree...");
+					buildSectionTree();
+					this.treeBuildingScheduled = false;
+				}, SECTION_TREE_REBUILD_DELAY_TICKS);
+			}
 		} else {
 			Log.warning("Section " + section + " tried to be registered for a second time.");
 		}
@@ -513,10 +526,13 @@ public class DefaultSectionManager implements SectionManager {
 					return false;
 				}
 			}
-			if(!node.preLeave(player, finalNode, fromParty)) {
-				// The current node does not want us to leave it. Stop going forward.
-				Log.severe("Node " + node + " refused player " + player + " to leave with its leave check.");
-				return false;
+			// If we are not at the last iteration
+			if(node != target) {
+				if(!node.preLeave(player, finalNode, fromParty)) {
+					// The current node does not want us to leave it. Stop going forward.
+					Log.severe("Node " + node + " refused player " + player + " to leave with its leave check.");
+					return false;
+				}
 			}
 			// Add the parent node to the list of visited nodes
 			visitedNodes.add(node);
@@ -592,6 +608,8 @@ public class DefaultSectionManager implements SectionManager {
 	 * Fills, for each node, its parent and children. Creates intermediary nodes whenever needed.
 	 */
 	public void buildSectionTree() {
+		this.treeBuilt = false;
+
 		// First, go through all registered sections and build a tree from their names, based on the separators in their
 		// names
 		KeyTreeNode keyTreeRoot = new KeyTreeNode(ROOT_NODE_NAME, ROOT_NODE_NAME);
@@ -648,6 +666,8 @@ public class DefaultSectionManager implements SectionManager {
 						.forEach(currentSection::addChildren);
 			}
 		});
+
+		this.treeBuilt = true;
 	}
 
 	@Override
