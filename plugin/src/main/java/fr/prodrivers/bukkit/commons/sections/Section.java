@@ -68,7 +68,7 @@ public abstract class Section {
 
 	public @Nullable Section getFirstNonTransitiveSection() {
 		Section nonTransitiveParent;
-		for(nonTransitiveParent = this; nonTransitiveParent instanceof TransitiveSection; ) {
+		for(nonTransitiveParent = this; nonTransitiveParent != null && nonTransitiveParent.getCapabilities().contains(SectionCapabilities.TRANSITIVE); ) {
 			nonTransitiveParent = nonTransitiveParent.getParentSection();
 		}
 

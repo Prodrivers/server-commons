@@ -165,7 +165,7 @@ public class DefaultSectionManager implements SectionManager {
 		// If the player is already in an enter process
 		if(inEnter.contains(player.getUniqueId())) {
 			// Stop
-			Log.fine( player + " is already in enter process");
+			Log.fine(player + " is already in enter process");
 			return false;
 		}
 
@@ -192,7 +192,7 @@ public class DefaultSectionManager implements SectionManager {
 
 		// The check pass guarantee us that the player can not walk down to a transitive node. However, he can still
 		// walk up to one. In this case, go up until we encounter a non-transitive node.
-		while(nodesToVisit.size() > 0 && nodesToVisit.get(nodesToVisit.size() - 1) instanceof TransitiveSection) {
+		while(nodesToVisit.size() > 0 && nodesToVisit.get(nodesToVisit.size() - 1).getCapabilities().contains(SectionCapabilities.TRANSITIVE)) {
 			// Until the path contains transitive node at the end, add their parent node.
 			Section parent = nodesToVisit.get(nodesToVisit.size() - 1).getParentSection();
 			assert parent != null;
@@ -379,7 +379,7 @@ public class DefaultSectionManager implements SectionManager {
 			Log.fine("Path already computed for " + player + ": " + playersSectionPath.get(player.getUniqueId()));
 			return true;
 		}
-		Log.fine("Computing path for " + player +   " from " + leftNode + " to " + targetNode);
+		Log.fine("Computing path for " + player + " from " + leftNode + " to " + targetNode);
 
 		// Special case for root node exit
 		if(leftNode != null && leftNode.getFullName().equals(SectionManager.ROOT_NODE_NAME) && targetNode == null) {
@@ -510,7 +510,7 @@ public class DefaultSectionManager implements SectionManager {
 			sectionsToWalk.add(target);
 		}
 		// If the first node of the list is a transitive node (meaning that we will walk down to a transitive node)
-		if(!sectionsToWalk.isEmpty() && sectionsToWalk.peekFirst() instanceof TransitiveSection) {
+		if(!sectionsToWalk.isEmpty() && sectionsToWalk.peekFirst() != null && sectionsToWalk.peekFirst().getCapabilities().contains(SectionCapabilities.TRANSITIVE)) {
 			// Stop everything
 			throw new InvalidSectionException("End node is a transitive node, which is invalid.");
 		}

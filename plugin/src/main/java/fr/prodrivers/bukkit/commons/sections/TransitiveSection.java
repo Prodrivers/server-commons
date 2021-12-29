@@ -27,7 +27,7 @@ public final class TransitiveSection extends Section {
 
 	@Override
 	public @NonNull Set<SectionCapabilities> getCapabilities() {
-		return Collections.emptySet();
+		return Collections.singleton(SectionCapabilities.TRANSITIVE);
 	}
 
 	@Override

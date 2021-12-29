@@ -8,6 +8,10 @@ package fr.prodrivers.bukkit.commons.sections;
  */
 public enum SectionCapabilities {
 	/**
+	 * Inform Prodrivers Commons that the section handles its UI by itself.
+	 */
+	CUSTOM_SELECTION_UI,
+	/**
 	 * Define that the section should be considered a hub. Players in parties can join hub sections by themselves, contrary to other sections.
 	 */
 	HUB,
@@ -20,7 +24,8 @@ public enum SectionCapabilities {
 	 */
 	SCOREBOARD_EXCLUSIVE,
 	/**
-	 * Inform Prodrivers Commons that the section handles its UI by itself.
+	 * Inform Prodrivers Commons that the section is transitive, meaning that a player should not stop here.
+	 * Sections created by manager to fill holes in section tree expose this capability.
 	 */
-	CUSTOM_SELECTION_UI
+	TRANSITIVE
 }
