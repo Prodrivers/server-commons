@@ -16,6 +16,7 @@ public abstract class AbstractFileAttributeConfiguration extends AbstractAttribu
 		registerAction(new ByteFileAttributeConfigurationAction(this.configuration));
 		registerAction(new MaterialFileAttributeConfigurationAction(this.configuration));
 		registerAction(new MapFileAttributeConfigurationAction(this.configuration));
+		registerAction(new PropertiesFileAttributeConfigurationAction(this.configuration));
 		super.init();
 	}
 
