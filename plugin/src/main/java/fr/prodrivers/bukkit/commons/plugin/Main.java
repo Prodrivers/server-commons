@@ -45,17 +45,6 @@ public class Main extends JavaPlugin implements Listener {
 	@Override
 	public void onDisable() {
 		PluginDescriptionFile plugindescription = this.getDescription();
-		if(configuration != null) {
-			configuration.save();
-		} else {
-			logger.warning("Configuration not saved because it is null.");
-		}
-		logger.info("Waiting for additional logging...");
-		try {
-			Thread.sleep(1000);
-		} catch(InterruptedException e) {
-			// Silently ignore
-		}
 		logger.info("" + plugindescription.getName() + " has been disabled!");
 	}
 
