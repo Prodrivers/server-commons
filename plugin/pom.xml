@@ -5,7 +5,9 @@
 
     <artifactId>prodrivers-commons-plugin</artifactId>
     <name>Prodrivers Commons Plugin</name>
-    <description>A common set of tools for Bukkit plugins, designed to fulfill all Prodrivers plugin needs. This project contains the reference implementation.</description>
+    <description>A common set of tools for Bukkit plugins, designed to fulfill all Prodrivers plugin needs. This project
+        contains the reference implementation.
+    </description>
 
     <packaging>jar</packaging>
 
@@ -21,131 +23,12 @@
         <ebean-maven-plugin.args>debug=0</ebean-maven-plugin.args>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
-            <id>prodrivers-repo</id>
-            <url>https://repo.prodrivers.fr/</url>
-        </repository>
-        <repository>
-            <id>aikar</id>
-            <url>https://repo.aikar.co/content/groups/aikar/</url>
-        </repository>
-    </repositories>
-
     <dependencies>
-        <!-- Guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>30.1-jre</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Guice -->
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>5.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-assistedinject</artifactId>
-            <version>5.0.1</version>
-        </dependency>
-        <!-- Checker Framework -->
-        <dependency>
-            <groupId>org.checkerframework</groupId>
-            <artifactId>checker-qual</artifactId>
-            <version>3.11.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.checkerframework</groupId>
-            <artifactId>checker</artifactId>
-            <version>3.11.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--Spigot API-->
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>${spigot.artifact.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <!--Prodrivers Commons API-->
         <dependency>
             <groupId>fr.prodrivers.bukkit</groupId>
             <artifactId>prodrivers-commons-api</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <!-- JavaX Validation Annotations -->
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- SLF4J -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.30</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- EBeans -->
-        <dependency>
-            <groupId>io.ebean</groupId>
-            <artifactId>ebean</artifactId>
-            <version>12.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ebean</groupId>
-            <artifactId>ebean-querybean</artifactId>
-            <version>12.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ebean</groupId>
-            <artifactId>querybean-generator</artifactId>
-            <version>12.9.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Apache Commons Collections -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>4.4</version>
-        </dependency>
-        <!-- Apache Commons IO -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.10.0</version>
-        </dependency>
-        <!-- Jackson -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>2.11.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.11.0</version>
-        </dependency>
-        <!-- Aikar Commands Patch -->
-        <dependency>
-            <groupId>fr.prodrivers.bukkit</groupId>
-            <artifactId>acf-patch</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <!-- Aikar Commands -->
-        <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>acf-paper</artifactId>
-            <version>0.5.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -224,16 +107,25 @@
                                         <exclude>fr/prodrivers/bukkit/commons/chat/Chat*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/chat/SpigotMessageSender*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/ProdriversCommons*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/commands/ACFCommandManagerProvider*</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/commands/ACFCommandManagerProvider*
+                                        </exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/configuration/Configuration*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/configuration/AbstractAttributeConfiguration*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/configuration/file/AbstractFileAttributeConfiguration*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/configuration/file/FileAttributeConfiguration*</exclude>
+                                        <exclude>
+                                            fr/prodrivers/bukkit/commons/configuration/AbstractAttributeConfiguration*
+                                        </exclude>
+                                        <exclude>
+                                            fr/prodrivers/bukkit/commons/configuration/file/AbstractFileAttributeConfiguration*
+                                        </exclude>
+                                        <exclude>
+                                            fr/prodrivers/bukkit/commons/configuration/file/FileAttributeConfiguration*
+                                        </exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/configuration/Messages*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/di/guice/ProdriversCommonsGuiceModule*</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/di/guice/ProdriversCommonsGuiceModule*
+                                        </exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/events/PlayerChangeSectionEvent*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/hubs/DefaultMainHub*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/storage/DataSourceConfigProvider*</exclude>
+                                        <exclude>fr/prodrivers/bukkit/commons/storage/DataSourceConfigProvider*
+                                        </exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/EbeanProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/SQLProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/sections/Section.class</exclude>
