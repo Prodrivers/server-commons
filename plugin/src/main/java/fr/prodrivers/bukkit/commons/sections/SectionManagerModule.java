@@ -13,7 +13,7 @@ public class SectionManagerModule extends AbstractModule {
 	public SectionManagerModule(EConfiguration configuration) {
 		try {
 			this.sectionManagerClass = (Class<? extends SectionManager>) Class.forName(configuration.providers_SectionManager);
-		} catch(ClassNotFoundException|ClassCastException e) {
+		} catch(ClassNotFoundException | ClassCastException e) {
 			throw new RuntimeException("Invalid section manager provider: " + configuration.providers_SectionManager, e);
 		}
 	}

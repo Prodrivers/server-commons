@@ -2,18 +2,15 @@ package fr.prodrivers.bukkit.commons.storage;
 
 import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.plugin.DependenciesClassLoaderProvider;
-import fr.prodrivers.bukkit.commons.plugin.EConfiguration;
 import io.ebean.Database;
 import io.ebean.DatabaseFactory;
 import io.ebean.config.DatabaseConfig;
-import io.ebean.datasource.DataSourceConfig;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.util.Properties;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Singleton
 public class EbeanProvider implements Provider<Database> {

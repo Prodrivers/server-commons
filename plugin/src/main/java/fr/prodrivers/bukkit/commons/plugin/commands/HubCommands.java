@@ -2,8 +2,8 @@ package fr.prodrivers.bukkit.commons.plugin.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
-import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.Log;
+import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.plugin.EMessages;
 import fr.prodrivers.bukkit.commons.sections.Section;
 import fr.prodrivers.bukkit.commons.sections.SectionCapabilities;

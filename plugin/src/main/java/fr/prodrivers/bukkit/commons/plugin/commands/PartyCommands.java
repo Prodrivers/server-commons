@@ -1,10 +1,10 @@
 package fr.prodrivers.bukkit.commons.plugin.commands;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
 import co.aikar.commands.annotation.Optional;
-import fr.prodrivers.bukkit.commons.chat.Chat;
+import co.aikar.commands.annotation.*;
 import fr.prodrivers.bukkit.commons.Log;
+import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.exceptions.PartyCannotInviteYourselfException;
 import fr.prodrivers.bukkit.commons.exceptions.PlayerNotConnectedException;
 import fr.prodrivers.bukkit.commons.exceptions.PlayerNotInvitedToParty;
@@ -15,7 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -25,14 +24,13 @@ import java.util.*;
 @CommandAlias("party")
 public class PartyCommands extends BaseCommand {
 	private static final String label = "party";
-	private static final String permission = "pcommons.party";
 
 	private final EMessages messages;
 	private final Chat chat;
 	private final PartyManager partyManager;
 
 	@Inject
-	PartyCommands(JavaPlugin plugin, Chat chat, EMessages messages, PartyManager partyManager) {
+	PartyCommands(Chat chat, EMessages messages, PartyManager partyManager) {
 		this.chat = chat;
 		this.messages = messages;
 		this.partyManager = partyManager;

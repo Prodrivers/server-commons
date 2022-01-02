@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * Transitive Section
- *
+ * <p>
  * A transitive section is a section automatically created by Prodrivers Commons to fill holes in the section tree.
  * It is final and non-instantiable, as it is used internally only.
  * It does nothing on its own, designed to allow players to pass through to non-transitive sections, but has special

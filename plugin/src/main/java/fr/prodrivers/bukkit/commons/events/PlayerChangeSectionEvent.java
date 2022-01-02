@@ -19,8 +19,8 @@ public class PlayerChangeSectionEvent extends Event implements Cancellable {
 	/**
 	 * Constructs a new event.
 	 *
-	 * @param player Player that is moving
-	 * @param leftSection Left section
+	 * @param player        Player that is moving
+	 * @param leftSection   Left section
 	 * @param targetSection Target section
 	 */
 	public PlayerChangeSectionEvent(Player player, Section leftSection, Section targetSection) {

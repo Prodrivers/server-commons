@@ -29,7 +29,8 @@ public class EbeanProvider implements Provider<Database> {
 	/**
 	 * Make class non-instantiable
 	 */
-	private EbeanProvider() {}
+	private EbeanProvider() {
+	}
 
 	/**
 	 * Gets a new Ebean Database instance.

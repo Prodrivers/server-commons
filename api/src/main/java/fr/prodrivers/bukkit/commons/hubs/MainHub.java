@@ -12,7 +12,7 @@ import java.util.Set;
 
 /**
  * Base class for Prodrivers Commons-managed main hub.
- *
+ * <p>
  * Implement this class if you want to use Prodrivers Commons' managed main hub with your own logic.
  * Used implementation can be changed in configuration.
  */

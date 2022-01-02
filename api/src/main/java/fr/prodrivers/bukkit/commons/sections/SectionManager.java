@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
  * Contains methods to manage and interact with Prodrivers Commons Sections.
  * Use this class to gather information, about sections, players, move players between sections and register new
  * sections.
- *
+ * <p>
  * Before actually moving a player, a {@link fr.prodrivers.bukkit.commons.events.PlayerChangeSectionEvent} will be triggered and can be cancelled.
- *
+ * <p>
  * Used implementation can be changed in configuration.
  */
 public interface SectionManager {
@@ -127,7 +127,6 @@ public interface SectionManager {
 	 *
 	 * @param sectionName Section's full name to open UI for
 	 * @param player      Player that opened the selection UI
-	 *
 	 * @throws InvalidSectionException No corresponding section exists to provided name
 	 * @throws InvalidUIException      Section reports to have custom UI, but does not implement it
 	 */

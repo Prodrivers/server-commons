@@ -24,5 +24,6 @@ public class ProdriversCommonsGuiceModule extends AbstractModule {
 	/**
 	 * Make class non-instantiable
 	 */
-	private ProdriversCommonsGuiceModule() {}
+	private ProdriversCommonsGuiceModule() {
+	}
 }

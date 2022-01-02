@@ -29,14 +29,14 @@ public class Commands {
 	public void registerCompletions(BukkitCommandManager commandManager, SectionManager sectionManager, PartyManager partyManager) {
 		CommandCompletions<BukkitCommandCompletionContext> commandCompletions = commandManager.getCommandCompletions();
 
-		commandCompletions.registerAsyncCompletion("others", c -> Bukkit.getOnlinePlayers().stream().filter(p-> p.getUniqueId() != c.getPlayer().getUniqueId()).map(Player::getName).toList());
+		commandCompletions.registerAsyncCompletion("others", c -> Bukkit.getOnlinePlayers().stream().filter(p -> p.getUniqueId() != c.getPlayer().getUniqueId()).map(Player::getName).toList());
 
 		commandCompletions.registerAsyncCompletion("hubs", c -> StreamSupport.stream(sectionManager.getSections().spliterator(), false).filter(s -> s.getFullName().length() > 0).filter(s -> s.getCapabilities().contains(SectionCapabilities.HUB)).map(Section::getFullName).toList());
 
 		commandCompletions.registerAsyncCompletion("partyothers", c -> {
 			Party party = partyManager.getParty(c.getPlayer().getUniqueId());
 			if(party != null) {
-				return party.getPlayers().stream().map(Bukkit::getOfflinePlayer).filter(p-> p.getUniqueId() != c.getPlayer().getUniqueId()).map(OfflinePlayer::getName).filter(Objects::nonNull).toList();
+				return party.getPlayers().stream().map(Bukkit::getOfflinePlayer).filter(p -> p.getUniqueId() != c.getPlayer().getUniqueId()).map(OfflinePlayer::getName).filter(Objects::nonNull).toList();
 			}
 			return Collections.emptyList();
 		});

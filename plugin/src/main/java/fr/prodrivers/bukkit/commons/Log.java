@@ -14,7 +14,6 @@ public class Log {
 	}
 
 	public static void setLevel(Configuration configuration) {
-		Log.logger = logger;
 		logger.setLevel(configuration.logLevel);
 		for(Handler handler : logger.getHandlers()) {
 			handler.setLevel(configuration.logLevel);

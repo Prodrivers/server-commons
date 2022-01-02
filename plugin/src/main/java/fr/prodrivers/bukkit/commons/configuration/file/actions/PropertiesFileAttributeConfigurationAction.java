@@ -7,7 +7,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 public class PropertiesFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
 	public PropertiesFileAttributeConfigurationAction(FileConfiguration configuration) {
@@ -43,7 +42,7 @@ public class PropertiesFileAttributeConfigurationAction extends ObjectFileConfig
 	public void set(Field field, Object value) {
 		String key = AbstractFileAttributeConfiguration.filterFieldName(field.getName());
 		if(value instanceof Properties properties) {
-			for(Map.Entry<Object, Object> entry : properties.entrySet()){
+			for(Map.Entry<Object, Object> entry : properties.entrySet()) {
 				configuration.set(key + "." + entry.getKey(), entry.getValue());
 			}
 		} else {
@@ -55,7 +54,7 @@ public class PropertiesFileAttributeConfigurationAction extends ObjectFileConfig
 	public void setDefault(Field field, Object value) {
 		String key = AbstractFileAttributeConfiguration.filterFieldName(field.getName());
 		if(value instanceof Properties properties) {
-			for(Map.Entry<Object, Object> entry : properties.entrySet()){
+			for(Map.Entry<Object, Object> entry : properties.entrySet()) {
 				configuration.set(key + "." + entry.getKey(), entry.getValue());
 			}
 		}

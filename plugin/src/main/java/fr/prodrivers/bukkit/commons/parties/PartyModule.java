@@ -14,7 +14,7 @@ public class PartyModule extends AbstractModule {
 	public PartyModule(EConfiguration configuration) {
 		try {
 			this.partyManagerClass = (Class<? extends PartyManager>) Class.forName(configuration.providers_PartyManager);
-		} catch(ClassNotFoundException|ClassCastException e) {
+		} catch(ClassNotFoundException | ClassCastException e) {
 			throw new RuntimeException("Invalid party manager provider: " + configuration.providers_PartyManager, e);
 		}
 	}

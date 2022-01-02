@@ -23,7 +23,8 @@ public class ACFCommandManagerProvider implements Provider<BukkitCommandManager>
 	/**
 	 * Make class non-instantiable
 	 */
-	private ACFCommandManagerProvider() {}
+	private ACFCommandManagerProvider() {
+	}
 
 	/**
 	 * Gets a new ACF Bukkit Command Manager.

@@ -17,7 +17,7 @@ public class MainHubModule extends AbstractModule {
 			} else {
 				this.mainHubClass = null;
 			}
-		} catch(ClassNotFoundException|ClassCastException e) {
+		} catch(ClassNotFoundException | ClassCastException e) {
 			throw new RuntimeException("Invalid main hub provider: " + configuration.providers_MainHub, e);
 		}
 	}

@@ -4,19 +4,14 @@ import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.plugin.EConfiguration;
 import fr.prodrivers.bukkit.commons.plugin.EMessages;
 import fr.prodrivers.bukkit.commons.sections.Section;
-import fr.prodrivers.bukkit.commons.sections.SectionCapabilities;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.HashSet;
-import java.util.Set;
 
 @Singleton
 public class DefaultMainHub extends MainHub {

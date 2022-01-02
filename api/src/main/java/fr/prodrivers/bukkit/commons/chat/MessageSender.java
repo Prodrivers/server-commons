@@ -12,7 +12,7 @@ import java.util.UUID;
  * Expose simple functions to send messages to players.
  * Handle colors directly. A prefix must be given as parameter.
  * Used as backend for Prodrivers Commons' chat facility.
- *
+ * <p>
  * Used implementation can be changed in configuration.
  */
 public interface MessageSender {

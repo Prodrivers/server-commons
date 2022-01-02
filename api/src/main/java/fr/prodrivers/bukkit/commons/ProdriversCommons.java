@@ -11,7 +11,8 @@ public class ProdriversCommons {
 	/**
 	 * Make class non-instantiable
 	 */
-	private ProdriversCommons() {}
+	private ProdriversCommons() {
+	}
 
 	/**
 	 * Returns a module for Guice dependency injector, adding all public parts of Prodrivers Commons to your dependency

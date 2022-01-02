@@ -18,7 +18,8 @@ public class DataSourceConfigProvider implements Provider<DataSourceConfig> {
 	/**
 	 * Make class non-instantiable
 	 */
-	private DataSourceConfigProvider() {}
+	private DataSourceConfigProvider() {
+	}
 
 	/**
 	 * Gets a new Ebean Database source configuration instance.

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 /**
  * Prodrivers Commons Party instance
- *
+ * <p>
  * Used implementation can be changed in configuration.
  */
 public interface Party {
@@ -113,15 +113,15 @@ public interface Party {
 	/**
 	 * Broadcast a message to the party.
 	 *
-	 * @param message       Message to send
+	 * @param message Message to send
 	 */
 	void broadcast(final String message);
 
 	/**
 	 * Broadcast a message to the party, except some players.
 	 *
-	 * @param message       Message to send
-	 * @param excluded      Players that should not receive the message
+	 * @param message  Message to send
+	 * @param excluded Players that should not receive the message
 	 */
 	void broadcast(final String message, final List<UUID> excluded);
 }

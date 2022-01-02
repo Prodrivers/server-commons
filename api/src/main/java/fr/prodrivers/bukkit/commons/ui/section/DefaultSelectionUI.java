@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 /**
  * Default Selection UI for sections.
- *
+ * <p>
  * This implementation is currently non-functional.
  */
 public class DefaultSelectionUI implements SelectionUI {

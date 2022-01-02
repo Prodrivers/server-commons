@@ -2,10 +2,10 @@ package fr.prodrivers.bukkit.commons.parties;
 
 /**
  * Describe a list of possible party messages
- *
+ * <p>
  * Party messages are triggered by the party manager, the party implementation is responsible for sending the actual
  * message to the players.
- *
+ * <p>
  * Messages
  */
 public enum PartyMessage {

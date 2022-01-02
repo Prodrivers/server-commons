@@ -1,6 +1,5 @@
 package fr.prodrivers.bukkit.commons.plugin;
 
-import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.chat.SpigotMessageSender;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
 import fr.prodrivers.bukkit.commons.configuration.Messages;

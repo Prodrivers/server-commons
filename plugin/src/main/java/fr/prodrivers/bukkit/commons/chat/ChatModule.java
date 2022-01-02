@@ -13,7 +13,7 @@ public class ChatModule extends AbstractModule {
 	public ChatModule(EConfiguration configuration) {
 		try {
 			this.messageSenderClass = (Class<? extends MessageSender>) Class.forName(configuration.providers_MessageSender);
-		} catch(ClassNotFoundException|ClassCastException e) {
+		} catch(ClassNotFoundException | ClassCastException e) {
 			throw new RuntimeException("Invalid section manager provider: " + configuration.providers_MessageSender, e);
 		}
 	}

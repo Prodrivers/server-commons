@@ -8,13 +8,13 @@ import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.ProdriversCommons;
 import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.chat.ChatModule;
-import fr.prodrivers.bukkit.commons.configuration.Messages;
-import fr.prodrivers.bukkit.commons.parties.PartyManager;
-import fr.prodrivers.bukkit.commons.plugin.commands.Commands;
 import fr.prodrivers.bukkit.commons.configuration.Configuration;
-import fr.prodrivers.bukkit.commons.hubs.MainHubModule;
-import fr.prodrivers.bukkit.commons.parties.PartyModule;
+import fr.prodrivers.bukkit.commons.configuration.Messages;
 import fr.prodrivers.bukkit.commons.hubs.MainHub;
+import fr.prodrivers.bukkit.commons.hubs.MainHubModule;
+import fr.prodrivers.bukkit.commons.parties.PartyManager;
+import fr.prodrivers.bukkit.commons.parties.PartyModule;
+import fr.prodrivers.bukkit.commons.plugin.commands.Commands;
 import fr.prodrivers.bukkit.commons.plugin.commands.CommandsModule;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.sections.SectionManagerModule;
@@ -68,7 +68,7 @@ public class Main extends JavaPlugin implements Listener {
 
 		// Create an injector with only the plugin module, containing its configuration
 		injector = Guice.createInjector(
-			new PluginModule(this, getClassLoader())
+				new PluginModule(this, getClassLoader())
 		);
 
 		// Instantiate the other modules using injectors, as those modules may depend on configuration values

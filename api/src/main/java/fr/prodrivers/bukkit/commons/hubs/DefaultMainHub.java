@@ -9,10 +9,10 @@ import javax.inject.Singleton;
 
 /**
  * Default implementation of main hub.
- *
+ * <p>
  * Teleports a player to a location defined in configuration and plays a sound.
  * If the player can not be teleported (for example, due to an invalid location), the player is kicked.
- *
+ * <p>
  * Correctly handles players wanting to leave the hub by forbidding them and teleporting them.
  */
 @Singleton
