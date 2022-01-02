@@ -18,7 +18,7 @@ import fr.prodrivers.bukkit.commons.hubs.MainHub;
 import fr.prodrivers.bukkit.commons.plugin.commands.CommandsModule;
 import fr.prodrivers.bukkit.commons.sections.SectionManager;
 import fr.prodrivers.bukkit.commons.sections.SectionManagerModule;
-import fr.prodrivers.bukkit.commons.storage.DataSourceConfigProvider;
+import fr.prodrivers.bukkit.commons.storage.EbeanPropertiesProvider;
 import fr.prodrivers.bukkit.commons.storage.StorageModule;
 import fr.prodrivers.bukkit.commons.ui.UIModule;
 import org.bukkit.Bukkit;
@@ -36,7 +36,7 @@ public class Main extends JavaPlugin implements Listener {
 	private Logger logger;
 
 	private SectionManager sectionManager;
-	private DataSourceConfigProvider dataSourceConfigProvider;
+	private EbeanPropertiesProvider ebeanPropertiesProvider;
 
 	public Injector getInjector() {
 		return injector;
@@ -102,7 +102,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(this, this);
 
 		sectionManager = injector.getInstance(SectionManager.class);
-		dataSourceConfigProvider = injector.getInstance(DataSourceConfigProvider.class);
+		ebeanPropertiesProvider = injector.getInstance(EbeanPropertiesProvider.class);
 
 		MainHub hub = injector.getInstance(MainHub.class);
 		if(hub != null) {
@@ -129,6 +129,5 @@ public class Main extends JavaPlugin implements Listener {
 
 	public void reload() {
 		this.configuration.reload();
-		this.dataSourceConfigProvider.reload();
 	}
 }

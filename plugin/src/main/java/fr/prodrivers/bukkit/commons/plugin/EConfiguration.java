@@ -14,6 +14,7 @@ import org.bukkit.plugin.Plugin;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Properties;
 import java.util.logging.Level;
 
 @SuppressWarnings("CanBeFinal")
@@ -21,13 +22,7 @@ import java.util.logging.Level;
 public class EConfiguration extends Configuration {
 	public Level logLevel = Level.INFO;
 	public Location sections_mainHub = new Location(Bukkit.getWorld("world"), 0, 70, 0);
-	public String storage_sql_uri = "jdbc:mysql://localhost:3306/db";
-	public String storage_sql_username = "";
-	public String storage_sql_password = "";
-	public boolean storage_sql_useSSL = true;
-	public Integer storage_sql_minimumConnections = 2;
-	public Integer storage_sql_maximumConnections = 200;
-	public Integer storage_sql_maxInactiveTimeSecs = 300;
+	public Properties storage_ebean = new Properties();
 	public long sectionTree_buildDelayTicks = 40L;
 	public String providers_SectionManager = DefaultSectionManager.class.getCanonicalName();
 	public String providers_PartyManager = DefaultPartyManager.class.getCanonicalName();
