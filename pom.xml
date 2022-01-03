@@ -25,7 +25,7 @@
 
     <modules>
         <module>api</module>
-        <module>plugin</module>
+        <module>spigot</module>
     </modules>
 
     <properties>
