@@ -5,6 +5,7 @@ import fr.prodrivers.bukkit.commons.plugin.DependenciesClassLoaderProvider;
 import io.ebean.Database;
 import io.ebean.DatabaseFactory;
 import io.ebean.config.DatabaseConfig;
+import io.ebean.config.PlatformConfig;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,7 +31,10 @@ public class EbeanProvider implements Provider<Database> {
 
 	@Override
 	public Database get() {
+		dbConfig.setDbUuid(PlatformConfig.DbUuid.AUTO_BINARY);
 		dbConfig.loadFromProperties(ebeanProperties);
+		// Force no default server
+		dbConfig.setDefaultServer(false);
 
 		return DatabaseFactory.createWithContextClassLoader(dbConfig, dependenciesClassLoaderProvider.get());
 	}
