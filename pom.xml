@@ -33,6 +33,9 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.release>17</maven.compiler.release>
+
+        <ebean.version>12.14.0</ebean.version>
+
         <spigot.api.version>1.17</spigot.api.version>
         <spigot.artifact.version>1.17.1-R0.1-SNAPSHOT</spigot.artifact.version>
     </properties>
@@ -101,18 +104,29 @@
         <dependency>
             <groupId>io.ebean</groupId>
             <artifactId>ebean</artifactId>
-            <version>12.14.0</version>
+            <version>${ebean.version}</version>
         </dependency>
         <dependency>
             <groupId>io.ebean</groupId>
             <artifactId>querybean-generator</artifactId>
-            <version>12.14.0</version>
+            <version>${ebean.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.ebean</groupId>
             <artifactId>ebean-redis</artifactId>
-            <version>12.14.0</version>
+            <version>${ebean.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ebean</groupId>
+            <artifactId>ebean-ddl-generator</artifactId>
+            <version>${ebean.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ebean</groupId>
+            <artifactId>ebean-test</artifactId>
+            <version>${ebean.version}</version>
+            <scope>test</scope>
         </dependency>
         <!-- MySQL -->
         <dependency>
@@ -162,6 +176,22 @@
             <version>0.5.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.repaint.maven</groupId>
+                <artifactId>tiles-maven-plugin</artifactId>
+                <version>2.25</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <tiles>
+                        <tile>io.ebean.tile:enhancement:${ebean.version}</tile>
+                    </tiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <distributionManagement>
         <downloadUrl>https://github.com/Prodrivers/commons-bukkit/releases</downloadUrl>
