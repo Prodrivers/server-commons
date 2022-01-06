@@ -20,7 +20,11 @@
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
         <maven.install.skip>true</maven.install.skip>
+
         <ebean-maven-plugin.args>debug=0</ebean-maven-plugin.args>
+
+        <project.plugin.name>ProdriversCommons</project.plugin.name>
+        <project.plugin.mainClass>fr.prodrivers.bukkit.commons.plugin.Main</project.plugin.mainClass>
     </properties>
 
     <dependencies>
@@ -76,6 +80,7 @@
                 <configuration>
                     <archive>
                         <manifest>
+                            <mainClass>${project.plugin.mainClass}</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>ProdriversCommons/libs/</classpathPrefix>
                             <useUniqueVersions>false</useUniqueVersions>
