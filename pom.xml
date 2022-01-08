@@ -177,22 +177,6 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>io.repaint.maven</groupId>
-                <artifactId>tiles-maven-plugin</artifactId>
-                <version>2.25</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <tiles>
-                        <tile>io.ebean.tile:enhancement:${ebean.version}</tile>
-                    </tiles>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
     <distributionManagement>
         <downloadUrl>https://github.com/Prodrivers/commons-bukkit/releases</downloadUrl>
         <repository>
