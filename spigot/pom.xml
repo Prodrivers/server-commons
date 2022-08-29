@@ -23,6 +23,7 @@
 
         <ebean-maven-plugin.args>debug=0</ebean-maven-plugin.args>
 
+        <project.plugin.author>Prodrivers</project.plugin.author>
         <project.plugin.name>ProdriversCommons</project.plugin.name>
         <project.plugin.mainClass>fr.prodrivers.bukkit.commons.plugin.Main</project.plugin.mainClass>
     </properties>
