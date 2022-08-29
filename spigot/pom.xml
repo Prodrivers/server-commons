@@ -146,7 +146,6 @@
                                         <exclude>fr/prodrivers/bukkit/commons/storage/EbeanProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/storage/SQLProvider*</exclude>
                                         <exclude>fr/prodrivers/bukkit/commons/sections/Section.class</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/ui/sections/DefaultSelectionUI*</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
