@@ -45,8 +45,8 @@ This API is available on a Maven repository.
 </repositories>
 <dependencies>
 	<dependency>
-		<groupId>fr.prodrivers.bukkit</groupId>
-		<artifactId>prodrivers-commons</artifactId>
+		<groupId>fr.prodrivers.minecraft</groupId>
+		<artifactId>commons-api</artifactId>
 		<version>2.0.0-SNAPSHOT</version>
 		<scope>provided</scope>
 	</dependency>

@@ -4,23 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fr.prodrivers.bukkit</groupId>
-    <artifactId>prodrivers-commons</artifactId>
+    <groupId>fr.prodrivers.minecraft</groupId>
+    <artifactId>commons</artifactId>
     <name>Prodrivers Commons</name>
-    <description>A common set of tools for Bukkit plugins, designed to fulfill all Prodrivers plugin needs.</description>
+    <description>A common set of tools for Minecraft (Spigot) plugins, designed to fulfill all Prodrivers plugin needs.</description>
     <version>2.0.0-SNAPSHOT</version>
     <url>https://prodrivers.fr/</url>
 
     <packaging>pom</packaging>
 
     <scm>
-        <connection>scm:git:https://github.com/Prodrivers/commons-bukkit.git</connection>
-        <url>https://github.com/Prodrivers/commons-bukkit</url>
+        <connection>scm:git:https://github.com/Prodrivers/minecraft-commons.git</connection>
+        <url>https://github.com/Prodrivers/minecraft-commons</url>
     </scm>
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/Prodrivers/commons-bukkit/issues</url>
+        <url>https://github.com/Prodrivers/minecraft-commons/issues</url>
     </issueManagement>
 
     <modules>
@@ -185,7 +185,7 @@
     </dependencies>
 
     <distributionManagement>
-        <downloadUrl>https://github.com/Prodrivers/commons-bukkit/releases</downloadUrl>
+        <downloadUrl>https://github.com/Prodrivers/minecraft-commons/releases</downloadUrl>
         <repository>
             <id>prodrivers-repo</id>
             <name>prodrivers-commons-releases</name>
