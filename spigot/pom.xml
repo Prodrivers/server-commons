@@ -29,6 +29,14 @@
     </properties>
 
     <dependencies>
+        <!--Spigot API-->
+        <!--suppress VulnerableLibrariesLocal -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>${spigot.artifact.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <!--Prodrivers Commons API-->
         <dependency>
             <groupId>fr.prodrivers.minecraft</groupId>
