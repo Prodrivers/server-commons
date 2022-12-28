@@ -2,7 +2,7 @@ package fr.prodrivers.minecraft.commons.parties;
 
 import com.google.inject.assistedinject.Assisted;
 import fr.prodrivers.minecraft.commons.chat.Chat;
-import fr.prodrivers.minecraft.commons.plugin.EMessages;
+import fr.prodrivers.minecraft.spigot.commons.plugin.EMessages;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;

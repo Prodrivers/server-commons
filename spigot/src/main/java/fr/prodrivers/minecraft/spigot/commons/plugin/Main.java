@@ -1,4 +1,4 @@
-package fr.prodrivers.minecraft.commons.plugin;
+package fr.prodrivers.minecraft.spigot.commons.plugin;
 
 import co.aikar.commands.BukkitCommandManager;
 import com.google.inject.Guice;
@@ -14,8 +14,8 @@ import fr.prodrivers.minecraft.commons.hubs.MainHub;
 import fr.prodrivers.minecraft.commons.hubs.MainHubModule;
 import fr.prodrivers.minecraft.commons.parties.PartyManager;
 import fr.prodrivers.minecraft.commons.parties.PartyModule;
-import fr.prodrivers.minecraft.commons.plugin.commands.Commands;
-import fr.prodrivers.minecraft.commons.plugin.commands.CommandsModule;
+import fr.prodrivers.minecraft.spigot.commons.plugin.commands.Commands;
+import fr.prodrivers.minecraft.spigot.commons.plugin.commands.CommandsModule;
 import fr.prodrivers.minecraft.commons.sections.SectionManager;
 import fr.prodrivers.minecraft.commons.sections.SectionManagerModule;
 import fr.prodrivers.minecraft.commons.storage.EbeanPropertiesProvider;

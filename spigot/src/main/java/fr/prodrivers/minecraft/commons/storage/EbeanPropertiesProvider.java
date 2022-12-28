@@ -1,6 +1,6 @@
 package fr.prodrivers.minecraft.commons.storage;
 
-import fr.prodrivers.minecraft.commons.plugin.EConfiguration;
+import fr.prodrivers.minecraft.spigot.commons.plugin.EConfiguration;
 
 import javax.inject.Inject;
 import javax.inject.Provider;

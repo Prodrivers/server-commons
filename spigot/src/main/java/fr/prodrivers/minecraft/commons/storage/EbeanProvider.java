@@ -1,7 +1,7 @@
 package fr.prodrivers.minecraft.commons.storage;
 
 import fr.prodrivers.minecraft.commons.Log;
-import fr.prodrivers.minecraft.commons.plugin.DependenciesClassLoaderProvider;
+import fr.prodrivers.minecraft.spigot.commons.plugin.DependenciesClassLoaderProvider;
 import io.ebean.Database;
 import io.ebean.DatabaseFactory;
 import io.ebean.config.DatabaseConfig;

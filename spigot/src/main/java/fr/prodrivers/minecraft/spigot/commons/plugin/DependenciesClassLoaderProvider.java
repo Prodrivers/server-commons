@@ -1,4 +1,4 @@
-package fr.prodrivers.minecraft.commons.plugin;
+package fr.prodrivers.minecraft.spigot.commons.plugin;
 
 import javax.inject.Provider;
 import javax.inject.Singleton;

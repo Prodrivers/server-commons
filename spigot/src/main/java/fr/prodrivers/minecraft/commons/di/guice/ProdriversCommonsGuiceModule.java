@@ -6,7 +6,7 @@ import com.google.inject.name.Names;
 import fr.prodrivers.minecraft.commons.chat.MessageSender;
 import fr.prodrivers.minecraft.commons.commands.ACFCommandManagerProvider;
 import fr.prodrivers.minecraft.commons.parties.PartyManager;
-import fr.prodrivers.minecraft.commons.plugin.DependenciesClassLoaderProvider;
+import fr.prodrivers.minecraft.spigot.commons.plugin.DependenciesClassLoaderProvider;
 import fr.prodrivers.minecraft.commons.sections.SectionManager;
 import fr.prodrivers.minecraft.commons.storage.EbeanPropertiesProvider;
 import fr.prodrivers.minecraft.commons.storage.EbeanProvider;

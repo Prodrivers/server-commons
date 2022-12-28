@@ -1,7 +1,7 @@
 package fr.prodrivers.minecraft.commons;
 
 import fr.prodrivers.minecraft.commons.di.guice.ProdriversCommonsGuiceModule;
-import fr.prodrivers.minecraft.commons.plugin.Main;
+import fr.prodrivers.minecraft.spigot.commons.plugin.Main;
 
 public class ProdriversCommons {
 	private static Main plugin;

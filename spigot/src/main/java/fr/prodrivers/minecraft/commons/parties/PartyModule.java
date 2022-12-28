@@ -2,7 +2,7 @@ package fr.prodrivers.minecraft.commons.parties;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
-import fr.prodrivers.minecraft.commons.plugin.EConfiguration;
+import fr.prodrivers.minecraft.spigot.commons.plugin.EConfiguration;
 
 import javax.inject.Inject;
 

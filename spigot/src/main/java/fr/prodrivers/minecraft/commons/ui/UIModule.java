@@ -1,7 +1,7 @@
 package fr.prodrivers.minecraft.commons.ui;
 
 import com.google.inject.AbstractModule;
-import fr.prodrivers.minecraft.commons.plugin.EConfiguration;
+import fr.prodrivers.minecraft.spigot.commons.plugin.EConfiguration;
 import fr.prodrivers.minecraft.commons.ui.section.SelectionUI;
 
 import javax.inject.Inject;

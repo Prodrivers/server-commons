@@ -25,7 +25,7 @@
 
         <project.plugin.author>Prodrivers</project.plugin.author>
         <project.plugin.name>ProdriversCommons</project.plugin.name>
-        <project.plugin.mainClass>fr.prodrivers.minecraft.commons.plugin.Main</project.plugin.mainClass>
+        <project.plugin.mainClass>fr.prodrivers.minecraft.spigot.commons.plugin.Main</project.plugin.mainClass>
     </properties>
 
     <dependencies>

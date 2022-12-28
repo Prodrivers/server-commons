@@ -1,8 +1,8 @@
 package fr.prodrivers.minecraft.commons.hubs;
 
 import fr.prodrivers.minecraft.commons.Log;
-import fr.prodrivers.minecraft.commons.plugin.EConfiguration;
-import fr.prodrivers.minecraft.commons.plugin.EMessages;
+import fr.prodrivers.minecraft.spigot.commons.plugin.EConfiguration;
+import fr.prodrivers.minecraft.spigot.commons.plugin.EMessages;
 import fr.prodrivers.minecraft.commons.sections.Section;
 import fr.prodrivers.minecraft.commons.sections.SectionManager;
 import org.bukkit.OfflinePlayer;

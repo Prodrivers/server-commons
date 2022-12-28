@@ -1,4 +1,4 @@
-package fr.prodrivers.minecraft.commons.plugin.commands;
+package fr.prodrivers.minecraft.spigot.commons.plugin.commands;
 
 import fr.prodrivers.minecraft.commons.Log;
 import org.bukkit.command.Command;

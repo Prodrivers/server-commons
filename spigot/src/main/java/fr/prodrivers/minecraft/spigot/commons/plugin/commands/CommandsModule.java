@@ -1,4 +1,4 @@
-package fr.prodrivers.minecraft.commons.plugin.commands;
+package fr.prodrivers.minecraft.spigot.commons.plugin.commands;
 
 import co.aikar.commands.BukkitCommandManager;
 import com.google.inject.AbstractModule;

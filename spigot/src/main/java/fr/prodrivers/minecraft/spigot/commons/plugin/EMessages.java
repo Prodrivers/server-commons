@@ -1,4 +1,4 @@
-package fr.prodrivers.minecraft.commons.plugin;
+package fr.prodrivers.minecraft.spigot.commons.plugin;
 
 import fr.prodrivers.minecraft.commons.configuration.Messages;
 import org.bukkit.ChatColor;

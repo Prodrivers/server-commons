@@ -1,10 +1,10 @@
-package fr.prodrivers.minecraft.commons.plugin.commands;
+package fr.prodrivers.minecraft.spigot.commons.plugin.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import fr.prodrivers.minecraft.commons.Log;
 import fr.prodrivers.minecraft.commons.chat.Chat;
-import fr.prodrivers.minecraft.commons.plugin.EMessages;
+import fr.prodrivers.minecraft.spigot.commons.plugin.EMessages;
 import fr.prodrivers.minecraft.commons.sections.Section;
 import fr.prodrivers.minecraft.commons.sections.SectionCapabilities;
 import fr.prodrivers.minecraft.commons.sections.SectionManager;

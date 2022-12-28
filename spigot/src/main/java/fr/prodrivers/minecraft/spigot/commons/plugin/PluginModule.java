@@ -1,4 +1,4 @@
-package fr.prodrivers.minecraft.commons.plugin;
+package fr.prodrivers.minecraft.spigot.commons.plugin;
 
 import com.google.inject.AbstractModule;
 import fr.prodrivers.minecraft.commons.configuration.Configuration;
