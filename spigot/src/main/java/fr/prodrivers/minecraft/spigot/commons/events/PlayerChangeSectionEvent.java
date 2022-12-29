@@ -1,4 +1,4 @@
-package fr.prodrivers.minecraft.commons.events;
+package fr.prodrivers.minecraft.spigot.commons.events;
 
 import fr.prodrivers.minecraft.commons.sections.Section;
 import org.bukkit.entity.Player;
