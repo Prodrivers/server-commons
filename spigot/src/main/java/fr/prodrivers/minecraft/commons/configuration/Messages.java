@@ -1,6 +1,7 @@
 package fr.prodrivers.minecraft.commons.configuration;
 
 import fr.prodrivers.minecraft.commons.configuration.file.FileAttributeConfiguration;
+import fr.prodrivers.minecraft.commons.configuration.file.actions.ComponentFileAttributeConfigurationAction;
 import fr.prodrivers.minecraft.commons.configuration.file.actions.MessageFileAttributeConfigurationAction;
 import fr.prodrivers.minecraft.commons.configuration.file.actions.MessageListFileAttributeConfigurationAction;
 import fr.prodrivers.minecraft.commons.configuration.file.actions.MessageMapFileAttributeConfigurationAction;
@@ -23,6 +24,7 @@ public class Messages extends FileAttributeConfiguration {
 		registerAction(new MessageFileAttributeConfigurationAction(this.configuration));
 		registerAction(new MessageListFileAttributeConfigurationAction(this.configuration));
 		registerAction(new MessageMapFileAttributeConfigurationAction(this.configuration));
+		registerAction(new ComponentFileAttributeConfigurationAction(this.configuration));
 		super.init();
 	}
 }
