@@ -8,6 +8,7 @@ import fr.prodrivers.minecraft.spigot.commons.plugin.Main;
 import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.commons.sections.Section;
 import fr.prodrivers.minecraft.commons.sections.SectionManager;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -58,9 +59,9 @@ public class MainPluginCommands extends BaseCommand {
 			Section section = this.sectionManager.getCurrentSection(player);
 
 			if(section != null) {
-				this.chat.info(sender, player.getName() + " -> " + section.getFullName() + " (" + section.getClass().getCanonicalName() + ")");
+				this.chat.info(sender, Component.text(player.getName() + " -> " + section.getFullName() + " (" + section.getClass().getCanonicalName() + ")"));
 			} else {
-				this.chat.error(sender, player.getName() + " -> No registered section");
+				this.chat.error(sender,  Component.text(player.getName() + " -> No registered section"));
 			}
 		}
 	}

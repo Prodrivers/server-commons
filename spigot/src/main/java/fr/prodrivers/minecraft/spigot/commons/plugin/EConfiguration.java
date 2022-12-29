@@ -1,6 +1,6 @@
 package fr.prodrivers.minecraft.spigot.commons.plugin;
 
-import fr.prodrivers.minecraft.spigot.commons.chat.SpigotMessageSender;
+import fr.prodrivers.minecraft.spigot.commons.chat.PaperMessageSender;
 import fr.prodrivers.minecraft.commons.configuration.Configuration;
 import fr.prodrivers.minecraft.commons.configuration.Messages;
 import fr.prodrivers.minecraft.commons.hubs.DefaultMainHub;
@@ -27,7 +27,7 @@ public class EConfiguration extends Configuration {
 	public String providers_PartyManager = DefaultPartyManager.class.getCanonicalName();
 	public String providers_MainHub = DefaultMainHub.class.getCanonicalName();
 	public String providers_SelectionUI = DefaultSelectionUI.class.getCanonicalName();
-	public String providers_MessageSender = SpigotMessageSender.class.getCanonicalName();
+	public String providers_MessageSender = PaperMessageSender.class.getCanonicalName();
 
 	@Inject
 	public EConfiguration(Plugin plugin, Messages messages) {

@@ -1,7 +1,7 @@
 package fr.prodrivers.minecraft.commons.chat;
 
-import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.command.CommandSender;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
@@ -20,22 +20,15 @@ import java.util.UUID;
  */
 public interface MessageSender {
 	/**
-	 * Generic message sender
-	 *
-	 * @param receiver Receiving entity
-	 * @param message  Message to send
-	 * @param prefix   Prefix to use
-	 */
-	void send(@NonNull CommandSender receiver, @NonNull String message, @NonNull String prefix);
-
-	/**
 	 * Generic message receiver, using a defined prefix
 	 *
-	 * @param receiver Receiving entity
+	 * @param receiver Receiving audience
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	void send(@NonNull CommandSender receiver, @NonNull BaseComponent[] message, @NonNull String prefix);
+	default void send(@NonNull Audience receiver, @NonNull Component message, @NonNull Component prefix) {
+		receiver.sendMessage(prefix.append(message));
+	}
 
 	/**
 	 * Generic message receiver, that potentially supports non-local players, using a defined prefix
@@ -44,14 +37,5 @@ public interface MessageSender {
 	 * @param message                Message to send
 	 * @param prefix                 Prefix to use
 	 */
-	void send(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix);
-
-	/**
-	 * Generic message receiver, that potentially supports non-local players, using a defined prefix
-	 *
-	 * @param receiverPlayerUniqueId Receiving player
-	 * @param message                Message to send
-	 * @param prefix                 Prefix to use
-	 */
-	void send(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix);
+	void send(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message, @NonNull Component prefix);
 }

@@ -1,8 +1,8 @@
 package fr.prodrivers.minecraft.commons.chat;
 
 import fr.prodrivers.minecraft.commons.configuration.Messages;
-import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.command.CommandSender;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
@@ -44,126 +44,63 @@ public class SystemMessage {
 	/**
 	 * Success message receiver
 	 *
-	 * @param receiver Receiving entity
+	 * @param receiver Receiving audience
 	 * @param message  Success message to send
 	 */
-	public void success(@NonNull CommandSender receiver, @NonNull String message) {
+	public void success(@NonNull Audience receiver, @NonNull Component message) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * Success message receiver, using a defined prefix
 	 *
-	 * @param receiver Receiving entity
+	 * @param receiver Receiving audience
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	public void success(@NonNull CommandSender receiver, @NonNull String message, @NonNull String prefix) {
+	public void success(@NonNull Audience receiver, @NonNull Component message, @NonNull Component prefix) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * Generic message receiver
 	 *
-	 * @param receiver Receiving entity
+	 * @param receiver Receiving audience
 	 * @param message  Success message to send
 	 */
-	public void info(@NonNull CommandSender receiver, @NonNull String message) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Success message receiver, using a defined prefix
-	 *
-	 * @param receiver Receiving entity
-	 * @param message  Message to send
-	 * @param prefix   Prefix to use
-	 */
-	public void info(@NonNull CommandSender receiver, @NonNull String message, @NonNull String prefix) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Error message receiver
-	 *
-	 * @param receiver Receiving entity
-	 * @param message  Error message to send
-	 */
-	public void error(@NonNull CommandSender receiver, @NonNull String message) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Error message receiver, using a defined prefix
-	 *
-	 * @param receiver Receiving entity
-	 * @param message  Message to send
-	 * @param prefix   Prefix to use
-	 */
-	public void error(@NonNull CommandSender receiver, @NonNull String message, @NonNull String prefix) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Success message receiver
-	 *
-	 * @param receiver Receiving entity
-	 * @param message  Success message to send
-	 */
-	public void success(@NonNull CommandSender receiver, @NonNull BaseComponent[] message) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Success message receiver, using a defined prefix
-	 *
-	 * @param receiver Receiving entity
-	 * @param message  Message to send
-	 * @param prefix   Prefix to use
-	 */
-	public void success(@NonNull CommandSender receiver, @NonNull BaseComponent[] message, @NonNull String prefix) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Generic message receiver
-	 *
-	 * @param receiver Receiving entity
-	 * @param message  Success message to send
-	 */
-	public void info(@NonNull CommandSender receiver, @NonNull BaseComponent[] message) {
+	public void info(@NonNull Audience receiver, @NonNull Component message) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * Generic message receiver, using a defined prefix
 	 *
-	 * @param receiver Receiving entity
+	 * @param receiver Receiving audience
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	public void info(@NonNull CommandSender receiver, @NonNull BaseComponent[] message, @NonNull String prefix) {
+	public void info(@NonNull Audience receiver, @NonNull Component message, @NonNull Component prefix) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * Error message receiver
 	 *
-	 * @param receiver Receiving entity
+	 * @param receiver Receiving audience
 	 * @param message  Error message to send
 	 */
-	public void error(@NonNull CommandSender receiver, @NonNull BaseComponent[] message) {
+	public void error(@NonNull Audience receiver, @NonNull Component message) {
 		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * Error message receiver, using a defined prefix
 	 *
-	 * @param receiver Receiving entity
+	 * @param receiver Receiving audience
 	 * @param message  Message to send
 	 * @param prefix   Prefix to use
 	 */
-	public void error(@NonNull CommandSender receiver, @NonNull BaseComponent[] message, @NonNull String prefix) {
+	public void error(@NonNull Audience receiver, @NonNull Component message, @NonNull Component prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -173,70 +110,7 @@ public class SystemMessage {
 	 * @param receiverPlayerUniqueId Receiving player
 	 * @param message                Success message to send
 	 */
-	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull String message) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Success message receiver, that potentially supports non-local players, using a defined prefix
-	 *
-	 * @param receiverPlayerUniqueId Receiving player
-	 * @param message                Success message to send
-	 * @param prefix                 Prefix to use
-	 */
-	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Generic message receiver, that potentially supports non-local players
-	 *
-	 * @param receiverPlayerUniqueId Receiving player
-	 * @param message                Success message to send
-	 */
-	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull String message) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Generic message receiver, that potentially supports non-local players, using a defined prefix
-	 *
-	 * @param receiverPlayerUniqueId Receiving player
-	 * @param message                Success message to send
-	 * @param prefix                 Prefix to use
-	 */
-	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Error message receiver, that potentially supports non-local players
-	 *
-	 * @param receiverPlayerUniqueId Receiving player
-	 * @param message                Error message to send
-	 */
-	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull String message) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Error message receiver, that potentially supports non-local players, using a defined prefix
-	 *
-	 * @param receiverPlayerUniqueId Receiving player
-	 * @param message                Success message to send
-	 * @param prefix                 Prefix to use
-	 */
-	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Success message receiver, that potentially supports non-local players
-	 *
-	 * @param receiverPlayerUniqueId Receiving player
-	 * @param message                Success message to send
-	 */
-	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message) {
+	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -247,7 +121,7 @@ public class SystemMessage {
 	 * @param message                Message to send
 	 * @param prefix                 Prefix to use
 	 */
-	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix) {
+	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message, @NonNull Component prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -257,7 +131,7 @@ public class SystemMessage {
 	 * @param receiverPlayerUniqueId Receiving player
 	 * @param message                Success message to send
 	 */
-	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message) {
+	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -268,7 +142,7 @@ public class SystemMessage {
 	 * @param message                Message to send
 	 * @param prefix                 Prefix to use
 	 */
-	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix) {
+	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message, @NonNull Component prefix) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -278,7 +152,7 @@ public class SystemMessage {
 	 * @param receiverPlayerUniqueId Receiving player
 	 * @param message                Error message to send
 	 */
-	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message) {
+	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -289,7 +163,7 @@ public class SystemMessage {
 	 * @param message                Message to send
 	 * @param prefix                 Prefix to use
 	 */
-	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix) {
+	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message, @NonNull Component prefix) {
 		throw new UnsupportedOperationException();
 	}
 }

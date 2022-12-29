@@ -11,6 +11,7 @@ import fr.prodrivers.minecraft.commons.exceptions.PlayerNotInvitedToParty;
 import fr.prodrivers.minecraft.commons.parties.Party;
 import fr.prodrivers.minecraft.commons.parties.PartyManager;
 import fr.prodrivers.minecraft.spigot.commons.plugin.EMessages;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -44,13 +45,13 @@ public class PartyCommands extends BaseCommand {
 				if(player.hasPermission("pcommons.party.invite")) {
 					partyInvite(player, Objects.requireNonNull(Bukkit.getPlayer(args[0])));
 				} else {
-					this.chat.error(player, this.messages.permission_denied);
+					this.chat.error(player, Component.text(this.messages.permission_denied));
 				}
 			} else {
 				if(player.hasPermission("pcommons.party.chat")) {
 					partyChat(player, args);
 				} else {
-					this.chat.error(player, this.messages.permission_denied);
+					this.chat.error(player, Component.text(this.messages.permission_denied));
 				}
 			}
 		} else {
@@ -64,14 +65,14 @@ public class PartyCommands extends BaseCommand {
 	@CommandPermission("pcommons.party.help")
 	public void partyHelp(final Player player) {
 		Map<String, String> cmdpartydesc = this.messages.party_help;
-		this.chat.info(player, this.messages.party_help_heading, this.messages.party_prefix);
+		this.chat.info(player, Component.text(this.messages.party_help_heading), Component.text(this.messages.party_prefix));
 		for(final String k : cmdpartydesc.keySet()) {
 			if(k.length() < 3) {
-				this.chat.info(player, "", this.messages.party_prefix);
+				this.chat.info(player, Component.text(""), Component.text(this.messages.party_prefix));
 				continue;
 			}
 			final String v = cmdpartydesc.get(k);
-			this.chat.info(player, ChatColor.YELLOW + "/" + label + " " + k + ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + v, this.messages.party_prefix);
+			this.chat.info(player, Component.text( ChatColor.YELLOW + "/" + label + " " + k + ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + v), Component.text(this.messages.party_prefix));
 		}
 	}
 
@@ -82,11 +83,11 @@ public class PartyCommands extends BaseCommand {
 		try {
 			this.partyManager.invite(inviter.getUniqueId(), invited.getUniqueId());
 		} catch(PartyCannotInviteYourselfException e) {
-			this.chat.error(inviter, this.messages.party_cannot_invite_yourself, this.messages.party_prefix);
+			this.chat.error(inviter, Component.text(this.messages.party_cannot_invite_yourself), Component.text(this.messages.party_prefix));
 		} catch(PlayerNotConnectedException e) {
-			this.chat.error(inviter, this.messages.party_player_not_online.formatted(invited.getName()), this.messages.party_prefix);
+			this.chat.error(inviter, Component.text(this.messages.party_player_not_online.formatted(invited.getName())), Component.text(this.messages.party_prefix));
 		} catch(Exception e) {
-			this.chat.error(inviter, this.messages.error_occurred);
+			this.chat.error(inviter, Component.text(this.messages.error_occurred));
 			Log.severe("Error while player " + inviter + " invited player " + invited + " .", e);
 		}
 	}
@@ -98,11 +99,11 @@ public class PartyCommands extends BaseCommand {
 		try {
 			this.partyManager.accept(inviter.getUniqueId(), invited.getUniqueId());
 		} catch(PlayerNotConnectedException e) {
-			this.chat.error(invited, this.messages.party_player_not_online.formatted(inviter.getName()), this.messages.party_prefix);
+			this.chat.error(invited, Component.text(this.messages.party_player_not_online.formatted(inviter.getName())), Component.text(this.messages.party_prefix));
 		} catch(PlayerNotInvitedToParty e) {
-			this.chat.error(invited, this.messages.party_not_invited_to_players_party.formatted(inviter.getName()), this.messages.party_prefix);
+			this.chat.error(invited, Component.text(this.messages.party_not_invited_to_players_party.formatted(inviter.getName())), Component.text(this.messages.party_prefix));
 		} catch(Exception e) {
-			this.chat.error(invited, this.messages.error_occurred);
+			this.chat.error(invited, Component.text(this.messages.error_occurred));
 			Log.severe("Error while player " + invited + " accepted invitet from player " + inviter + " .", e);
 		}
 	}
@@ -112,7 +113,7 @@ public class PartyCommands extends BaseCommand {
 	@CommandCompletion("@partyothers")
 	private void partyKick(final Player player, final OfflinePlayer target) {
 		if(!target.isOnline()) {
-			this.chat.error(player, this.messages.party_player_not_online.formatted(target.getName()), this.messages.party_prefix);
+			this.chat.error(player, Component.text(this.messages.party_player_not_online.formatted(target.getName())), Component.text(this.messages.party_prefix));
 			return;
 		}
 
@@ -121,10 +122,10 @@ public class PartyCommands extends BaseCommand {
 			if(party.containsPlayer(target.getUniqueId())) {
 				partyManager.removeFromParty(target.getUniqueId());
 			} else {
-				this.chat.error(player, this.messages.party_player_not_in_party.formatted(target.getName()), this.messages.party_prefix);
+				this.chat.error(player, Component.text(this.messages.party_player_not_in_party.formatted(target.getName())), Component.text(this.messages.party_prefix));
 			}
 		} else {
-			this.chat.info(player, this.messages.party_you_are_not_a_party_owner, this.messages.party_prefix);
+			this.chat.info(player, Component.text(this.messages.party_you_are_not_a_party_owner), Component.text(this.messages.party_prefix));
 		}
 	}
 
@@ -134,7 +135,7 @@ public class PartyCommands extends BaseCommand {
 		Party party = this.partyManager.getParty(player.getUniqueId());
 
 		if(party != null) {
-			this.chat.info(player, this.messages.party_list_heading, this.messages.party_prefix);
+			this.chat.info(player, Component.text(this.messages.party_list_heading), Component.text(this.messages.party_prefix));
 			StringBuilder ret = new StringBuilder();
 			for(final UUID partyPlayer : party.getPlayers()) {
 				if(partyPlayer == party.getOwnerUniqueId()) {
@@ -146,9 +147,9 @@ public class PartyCommands extends BaseCommand {
 				OfflinePlayer other = Bukkit.getOfflinePlayer(partyPlayer);
 				ret.append(other.getName());
 			}
-			this.chat.info(player, ret.toString(), this.messages.party_prefix);
+			this.chat.info(player, Component.text(ret.toString()), Component.text(this.messages.party_prefix));
 		} else {
-			this.chat.error(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
+			this.chat.error(player, Component.text(this.messages.party_you_are_not_in_a_party), Component.text(this.messages.party_prefix));
 		}
 	}
 
@@ -159,7 +160,7 @@ public class PartyCommands extends BaseCommand {
 		if(party != null && party.isPartyOwner(player.getUniqueId())) {
 			partyManager.disband(party);
 		} else {
-			this.chat.error(player, this.messages.party_you_are_not_a_party_owner, this.messages.party_prefix);
+			this.chat.error(player, Component.text(this.messages.party_you_are_not_a_party_owner), Component.text(this.messages.party_prefix));
 		}
 	}
 
@@ -168,7 +169,7 @@ public class PartyCommands extends BaseCommand {
 	private void partyLeave(final Player player) {
 		Party party = this.partyManager.getParty(player.getUniqueId());
 		if(party == null) {
-			this.chat.error(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
+			this.chat.error(player, Component.text(this.messages.party_you_are_not_in_a_party), Component.text(this.messages.party_prefix));
 			return;
 		}
 
@@ -181,22 +182,22 @@ public class PartyCommands extends BaseCommand {
 	private void partySetOwner(final Player player, final Player newOwner) {
 		Party party = this.partyManager.getParty(player.getUniqueId());
 		if(party == null) {
-			this.chat.error(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
+			this.chat.error(player, Component.text(this.messages.party_you_are_not_in_a_party), Component.text(this.messages.party_prefix));
 			return;
 		}
 
 		if(!party.isPartyOwner(player.getUniqueId())) {
-			this.chat.error(player, this.messages.party_player_not_party_owner, this.messages.party_prefix);
+			this.chat.error(player, Component.text(this.messages.party_player_not_party_owner), Component.text(this.messages.party_prefix));
 			return;
 		}
 
 		if(!newOwner.isOnline()) {
-			this.chat.error(player, this.messages.party_player_not_online.formatted(newOwner.getName()), this.messages.party_prefix);
+			this.chat.error(player, Component.text(this.messages.party_player_not_online.formatted(newOwner.getName())), Component.text(this.messages.party_prefix));
 			return;
 		}
 
 		if(newOwner.getUniqueId() == player.getUniqueId()) {
-			this.chat.error(player, this.messages.party_player_cannot_elect_yourself, this.messages.party_prefix);
+			this.chat.error(player, Component.text(this.messages.party_player_cannot_elect_yourself), Component.text(this.messages.party_prefix));
 			return;
 		}
 
@@ -210,7 +211,7 @@ public class PartyCommands extends BaseCommand {
 	private void partyChat(final Player player, final String[] messages) {
 		Party party = this.partyManager.getParty(player.getUniqueId());
 		if(party == null) {
-			this.chat.error(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
+			this.chat.error(player, Component.text(this.messages.party_you_are_not_in_a_party), Component.text(this.messages.party_prefix));
 			return;
 		}
 

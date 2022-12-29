@@ -1,10 +1,10 @@
 package fr.prodrivers.minecraft.commons.chat;
 
 import fr.prodrivers.minecraft.commons.configuration.Messages;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.inject.Inject;
@@ -16,7 +16,8 @@ public class SystemMessage {
 	private final MessageSender messageSender;
 
 	private String rawPrefix = "[<name>]";
-	private String prefix = "[<name>]";
+	private Component prefix = Component.text("[<name>]");
+	private String prefixLegacy = "[<name>]";
 	private String name;
 
 	@Inject
@@ -26,129 +27,75 @@ public class SystemMessage {
 
 	public void setName(@NonNull String name) {
 		this.name = name;
-		this.prefix = this.rawPrefix.replaceAll("<name>", this.name);
+		this.prefix = LegacyComponentSerializer.legacySection().deserialize(this.rawPrefix.replaceAll("<name>", this.name));
+		this.prefixLegacy = this.rawPrefix.replaceAll("<name>", this.name);
 	}
 
 	public void load(@NonNull Messages messages) {
 		if(messages != null && messages.prefix != null) {
 			this.rawPrefix = messages.prefix;
 		}
-		this.prefix = this.rawPrefix.replaceAll("<name>", this.name);
+		this.prefix = LegacyComponentSerializer.legacySection().deserialize(this.rawPrefix.replaceAll("<name>", this.name));
+		this.prefixLegacy = this.rawPrefix.replaceAll("<name>", this.name);
 	}
 
-	private void send(@NonNull CommandSender sender, @NonNull String message, @NonNull String prefix) {
-		this.messageSender.send(sender, message, prefix);
+	private void send(@NonNull Audience receiver, @NonNull Component message, @NonNull Component prefix) {
+		this.messageSender.send(receiver, message, prefix);
 	}
 
-	public void success(@NonNull CommandSender sender, @NonNull String message) {
-		success(sender, message, this.prefix);
+	public void success(@NonNull Audience receiver, @NonNull Component message) {
+		success(receiver, message, this.prefix);
 	}
 
-	public void success(@NonNull CommandSender sender, @NonNull String message, @NonNull String prefix) {
-		send(sender, ChatColor.GREEN + message, prefix);
+	public void success(@NonNull Audience receiver, @NonNull Component message, @NonNull Component prefix) {
+		send(receiver, Component.text().color(NamedTextColor.GREEN).append(message).build(), prefix);
 	}
 
-	public void info(@NonNull CommandSender sender, @NonNull String message) {
-		info(sender, message, this.prefix);
+	public void info(@NonNull Audience receiver, @NonNull Component message) {
+		info(receiver, message, this.prefix);
 	}
 
-	public void info(@NonNull CommandSender sender, @NonNull String message, @NonNull String prefix) {
-		send(sender, message, prefix);
+	public void info(@NonNull Audience receiver, @NonNull Component message, @NonNull Component prefix) {
+		send(receiver, message, prefix);
 	}
 
-	public void error(@NonNull CommandSender sender, @NonNull String message) {
-		error(sender, message, this.prefix);
+	public void error(@NonNull Audience receiver, @NonNull Component message) {
+		error(receiver, message, this.prefix);
 	}
 
-	public void error(@NonNull CommandSender sender, @NonNull String message, @NonNull String prefix) {
-		send(sender, ChatColor.RED + message, prefix);
+	public void error(@NonNull Audience receiver, @NonNull Component message, @NonNull Component prefix) {
+		send(receiver, Component.text().color(NamedTextColor.RED).append(message).build(), prefix);
 	}
 
-	private void send(@NonNull CommandSender sender, @NonNull BaseComponent[] message, @NonNull String prefix) {
-		this.messageSender.send(sender, message, prefix);
-	}
-
-	public void success(@NonNull CommandSender sender, @NonNull BaseComponent[] message) {
-		success(sender, message, this.prefix);
-	}
-
-	public void success(@NonNull CommandSender sender, @NonNull BaseComponent[] message, @NonNull String prefix) {
-		send(sender, (new ComponentBuilder("")).color(net.md_5.bungee.api.ChatColor.GREEN).append(message).create(), prefix);
-	}
-
-	public void info(@NonNull CommandSender sender, @NonNull BaseComponent[] message) {
-		info(sender, message, this.prefix);
-	}
-
-	public void info(@NonNull CommandSender sender, @NonNull BaseComponent[] message, @NonNull String prefix) {
-		send(sender, message, prefix);
-	}
-
-	public void error(@NonNull CommandSender sender, @NonNull BaseComponent[] message) {
-		error(sender, message, this.prefix);
-	}
-
-	public void error(@NonNull CommandSender sender, @NonNull BaseComponent[] message, @NonNull String prefix) {
-		send(sender, (new ComponentBuilder("")).color(net.md_5.bungee.api.ChatColor.RED).append(message).create(), prefix);
-	}
-
-	private void send(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix) {
+	private void send(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message, @NonNull Component prefix) {
 		this.messageSender.send(receiverPlayerUniqueId, message, prefix);
 	}
 
-	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull String message) {
+	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message) {
 		success(receiverPlayerUniqueId, message, this.prefix);
 	}
 
-	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix) {
-		send(receiverPlayerUniqueId, ChatColor.GREEN + message, prefix);
+	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message, @NonNull Component prefix) {
+		send(receiverPlayerUniqueId, Component.text().color(NamedTextColor.GREEN).append(message).build(), prefix);
 	}
 
-	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull String message) {
+	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message) {
 		info(receiverPlayerUniqueId, message, this.prefix);
 	}
 
-	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix) {
+	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message, @NonNull Component prefix) {
 		send(receiverPlayerUniqueId, message, prefix);
 	}
 
-	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull String message) {
+	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message) {
 		error(receiverPlayerUniqueId, message, this.prefix);
 	}
 
-	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull String message, @NonNull String prefix) {
-		send(receiverPlayerUniqueId, ChatColor.RED + message, prefix);
+	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull Component message, @NonNull Component prefix) {
+		send(receiverPlayerUniqueId, Component.text().color(NamedTextColor.RED).append(message).build(), prefix);
 	}
 
-	private void send(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix) {
-		this.messageSender.send(receiverPlayerUniqueId, message, prefix);
-	}
-
-	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message) {
-		success(receiverPlayerUniqueId, message, this.prefix);
-	}
-
-	public void success(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix) {
-		send(receiverPlayerUniqueId, (new ComponentBuilder("")).color(net.md_5.bungee.api.ChatColor.GREEN).append(message).create(), prefix);
-	}
-
-	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message) {
-		info(receiverPlayerUniqueId, message, this.prefix);
-	}
-
-	public void info(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix) {
-		send(receiverPlayerUniqueId, message, prefix);
-	}
-
-	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message) {
-		error(receiverPlayerUniqueId, message, this.prefix);
-	}
-
-	public void error(@NonNull UUID receiverPlayerUniqueId, @NonNull BaseComponent[] message, @NonNull String prefix) {
-		send(receiverPlayerUniqueId, (new ComponentBuilder("")).color(net.md_5.bungee.api.ChatColor.RED).append(message).create(), prefix);
-	}
-
-	public String getPrefix() {
-		return prefix;
+	public String getPrefixLegacy() {
+		return prefixLegacy;
 	}
 }

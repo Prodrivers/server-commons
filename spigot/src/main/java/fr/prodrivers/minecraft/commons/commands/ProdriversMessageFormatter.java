@@ -14,6 +14,6 @@ public class ProdriversMessageFormatter extends BukkitMessageFormatter {
 
 	@Override
 	public String format(String message) {
-		return this.chat.getPrefix() + " " + super.format(message).stripLeading();
+		return this.chat.getPrefixLegacy() + " " + super.format(message).stripLeading();
 	}
 }
