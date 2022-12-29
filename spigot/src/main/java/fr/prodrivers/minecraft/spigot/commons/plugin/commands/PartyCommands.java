@@ -4,7 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.*;
 import fr.prodrivers.minecraft.commons.Log;
-import fr.prodrivers.minecraft.commons.chat.Chat;
+import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.commons.exceptions.PartyCannotInviteYourselfException;
 import fr.prodrivers.minecraft.commons.exceptions.PlayerNotConnectedException;
 import fr.prodrivers.minecraft.commons.exceptions.PlayerNotInvitedToParty;
@@ -26,11 +26,11 @@ public class PartyCommands extends BaseCommand {
 	private static final String label = "party";
 
 	private final EMessages messages;
-	private final Chat chat;
+	private final SystemMessage chat;
 	private final PartyManager partyManager;
 
 	@Inject
-	PartyCommands(Chat chat, EMessages messages, PartyManager partyManager) {
+	PartyCommands(SystemMessage chat, EMessages messages, PartyManager partyManager) {
 		this.chat = chat;
 		this.messages = messages;
 		this.partyManager = partyManager;
@@ -64,14 +64,14 @@ public class PartyCommands extends BaseCommand {
 	@CommandPermission("pcommons.party.help")
 	public void partyHelp(final Player player) {
 		Map<String, String> cmdpartydesc = this.messages.party_help;
-		this.chat.send(player, this.messages.party_help_heading, this.messages.party_prefix);
+		this.chat.info(player, this.messages.party_help_heading, this.messages.party_prefix);
 		for(final String k : cmdpartydesc.keySet()) {
 			if(k.length() < 3) {
-				this.chat.send(player, "", this.messages.party_prefix);
+				this.chat.info(player, "", this.messages.party_prefix);
 				continue;
 			}
 			final String v = cmdpartydesc.get(k);
-			this.chat.send(player, ChatColor.YELLOW + "/" + label + " " + k + ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + v, this.messages.party_prefix);
+			this.chat.info(player, ChatColor.YELLOW + "/" + label + " " + k + ChatColor.DARK_GRAY + " - " + ChatColor.GRAY + v, this.messages.party_prefix);
 		}
 	}
 
@@ -124,7 +124,7 @@ public class PartyCommands extends BaseCommand {
 				this.chat.error(player, this.messages.party_player_not_in_party.formatted(target.getName()), this.messages.party_prefix);
 			}
 		} else {
-			this.chat.send(player, this.messages.party_you_are_not_a_party_owner, this.messages.party_prefix);
+			this.chat.info(player, this.messages.party_you_are_not_a_party_owner, this.messages.party_prefix);
 		}
 	}
 
@@ -134,7 +134,7 @@ public class PartyCommands extends BaseCommand {
 		Party party = this.partyManager.getParty(player.getUniqueId());
 
 		if(party != null) {
-			this.chat.send(player, this.messages.party_list_heading, this.messages.party_prefix);
+			this.chat.info(player, this.messages.party_list_heading, this.messages.party_prefix);
 			StringBuilder ret = new StringBuilder();
 			for(final UUID partyPlayer : party.getPlayers()) {
 				if(partyPlayer == party.getOwnerUniqueId()) {
@@ -146,9 +146,9 @@ public class PartyCommands extends BaseCommand {
 				OfflinePlayer other = Bukkit.getOfflinePlayer(partyPlayer);
 				ret.append(other.getName());
 			}
-			this.chat.send(player, ret.toString(), this.messages.party_prefix);
+			this.chat.info(player, ret.toString(), this.messages.party_prefix);
 		} else {
-			this.chat.send(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
+			this.chat.error(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
 		}
 	}
 
@@ -159,7 +159,7 @@ public class PartyCommands extends BaseCommand {
 		if(party != null && party.isPartyOwner(player.getUniqueId())) {
 			partyManager.disband(party);
 		} else {
-			this.chat.send(player, this.messages.party_you_are_not_a_party_owner, this.messages.party_prefix);
+			this.chat.error(player, this.messages.party_you_are_not_a_party_owner, this.messages.party_prefix);
 		}
 	}
 
@@ -168,7 +168,7 @@ public class PartyCommands extends BaseCommand {
 	private void partyLeave(final Player player) {
 		Party party = this.partyManager.getParty(player.getUniqueId());
 		if(party == null) {
-			this.chat.send(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
+			this.chat.error(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
 			return;
 		}
 
@@ -181,7 +181,7 @@ public class PartyCommands extends BaseCommand {
 	private void partySetOwner(final Player player, final Player newOwner) {
 		Party party = this.partyManager.getParty(player.getUniqueId());
 		if(party == null) {
-			this.chat.send(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
+			this.chat.error(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
 			return;
 		}
 
@@ -210,7 +210,7 @@ public class PartyCommands extends BaseCommand {
 	private void partyChat(final Player player, final String[] messages) {
 		Party party = this.partyManager.getParty(player.getUniqueId());
 		if(party == null) {
-			this.chat.send(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
+			this.chat.error(player, this.messages.party_you_are_not_in_a_party, this.messages.party_prefix);
 			return;
 		}
 

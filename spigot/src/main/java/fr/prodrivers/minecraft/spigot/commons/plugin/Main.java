@@ -6,7 +6,7 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import fr.prodrivers.minecraft.commons.Log;
 import fr.prodrivers.minecraft.commons.ProdriversCommons;
-import fr.prodrivers.minecraft.commons.chat.Chat;
+import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.commons.chat.ChatModule;
 import fr.prodrivers.minecraft.commons.configuration.Configuration;
 import fr.prodrivers.minecraft.commons.configuration.Messages;
@@ -84,7 +84,7 @@ public class Main extends JavaPlugin implements Listener {
 
 		Log.setLevel(configuration);
 
-		Chat chat = injector.getInstance(Chat.class);
+		SystemMessage chat = injector.getInstance(SystemMessage.class);
 		chat.setName(this.getDescription().getName());
 		chat.load(injector.getInstance(Messages.class));
 

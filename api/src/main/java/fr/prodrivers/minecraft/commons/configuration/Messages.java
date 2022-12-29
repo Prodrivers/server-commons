@@ -1,6 +1,6 @@
 package fr.prodrivers.minecraft.commons.configuration;
 
-import fr.prodrivers.minecraft.commons.chat.Chat;
+import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.commons.annotations.ExcludedFromConfiguration;
 import fr.prodrivers.minecraft.commons.configuration.file.FileAttributeConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -19,7 +19,7 @@ import org.bukkit.plugin.Plugin;
  */
 public class Messages extends FileAttributeConfiguration {
 	/**
-	 * Prefix to use in messages sent using {@link Chat Chat}
+	 * Prefix to use in messages sent using {@link SystemMessage Chat}
 	 */
 	public String prefix = "[<name>]";
 

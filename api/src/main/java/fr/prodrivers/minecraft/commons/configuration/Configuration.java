@@ -1,6 +1,6 @@
 package fr.prodrivers.minecraft.commons.configuration;
 
-import fr.prodrivers.minecraft.commons.chat.Chat;
+import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.commons.annotations.ExcludedFromConfiguration;
 import fr.prodrivers.minecraft.commons.configuration.file.AbstractFileAttributeConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -30,11 +30,11 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	}
 
 	/**
-	 * Set chat instance to be managed.
+	 * Set SystemMessage instance to be managed.
 	 *
-	 * @param chat Chat instance to manage
+	 * @param systemMessage SystemMessage instance to manage
 	 */
-	public void setChat(Chat chat) {
+	public void setSystemMessage(SystemMessage systemMessage) {
 		throw new UnsupportedOperationException();
 	}
 

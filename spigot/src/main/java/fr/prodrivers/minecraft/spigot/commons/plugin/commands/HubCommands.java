@@ -3,7 +3,7 @@ package fr.prodrivers.minecraft.spigot.commons.plugin.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import fr.prodrivers.minecraft.commons.Log;
-import fr.prodrivers.minecraft.commons.chat.Chat;
+import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.spigot.commons.plugin.EMessages;
 import fr.prodrivers.minecraft.commons.sections.Section;
 import fr.prodrivers.minecraft.commons.sections.SectionCapabilities;
@@ -17,11 +17,11 @@ import javax.inject.Singleton;
 @CommandAlias("hub")
 public class HubCommands extends BaseCommand {
 	private final SectionManager sectionManager;
-	private final Chat chat;
+	private final SystemMessage chat;
 	private final EMessages messages;
 
 	@Inject
-	HubCommands(SectionManager sectionManager, Chat chat, EMessages messages) {
+	HubCommands(SectionManager sectionManager, SystemMessage chat, EMessages messages) {
 		this.chat = chat;
 		this.messages = messages;
 		this.sectionManager = sectionManager;

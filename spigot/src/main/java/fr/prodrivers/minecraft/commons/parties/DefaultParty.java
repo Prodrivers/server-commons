@@ -1,7 +1,7 @@
 package fr.prodrivers.minecraft.commons.parties;
 
 import com.google.inject.assistedinject.Assisted;
-import fr.prodrivers.minecraft.commons.chat.Chat;
+import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.spigot.commons.plugin.EMessages;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -19,10 +19,10 @@ public class DefaultParty implements Party {
 	private final ArrayList<UUID> players = new ArrayList<>();
 
 	private final EMessages messages;
-	private final Chat chat;
+	private final SystemMessage chat;
 
 	@Inject
-	DefaultParty(final EMessages messages, final Chat chat, @Assisted final UUID ownerUniqueId) {
+	DefaultParty(final EMessages messages, final SystemMessage chat, @Assisted final UUID ownerUniqueId) {
 		this.owner = ownerUniqueId;
 		this.players.add(this.owner);
 
@@ -75,7 +75,7 @@ public class DefaultParty implements Party {
 			String format = this.messages.party_chat_format;
 			message = format.replaceAll("%PLAYER%", player.getDisplayName()).replaceAll("%MESSAGE%", message);
 			for(final UUID partyMember : this.getPlayers()) {
-				this.chat.send(partyMember, message, this.messages.party_prefix);
+				this.chat.info(partyMember, message, this.messages.party_prefix);
 			}
 		}
 	}
@@ -133,7 +133,7 @@ public class DefaultParty implements Party {
 				this.chat.error(receiverUniqueId, components, this.messages.party_prefix);
 				return;
 			default:
-				this.chat.send(receiverUniqueId, components, this.messages.party_prefix);
+				this.chat.info(receiverUniqueId, components, this.messages.party_prefix);
 		}
 	}
 
@@ -154,7 +154,7 @@ public class DefaultParty implements Party {
 	@Override
 	public void broadcast(String message) {
 		for(final UUID partyMember : this.getPlayers()) {
-			this.chat.send(partyMember, message, this.messages.party_prefix);
+			this.chat.info(partyMember, message, this.messages.party_prefix);
 		}
 	}
 
@@ -162,7 +162,7 @@ public class DefaultParty implements Party {
 	public void broadcast(String message, List<UUID> excluded) {
 		for(final UUID partyMember : this.getPlayers()) {
 			if(!excluded.contains(partyMember)) {
-				this.chat.send(partyMember, message, this.messages.party_prefix);
+				this.chat.info(partyMember, message, this.messages.party_prefix);
 			}
 		}
 	}

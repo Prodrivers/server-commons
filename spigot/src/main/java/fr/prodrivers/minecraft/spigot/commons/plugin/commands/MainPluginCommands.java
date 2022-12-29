@@ -5,7 +5,7 @@ import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import fr.prodrivers.minecraft.spigot.commons.plugin.Main;
-import fr.prodrivers.minecraft.commons.chat.Chat;
+import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.commons.sections.Section;
 import fr.prodrivers.minecraft.commons.sections.SectionManager;
 import org.bukkit.command.CommandSender;
@@ -19,10 +19,10 @@ import javax.inject.Singleton;
 public class MainPluginCommands extends BaseCommand {
 	private final Main plugin;
 	private final SectionManager sectionManager;
-	private final Chat chat;
+	private final SystemMessage chat;
 
 	@Inject
-	MainPluginCommands(Main plugin, SectionManager sectionManager, Chat chat) {
+	MainPluginCommands(Main plugin, SectionManager sectionManager, SystemMessage chat) {
 		this.plugin = plugin;
 		this.chat = chat;
 		this.sectionManager = sectionManager;
@@ -58,9 +58,9 @@ public class MainPluginCommands extends BaseCommand {
 			Section section = this.sectionManager.getCurrentSection(player);
 
 			if(section != null) {
-				this.chat.send(sender, player.getName() + " -> " + section.getFullName() + " (" + section.getClass().getCanonicalName() + ")");
+				this.chat.info(sender, player.getName() + " -> " + section.getFullName() + " (" + section.getClass().getCanonicalName() + ")");
 			} else {
-				this.chat.send(sender, player.getName() + " -> No registered section");
+				this.chat.error(sender, player.getName() + " -> No registered section");
 			}
 		}
 	}

@@ -4,7 +4,7 @@ import co.aikar.commands.*;
 import co.aikar.locales.MessageKeyProvider;
 import com.google.common.collect.ImmutableMap;
 import fr.prodrivers.minecraft.commons.Log;
-import fr.prodrivers.minecraft.commons.chat.Chat;
+import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.commons.configuration.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
@@ -35,7 +35,7 @@ public class ACFCommandManagerProvider implements Provider<BukkitCommandManager>
 
 	@Inject
 	@SuppressWarnings("deprecation")
-	public ACFCommandManagerProvider(Plugin plugin, Messages messages, Chat chat) {
+	public ACFCommandManagerProvider(Plugin plugin, Messages messages, SystemMessage chat) {
 		// Create manager
 		this.commandManager = new PaperCommandManager(plugin);
 		// Enable help API

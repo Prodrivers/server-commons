@@ -1,7 +1,7 @@
 package fr.prodrivers.minecraft.commons.configuration;
 
 import fr.prodrivers.minecraft.commons.annotations.ExcludedFromConfiguration;
-import fr.prodrivers.minecraft.commons.chat.Chat;
+import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.commons.configuration.file.AbstractFileAttributeConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -13,7 +13,7 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	@ExcludedFromConfiguration
 	private final Plugin plugin;
 	@ExcludedFromConfiguration
-	private Chat chat;
+	private SystemMessage systemMessage;
 	@ExcludedFromConfiguration
 	private final Messages messages;
 
@@ -27,10 +27,10 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 		this.configuration = this.plugin.getConfig();
 	}
 
-	public void setChat(Chat chat) {
-		this.chat = chat;
-		if(this.messages != null && this.chat != null) {
-			this.chat.load(this.messages);
+	public void setSystemMessage(SystemMessage systemMessage) {
+		this.systemMessage = systemMessage;
+		if(this.messages != null && this.systemMessage != null) {
+			this.systemMessage.load(this.messages);
 		}
 	}
 
@@ -39,8 +39,8 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 		super.init();
 		if(this.messages != null) {
 			this.messages.init();
-			if(this.chat != null) {
-				this.chat.load(this.messages);
+			if(this.systemMessage != null) {
+				this.systemMessage.load(this.messages);
 			}
 		}
 	}
@@ -68,8 +68,8 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 		super.reload();
 		if(this.messages != null) {
 			this.messages.reload();
-			if(chat != null) {
-				this.chat.load(this.messages);
+			if(systemMessage != null) {
+				this.systemMessage.load(this.messages);
 			}
 		}
 	}
