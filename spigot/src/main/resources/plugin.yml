@@ -4,7 +4,7 @@ version: ${project.version}
 description: ${project.description}
 author: ${project.plugin.author}
 website: ${project.url}
-api-version: ${spigot.api.version}
+api-version: ${paper.api.version}
 
 commands:
   plugin:

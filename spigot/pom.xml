@@ -23,18 +23,28 @@
 
         <ebean-maven-plugin.args>debug=0</ebean-maven-plugin.args>
 
+        <paper.api.version>1.17</paper.api.version>
+        <paper.artifact.version>1.17.1-R0.1-SNAPSHOT</paper.artifact.version>
+
         <project.plugin.author>Prodrivers</project.plugin.author>
         <project.plugin.name>ProdriversCommons</project.plugin.name>
         <project.plugin.mainClass>fr.prodrivers.minecraft.spigot.commons.plugin.Main</project.plugin.mainClass>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
-        <!--Spigot API-->
+        <!--Paper API-->
         <!--suppress VulnerableLibrariesLocal -->
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>${spigot.artifact.version}</version>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>${paper.artifact.version}</version>
             <scope>provided</scope>
         </dependency>
         <!--Prodrivers Commons API-->
