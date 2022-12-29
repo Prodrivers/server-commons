@@ -1,4 +1,4 @@
-package fr.prodrivers.minecraft.commons.storage.player;
+package fr.prodrivers.minecraft.commons.players;
 
 import io.ebean.annotation.Cache;
 import io.ebean.annotation.NotNull;
