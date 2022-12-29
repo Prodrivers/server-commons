@@ -3,6 +3,8 @@ package fr.prodrivers.minecraft.commons.configuration;
 import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.commons.annotations.ExcludedFromConfiguration;
 import fr.prodrivers.minecraft.commons.configuration.file.FileAttributeConfiguration;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -19,6 +21,12 @@ import org.bukkit.plugin.Plugin;
  */
 public class Messages extends FileAttributeConfiguration {
 	/**
+	 * Embark an instance of MiniMessage to easily (de)serialize in context.
+	 */
+	@ExcludedFromConfiguration
+	protected final MiniMessage miniMessage = MiniMessage.miniMessage();
+
+	/**
 	 * Prefix to use in messages sent using {@link SystemMessage Chat}
 	 */
 	public String prefix = "[<name>]";
@@ -31,5 +39,25 @@ public class Messages extends FileAttributeConfiguration {
 	public Messages(Plugin plugin) {
 		super(null);
 		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Utility function that returns the embarked MiniMessage instance
+	 *
+	 * @return MiniMessage instance
+	 */
+	public MiniMessage miniMessage() {
+		return miniMessage;
+	}
+
+	/**
+	 * Utility function that deserialize a MiniMessage-formatted string to a Component using embarked MiniMessage
+	 * instance.
+	 *
+	 * @param message String to deserialize
+	 * @return MiniMessage instance
+	 */
+	public Component deserialize(String message) {
+		return miniMessage.deserialize(message);
 	}
 }

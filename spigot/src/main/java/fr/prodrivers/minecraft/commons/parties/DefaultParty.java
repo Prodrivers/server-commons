@@ -6,6 +6,7 @@ import fr.prodrivers.minecraft.spigot.commons.plugin.EMessages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 
@@ -72,15 +73,14 @@ public class DefaultParty implements Party {
 
 	public void chatAsPlayer(final Player player, String message) {
 		if(message.trim().length() > 0) {
-			String format = this.messages.party_chat_format;
-			message = format.replaceAll("%PLAYER%", player.getDisplayName()).replaceAll("%MESSAGE%", message);
+			Component messageToSend = this.messages.miniMessage().deserialize(this.messages.party_chat_format, Placeholder.unparsed("player", player.getName()), Placeholder.unparsed("message", message));
 			for(final UUID partyMember : this.getPlayers()) {
-				this.chat.info(partyMember, Component.text(message), Component.text(this.messages.party_prefix));
+				this.chat.info(partyMember, messageToSend, this.messages.party_prefix);
 			}
 		}
 	}
 
-	private String getStringForMessage(PartyMessage message) {
+	private Object getElementForMessage(PartyMessage message) {
 		return switch(message) {
 			case DISBANDED -> this.messages.party_disbanded;
 			case JOINED_YOU -> this.messages.party_you_joined_party;
@@ -102,13 +102,18 @@ public class DefaultParty implements Party {
 
 	private Component getComponentsFromMessage(PartyMessage message, final Object... substitutions) {
 		if(message == PartyMessage.PLAYER_INVITED_YOU) {
-			Component invite_message_hover_text = LegacyComponentSerializer.legacySection().deserialize(this.messages.party_you_were_invited_hover_text.formatted(substitutions));
-			return LegacyComponentSerializer.legacySection().deserialize(getStringForMessage(PartyMessage.PLAYER_INVITED_YOU).formatted(substitutions))
+			Component invite_message_hover_text = this.messages.deserialize(this.messages.party_you_were_invited_hover_text.formatted(substitutions));
+			String mainTextMiniMessage = (String) getElementForMessage(PartyMessage.PLAYER_INVITED_YOU);
+			return this.messages.deserialize(mainTextMiniMessage.formatted(substitutions))
 					.clickEvent(ClickEvent.runCommand("/party accept " + substitutions[0]))
 					.hoverEvent(HoverEvent.showText(invite_message_hover_text));
 		}
 
-		return LegacyComponentSerializer.legacySection().deserialize(getStringForMessage(message).formatted(substitutions));
+		Object mainTextElement = getElementForMessage(message);
+		if(mainTextElement instanceof Component mainTextComponent) {
+			return mainTextComponent;
+		}
+		return this.messages.deserialize(((String) mainTextElement).formatted(substitutions));
 	}
 
 	public void send(final UUID receiverUniqueId, final PartyMessage message, final Object... substitutions) {
@@ -118,17 +123,17 @@ public class DefaultParty implements Party {
 			case LEFT_YOU:
 			case PLAYER_INVITED_INVITER:
 			case PLAYER_INVITED_YOU:
-				this.chat.success(receiverUniqueId, components, Component.text(this.messages.party_prefix));
+				this.chat.success(receiverUniqueId, components, this.messages.party_prefix);
 				return;
 			case CANNOT_INVITE_YOURSELF:
 			case NOT_PARTY_OWNER_YOU:
 			case PLAYER_IS_IN_PARTY:
 			case PARTY_LEAVE_BEFORE_JOINING_ANOTHER:
 			case PARTY_NOT_INVITED_YOU:
-				this.chat.error(receiverUniqueId, components, Component.text(this.messages.party_prefix));
+				this.chat.error(receiverUniqueId, components, this.messages.party_prefix);
 				return;
 			default:
-				this.chat.info(receiverUniqueId, components, Component.text(this.messages.party_prefix));
+				this.chat.info(receiverUniqueId, components, this.messages.party_prefix);
 		}
 	}
 
@@ -149,7 +154,7 @@ public class DefaultParty implements Party {
 	@Override
 	public void broadcast(String message) {
 		for(final UUID partyMember : this.getPlayers()) {
-			this.chat.info(partyMember, Component.text(message), Component.text(this.messages.party_prefix));
+			this.chat.info(partyMember, Component.text(message), this.messages.party_prefix);
 		}
 	}
 
@@ -157,7 +162,7 @@ public class DefaultParty implements Party {
 	public void broadcast(String message, List<UUID> excluded) {
 		for(final UUID partyMember : this.getPlayers()) {
 			if(!excluded.contains(partyMember)) {
-				this.chat.info(partyMember, Component.text(message), Component.text(this.messages.party_prefix));
+				this.chat.info(partyMember, Component.text(message), this.messages.party_prefix);
 			}
 		}
 	}

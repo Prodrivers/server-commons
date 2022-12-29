@@ -8,6 +8,7 @@ import fr.prodrivers.minecraft.commons.sections.SectionManager;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.inject.Inject;
@@ -37,7 +38,7 @@ public class DefaultMainHub extends MainHub {
 			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10, 5);
 		} catch(Throwable e) {
 			Log.severe("Error while trying to make player " + player + " enter hub. Kicking him.", e);
-			player.kickPlayer(this.messages.player_kicked_invalid_hub);
+			player.kick(this.messages.player_kicked_invalid_hub, PlayerKickEvent.Cause.UNKNOWN);
 			return false;
 		}
 		return true;

@@ -39,14 +39,14 @@ public class HubCommands extends BaseCommand {
 				if(section != null && section.getCapabilities().contains(SectionCapabilities.HUB)) {
 					this.sectionManager.enter(player, sectionName);
 				} else {
-					this.chat.error(player, Component.text(this.messages.invalid_hub_name));
+					this.chat.error(player, this.messages.invalid_hub_name);
 				}
 			} else {
 				this.sectionManager.enter(player);
 			}
 		} catch(Exception e) {
 			Log.severe("Unexpected error during hub command.", e);
-			this.chat.error(player, Component.text(this.messages.error_occurred));
+			this.chat.error(player, this.messages.error_occurred);
 		}
 	}
 }

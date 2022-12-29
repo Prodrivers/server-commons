@@ -4,6 +4,8 @@ import fr.prodrivers.minecraft.commons.configuration.Messages;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -13,6 +15,7 @@ import java.util.UUID;
 
 @Singleton
 public class SystemMessage {
+	private final MiniMessage miniMessage;
 	private final MessageSender messageSender;
 
 	private String rawPrefix = "[<name>]";
@@ -21,22 +24,22 @@ public class SystemMessage {
 	private String name;
 
 	@Inject
-	public SystemMessage(@NonNull MessageSender messageSender) {
+	public SystemMessage(@NonNull MiniMessage miniMessage, @NonNull MessageSender messageSender) {
+		this.miniMessage = miniMessage;
 		this.messageSender = messageSender;
 	}
 
 	public void setName(@NonNull String name) {
 		this.name = name;
-		this.prefix = LegacyComponentSerializer.legacySection().deserialize(this.rawPrefix.replaceAll("<name>", this.name));
-		this.prefixLegacy = this.rawPrefix.replaceAll("<name>", this.name);
+		this.prefix = this.miniMessage.deserialize(this.rawPrefix, Placeholder.unparsed("<name>", name));
+		this.prefixLegacy = LegacyComponentSerializer.legacySection().serialize(this.prefix);
 	}
 
 	public void load(@NonNull Messages messages) {
 		if(messages != null && messages.prefix != null) {
 			this.rawPrefix = messages.prefix;
 		}
-		this.prefix = LegacyComponentSerializer.legacySection().deserialize(this.rawPrefix.replaceAll("<name>", this.name));
-		this.prefixLegacy = this.rawPrefix.replaceAll("<name>", this.name);
+		setName(this.name);
 	}
 
 	private void send(@NonNull Audience receiver, @NonNull Component message, @NonNull Component prefix) {
