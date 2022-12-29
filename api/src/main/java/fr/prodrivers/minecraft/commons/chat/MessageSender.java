@@ -16,7 +16,13 @@ import java.util.UUID;
  * Used implementation can be changed in configuration.
  * <p>
  * Default implementations are:
- * - fr.prodrivers.minecraft.spigot.commons.chat.SpigotMessageSender: for Spigot platform, uses local Spigot server functions
+ * <ul>
+ *     <li>
+ *         <b>fr.prodrivers.minecraft.spigot.commons.chat.SpigotMessageSender</b>
+ *         <p>
+ *         for Spigot platform, uses local Spigot server functions
+ *     </li>
+ * </ul>
  */
 public interface MessageSender {
 	/**

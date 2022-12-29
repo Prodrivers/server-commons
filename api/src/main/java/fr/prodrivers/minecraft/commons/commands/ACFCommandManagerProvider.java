@@ -1,6 +1,7 @@
 package fr.prodrivers.minecraft.commons.commands;
 
 import co.aikar.commands.BukkitCommandManager;
+import fr.prodrivers.minecraft.commons.configuration.Messages;
 
 import javax.inject.Provider;
 import javax.inject.Singleton;

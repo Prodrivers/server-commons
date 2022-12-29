@@ -1,5 +1,7 @@
 package fr.prodrivers.minecraft.commons.configuration;
 
+import fr.prodrivers.minecraft.commons.annotations.ExcludedFromConfiguration;
+
 /**
  * Field-based configuration framework for Prodrivers plugins.
  * <p>

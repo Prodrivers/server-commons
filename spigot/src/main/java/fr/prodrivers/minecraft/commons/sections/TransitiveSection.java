@@ -14,11 +14,13 @@ import java.util.Set;
  * It is final and non-instantiable, as it is used internally only.
  * It does nothing on its own, designed to allow players to pass through to non-transitive sections, but has special
  * handling code to ensure that:
- * - players can not walk down the tree to a transitive section, i.e. a transitive section can not be the target node
- * when the player has to walk up and down the tree.
- * - players walking up the tree to a transitive section ends up walking to its parent until it encounters a
+ * <ul>
+ *     <li>players can not walk down the tree to a transitive section, i.e. a transitive section can not be the target node
+ * when the player has to walk up and down the tree.</li>
+ *     <li>players walking up the tree to a transitive section ends up walking to its parent until it encounters a
  * non-transitive section, i.e. a transitive section, when it is the target node and is attained only by walking up the
- * tree, acts a proxy for the non-transitive parent section.
+ * tree, acts a proxy for the non-transitive parent section.</li>
+ * </ul>
  */
 public final class TransitiveSection extends Section {
 	public TransitiveSection(String fullName) {
