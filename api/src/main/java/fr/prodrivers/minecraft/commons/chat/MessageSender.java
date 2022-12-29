@@ -14,6 +14,9 @@ import java.util.UUID;
  * Used as backend for Prodrivers Commons' chat facility.
  * <p>
  * Used implementation can be changed in configuration.
+ * <p>
+ * Default implementations are:
+ * - fr.prodrivers.minecraft.spigot.commons.chat.SpigotMessageSender: for Spigot platform, uses local Spigot server functions
  */
 public interface MessageSender {
 	/**

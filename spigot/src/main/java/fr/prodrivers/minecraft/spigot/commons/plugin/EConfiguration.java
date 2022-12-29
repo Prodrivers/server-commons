@@ -1,6 +1,6 @@
 package fr.prodrivers.minecraft.spigot.commons.plugin;
 
-import fr.prodrivers.minecraft.commons.chat.SpigotMessageSender;
+import fr.prodrivers.minecraft.spigot.commons.chat.SpigotMessageSender;
 import fr.prodrivers.minecraft.commons.configuration.Configuration;
 import fr.prodrivers.minecraft.commons.configuration.Messages;
 import fr.prodrivers.minecraft.commons.hubs.DefaultMainHub;
