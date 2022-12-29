@@ -10,8 +10,6 @@ import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.commons.chat.ChatModule;
 import fr.prodrivers.minecraft.commons.configuration.Configuration;
 import fr.prodrivers.minecraft.commons.configuration.Messages;
-import fr.prodrivers.minecraft.commons.hubs.MainHub;
-import fr.prodrivers.minecraft.commons.hubs.MainHubModule;
 import fr.prodrivers.minecraft.commons.parties.PartyManager;
 import fr.prodrivers.minecraft.commons.parties.PartyModule;
 import fr.prodrivers.minecraft.spigot.commons.plugin.commands.Commands;
@@ -65,7 +63,6 @@ public class Main extends JavaPlugin implements Listener {
 		StorageModule storageModule = injector.getInstance(StorageModule.class);
 		PartyModule partyModule = injector.getInstance(PartyModule.class);
 		SectionManagerModule sectionManagerModule = injector.getInstance(SectionManagerModule.class);
-		MainHubModule mainHubModule = injector.getInstance(MainHubModule.class);
 		UIModule uiModule = injector.getInstance(UIModule.class);
 		ChatModule chatModule = injector.getInstance(ChatModule.class);
 
@@ -75,7 +72,6 @@ public class Main extends JavaPlugin implements Listener {
 				storageModule,
 				partyModule,
 				sectionManagerModule,
-				mainHubModule,
 				chatModule,
 				uiModule
 		);
@@ -92,13 +88,6 @@ public class Main extends JavaPlugin implements Listener {
 
 		sectionManager = injector.getInstance(SectionManager.class);
 		ebeanPropertiesProvider = injector.getInstance(EbeanPropertiesProvider.class);
-
-		MainHub hub = injector.getInstance(MainHub.class);
-		if(hub != null) {
-			sectionManager.register(hub);
-		} else {
-			Log.info("No main hub available to ProdriversCommons.");
-		}
 
 		BukkitCommandManager bukkitCommandManager = injector.getInstance(BukkitCommandManager.class);
 		Commands commands = injector.getInstance(Commands.class);
