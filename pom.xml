@@ -14,13 +14,13 @@
     <packaging>pom</packaging>
 
     <scm>
-        <connection>scm:git:https://github.com/Prodrivers/commons-bukkit.git</connection>
-        <url>https://github.com/Prodrivers/commons-bukkit</url>
+        <connection>scm:git:https://github.com/Prodrivers/server-commons.git</connection>
+        <url>https://github.com/Prodrivers/server-commons</url>
     </scm>
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/Prodrivers/commons-bukkit/issues</url>
+        <url>https://github.com/Prodrivers/server-commons/issues</url>
     </issueManagement>
 
     <modules>
@@ -181,16 +181,16 @@
     </dependencies>
 
     <distributionManagement>
-        <downloadUrl>https://github.com/Prodrivers/commons-bukkit/releases</downloadUrl>
+        <downloadUrl>https://github.com/Prodrivers/server-commons/releases</downloadUrl>
         <repository>
             <id>prodrivers-repo</id>
             <name>prodrivers-commons-releases</name>
-            <url>https://gitlab.com/api/v4/projects/12871060/packages/maven</url>
+            <url>https://maven.pkg.github.com/Prodrivers/server-commons</url>
         </repository>
         <snapshotRepository>
             <id>prodrivers-repo</id>
             <name>prodrivers-commons-snapshots</name>
-            <url>https://gitlab.com/api/v4/projects/12871060/packages/maven</url>
+            <url>https://maven.pkg.github.com/Prodrivers/server-commons</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
