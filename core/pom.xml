@@ -4,17 +4,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>commons-core</artifactId>
-    <name>Prodrivers Commons Core functionnalities</name>
-    <description>A common set of tools for Minecraft server plugins, designed to fulfill all Prodrivers plugin needs.
-        This project contains the core, cross-platform functionnalities.
+    <name>Prodrivers Commons Core functionalities</name>
+    <description>A common set of tools for Minecraft server components, designed to fulfill all Prodrivers' needs.
+        This project contains the core, cross-platform functionalities.
     </description>
 
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>fr.prodrivers.minecraft</groupId>
+        <groupId>fr.prodrivers.minecraft.server</groupId>
         <artifactId>commons</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
 
     <properties>

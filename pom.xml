@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fr.prodrivers.minecraft</groupId>
+    <groupId>fr.prodrivers.minecraft.server</groupId>
     <artifactId>commons</artifactId>
     <name>Prodrivers Commons</name>
-    <description>A common set of tools for Minecraft (Spigot) plugins, designed to fulfill all Prodrivers plugin needs.</description>
-    <version>2.0.0-SNAPSHOT</version>
+    <description>A common set of tools for Minecraft server components, designed to fulfill all Prodrivers' needs.</description>
+    <version>0.1.0-SNAPSHOT</version>
     <url>https://prodrivers.fr/</url>
 
     <packaging>pom</packaging>
