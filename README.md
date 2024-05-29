@@ -1,5 +1,26 @@
 # Prodrivers Commons for Bukkit
 
+## Status
+
+This repository holds the legacy, Spigot-specific 2.X branch of Prodrivers Commons for Minecraft servers, then called
+Prodrivers Commons for Bukkit.
+
+Deep integration with Spigot and between Commons' components means that it is too difficult to port select components
+to other platforms, notably Velocity and Minestom. This also means it is difficult to implement distributed actions to
+support multiple servers.
+
+This revision is in maintenance mode and will not evolve further.
+
+
+A refactor is currently in progress in branch "master" with a new name, Prodrivers Commons for Minecraft servers, based
+around Vert.x.  Dependency injection will still be used for select, non-distributed components which cannot be built
+around Vert.x.
+
+The usage of Vert.x and its event bus will make Prodrivers Commons distributed by default. Proper separation between
+core logic and platform-specific parts will be ensured, with platform-specific parts at a minimum.
+
+## Introduction
+
 Prodrivers Commons is a common set of tools for Bukkit plugins, designed to fulfil all Prodrivers plugin needs.
 
 Prodrivers Commons is designed to allow easy integration of internally or externally-developed plugins.
