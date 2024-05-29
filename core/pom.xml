@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>commons-spigot</artifactId>
-    <name>Prodrivers Commons Spigot Plugin</name>
-    <description>A common set of tools for Bukkit plugins, designed to fulfill all Prodrivers plugin needs. This project
-        contains the reference Spigot implementation.
+    <artifactId>commons-core</artifactId>
+    <name>Prodrivers Commons Core functionnalities</name>
+    <description>A common set of tools for Minecraft server plugins, designed to fulfill all Prodrivers plugin needs.
+        This project contains the core, cross-platform functionnalities.
     </description>
 
     <packaging>jar</packaging>
@@ -17,49 +17,12 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <repositories>
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-    </repositories>
-
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
         <maven.install.skip>true</maven.install.skip>
 
         <ebean-maven-plugin.args>debug=0</ebean-maven-plugin.args>
-
-        <spigot.api.version>1.17</spigot.api.version>
-        <spigot.artifact.version>1.17.1-R0.1-SNAPSHOT</spigot.artifact.version>
-
-        <project.plugin.author>Prodrivers</project.plugin.author>
-        <project.plugin.name>ProdriversCommons</project.plugin.name>
-        <project.plugin.mainClass>fr.prodrivers.minecraft.spigot.commons.plugin.Main</project.plugin.mainClass>
     </properties>
-
-    <dependencies>
-        <!--Spigot API-->
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>${spigot.artifact.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--Prodrivers Commons Core-->
-        <dependency>
-            <groupId>fr.prodrivers.minecraft.server</groupId>
-            <artifactId>commons-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <!-- Aikar Commands -->
-        <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>acf-paper</artifactId>
-            <version>0.5.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -117,32 +80,10 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>${project.plugin.mainClass}</mainClass>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>ProdriversCommons/libs/</classpathPrefix>
                             <useUniqueVersions>false</useUniqueVersions>
                         </manifest>
                     </archive>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.0.2</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <excludeScope>provided</excludeScope>
-                            <outputDirectory>${project.build.directory}/ProdriversCommons/libs/</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
