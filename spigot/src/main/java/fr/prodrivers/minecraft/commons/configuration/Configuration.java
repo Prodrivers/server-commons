@@ -8,6 +8,18 @@ import org.bukkit.plugin.Plugin;
 import javax.inject.Inject;
 import java.util.logging.Level;
 
+/**
+ * Configuration helper for Prodrivers plugins.
+ * <p>
+ * It represents configuration options using class fields, by saving and loading fields from and inside the plugin's
+ * configuration file, using an underlying {@link AbstractAttributeConfiguration}.
+ * It supports all data types supported by Bukkit's {@link org.bukkit.configuration.file.FileConfiguration}.
+ * <p>
+ * {@link ExcludedFromConfiguration} annotation allows specific fields not to
+ * be used by the field processor.
+ * As with every {@link AbstractAttributeConfiguration} derivative, {@link #init()} have to be called immediately after
+ * constructing the object, either at the end of the constructor or outside of it.
+ */
 @SuppressWarnings("CanBeFinal")
 public class Configuration extends AbstractFileAttributeConfiguration {
 	@ExcludedFromConfiguration
@@ -19,6 +31,13 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 
 	public Level logLevel = Level.INFO;
 
+	/**
+	 * Configuration helper constructor.
+	 * Intended to be used with a dependency injector.
+	 *
+	 * @param plugin   Plugin initializing the helper
+	 * @param messages Messages instance to manage, uses this to provide your own inheriting class that adds its own message fields
+	 */
 	@Inject
 	public Configuration(Plugin plugin, Messages messages) {
 		super();
@@ -27,6 +46,11 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 		this.configuration = this.plugin.getConfig();
 	}
 
+	/**
+	 * Set chat instance to be managed.
+	 *
+	 * @param chat Chat instance to manage
+	 */
 	public void setChat(Chat chat) {
 		this.chat = chat;
 		if(this.messages != null && this.chat != null) {

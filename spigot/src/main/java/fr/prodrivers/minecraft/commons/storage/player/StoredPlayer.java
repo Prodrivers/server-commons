@@ -7,7 +7,10 @@ import io.ebean.annotation.Cache;
 import io.ebean.annotation.NotNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

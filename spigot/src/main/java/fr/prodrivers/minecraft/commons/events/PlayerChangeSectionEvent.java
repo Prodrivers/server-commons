@@ -7,6 +7,9 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+/**
+ * Event triggered when a player moves from one section to another, before the moving is actually done.
+ */
 public class PlayerChangeSectionEvent extends Event implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 
@@ -29,14 +32,29 @@ public class PlayerChangeSectionEvent extends Event implements Cancellable {
 		this.targetSection = targetSection;
 	}
 
+	/**
+	 * Get the player that is moving.
+	 *
+	 * @return Player that is moving
+	 */
 	public Player getPlayer() {
 		return this.player;
 	}
 
+	/**
+	 * Get the left section.
+	 *
+	 * @return Left section
+	 */
 	public Section getLeftSection() {
 		return this.leftSection;
 	}
 
+	/**
+	 * Get the target section.
+	 *
+	 * @return Target section
+	 */
 	public Section getTargetSection() {
 		return this.targetSection;
 	}
@@ -56,6 +74,11 @@ public class PlayerChangeSectionEvent extends Event implements Cancellable {
 		return handlers;
 	}
 
+	/**
+	 * Return handlers of this event. Mandated by Bukkit.
+	 *
+	 * @return Handler list
+	 */
 	public static HandlerList getHandlerList() {
 		return handlers;
 	}

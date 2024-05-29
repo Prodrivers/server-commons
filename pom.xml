@@ -24,7 +24,6 @@
     </issueManagement>
 
     <modules>
-        <module>api</module>
         <module>spigot</module>
     </modules>
 

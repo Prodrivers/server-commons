@@ -37,12 +37,6 @@
             <version>${spigot.artifact.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!--Prodrivers Commons API-->
-        <dependency>
-            <groupId>fr.prodrivers.minecraft</groupId>
-            <artifactId>commons-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -112,59 +106,6 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>fr.prodrivers.minecraft:commons-api</include>
-                                </includes>
-                            </artifactSet>
-                            <filters>
-                                <filter>
-                                    <artifact>fr.prodrivers.minecraft:commons-api</artifact>
-                                    <excludes>
-                                        <exclude>fr/prodrivers/bukkit/commons/chat/Chat*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/chat/SpigotMessageSender*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/ProdriversCommons*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/commands/ACFCommandManagerProvider*
-                                        </exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/configuration/Configuration*</exclude>
-                                        <exclude>
-                                            fr/prodrivers/bukkit/commons/configuration/AbstractAttributeConfiguration*
-                                        </exclude>
-                                        <exclude>
-                                            fr/prodrivers/bukkit/commons/configuration/file/AbstractFileAttributeConfiguration*
-                                        </exclude>
-                                        <exclude>
-                                            fr/prodrivers/bukkit/commons/configuration/file/FileAttributeConfiguration*
-                                        </exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/configuration/Messages*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/di/guice/ProdriversCommonsGuiceModule*
-                                        </exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/events/PlayerChangeSectionEvent*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/hubs/DefaultMainHub*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/storage/DataSourceConfigProvider*
-                                        </exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/storage/EbeanProvider*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/storage/SQLProvider*</exclude>
-                                        <exclude>fr/prodrivers/bukkit/commons/sections/Section.class</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.0.2</version>
                 <executions>
@@ -176,7 +117,6 @@
                         </goals>
                         <configuration>
                             <excludeScope>provided</excludeScope>
-                            <excludeArtifactIds>prodrivers-commons-api</excludeArtifactIds>
                             <outputDirectory>${project.build.directory}/ProdriversCommons/libs/</outputDirectory>
                         </configuration>
                     </execution>

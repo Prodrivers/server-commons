@@ -1,7 +1,7 @@
 package fr.prodrivers.minecraft.commons.sections;
 
-import fr.prodrivers.minecraft.commons.exceptions.*;
 import fr.prodrivers.minecraft.commons.events.PlayerChangeSectionEvent;
+import fr.prodrivers.minecraft.commons.exceptions.*;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
