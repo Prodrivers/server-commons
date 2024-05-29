@@ -1,7 +1,7 @@
 package fr.prodrivers.minecraft.commons.sections;
 
 import fr.prodrivers.minecraft.commons.Log;
-import fr.prodrivers.minecraft.commons.events.PlayerChangeSectionEvent;
+import fr.prodrivers.minecraft.spigot.commons.events.PlayerChangeSectionEvent;
 import fr.prodrivers.minecraft.commons.exceptions.*;
 import fr.prodrivers.minecraft.commons.parties.Party;
 import fr.prodrivers.minecraft.commons.parties.PartyManager;

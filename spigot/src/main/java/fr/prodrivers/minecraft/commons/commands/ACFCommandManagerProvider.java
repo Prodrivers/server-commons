@@ -42,7 +42,7 @@ public class ACFCommandManagerProvider implements Provider<BukkitCommandManager>
 		this.commandManager.enableUnstableAPI("help");
 		// Load messages from message instance
 		Locale defaultLocale = commandManager.getLocales().getDefaultLocale();
-		this.commandManager.getLocales().loadLanguage(messages.getConfiguration(), defaultLocale);
+		this.commandManager.getLocales().loadLanguage(messages.getStorage(), defaultLocale);
 		// Set formatter with prefix
 		this.commandManager.setDefaultFormatter(new ProdriversMessageFormatter(chat));
 		this.commandManager.setFormat(MessageType.ERROR, new ProdriversMessageFormatter(chat, ChatColor.RED, ChatColor.YELLOW, ChatColor.RED));

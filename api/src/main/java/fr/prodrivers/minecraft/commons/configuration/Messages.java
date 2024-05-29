@@ -2,10 +2,9 @@ package fr.prodrivers.minecraft.commons.configuration;
 
 import fr.prodrivers.minecraft.commons.chat.SystemMessage;
 import fr.prodrivers.minecraft.commons.annotations.ExcludedFromConfiguration;
-import fr.prodrivers.minecraft.commons.configuration.file.FileAttributeConfiguration;
+import fr.prodrivers.minecraft.commons.plugins.PPlugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.plugin.Plugin;
 
 /**
  * Messages helper for Prodrivers plugins.
@@ -19,7 +18,7 @@ import org.bukkit.plugin.Plugin;
  * If it is not used in pair with a {@link Configuration} derivative, {@link #init()} have to be called immediately
  * after constructing the object, either at the end of the constructor or outside of it.
  */
-public class Messages extends FileAttributeConfiguration {
+public class Messages extends AbstractAttributeConfiguration {
 	/**
 	 * Embark an instance of MiniMessage to easily (de)serialize in context.
 	 */
@@ -36,8 +35,7 @@ public class Messages extends FileAttributeConfiguration {
 	 *
 	 * @param plugin Plugin initializing the helper
 	 */
-	public Messages(Plugin plugin) {
-		super(null);
+	public Messages(PPlugin plugin) {
 		throw new UnsupportedOperationException();
 	}
 
