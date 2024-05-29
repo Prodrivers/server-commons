@@ -1,7 +1,7 @@
 package fr.prodrivers.minecraft.commons.ui.section;
 
+import fr.prodrivers.minecraft.commons.players.PPlayer;
 import fr.prodrivers.minecraft.commons.sections.Section;
-import org.bukkit.entity.Player;
 
 /**
  * Default Selection UI for sections.
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
  */
 public class DefaultSelectionUI implements SelectionUI {
 	@Override
-	public void ui(Section section, Player player) {
+	public void ui(Section section, PPlayer player) {
 		throw new UnsupportedOperationException();
 	}
 }

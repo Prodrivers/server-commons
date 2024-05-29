@@ -6,6 +6,8 @@ import com.google.inject.name.Names;
 import fr.prodrivers.minecraft.commons.chat.MessageSender;
 import fr.prodrivers.minecraft.commons.commands.ACFCommandManagerProvider;
 import fr.prodrivers.minecraft.commons.parties.PartyManager;
+import fr.prodrivers.minecraft.commons.players.PPlayerAdapter;
+import fr.prodrivers.minecraft.commons.players.PPlayerAdapterProvider;
 import fr.prodrivers.minecraft.spigot.commons.plugin.DependenciesClassLoaderProvider;
 import fr.prodrivers.minecraft.commons.sections.SectionManager;
 import fr.prodrivers.minecraft.commons.storage.EbeanPropertiesProvider;
@@ -43,5 +45,6 @@ public class ProdriversCommonsGuiceModule extends AbstractModule {
 		bind(Properties.class).annotatedWith(Names.named("ebean")).toProvider(ebeanPropertiesProvider);
 		bind(DependenciesClassLoaderProvider.class).toInstance(dependenciesClassLoaderProvider);
 		bind(BukkitCommandManager.class).toProvider(ACFCommandManagerProvider.class);
+		bind(PPlayerAdapter.class).toProvider(PPlayerAdapterProvider.class);
 	}
 }

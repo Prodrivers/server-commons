@@ -1,7 +1,7 @@
 package fr.prodrivers.minecraft.commons.ui.section;
 
+import fr.prodrivers.minecraft.commons.players.PPlayer;
 import fr.prodrivers.minecraft.commons.sections.Section;
-import org.bukkit.entity.Player;
 
 /**
  * Prodrivers Commons Section Selection UI
@@ -19,5 +19,5 @@ public interface SelectionUI {
 	 * @param section Section to open UI for
 	 * @param player  Player that opened the selection UI
 	 */
-	void ui(Section section, Player player);
+	void ui(Section section, PPlayer player);
 }

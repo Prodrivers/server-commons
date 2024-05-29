@@ -1,7 +1,5 @@
 package fr.prodrivers.minecraft.commons.parties;
 
-import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -82,7 +80,7 @@ public interface Party {
 	 * @param player  Sending player
 	 * @param message Message to send
 	 */
-	void chatAsPlayer(final Player player, String message);
+	void chatAsPlayer(final UUID playerUniqueId, String message);
 
 	/**
 	 * Send a message to a player.

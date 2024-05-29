@@ -1,8 +1,7 @@
 package fr.prodrivers.minecraft.commons.sections;
 
+import fr.prodrivers.minecraft.commons.players.PPlayer;
 import fr.prodrivers.minecraft.commons.ui.section.SelectionUI;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -100,7 +99,7 @@ public abstract class Section {
 	 * @param fromParty     Indicate that the process was started by the party owner
 	 * @return {@code true} The user is authorized to enter the section
 	 */
-	public abstract boolean preJoin(@NonNull Player player, Section targetSection, boolean fromParty);
+	public abstract boolean preJoin(@NonNull PPlayer player, Section targetSection, boolean fromParty);
 
 	/**
 	 * Section join callback. Should do the actions required when a player enters a section.
@@ -108,7 +107,7 @@ public abstract class Section {
 	 * @param player Player that joins the section
 	 * @return {@code true} Continue the section enter process
 	 */
-	public abstract boolean join(@NonNull Player player);
+	public abstract boolean join(@NonNull PPlayer player);
 
 	/**
 	 * Section pre leave callback, called to check whether the player can leave the section.
@@ -125,7 +124,7 @@ public abstract class Section {
 	 * @param fromParty     Indicate that the process was started by the party owner
 	 * @return {@code true} The user is authorized to leave the section
 	 */
-	public abstract boolean preLeave(@NonNull OfflinePlayer player, Section targetSection, boolean fromParty);
+	public abstract boolean preLeave(@NonNull PPlayer player, Section targetSection, boolean fromParty);
 
 	/**
 	 * Section leave callback. Should do the actions required when a player leaves a section.
@@ -133,14 +132,14 @@ public abstract class Section {
 	 * @param player Player that leaves the section
 	 * @return {@code true} Continue the section enter process
 	 */
-	public abstract boolean leave(@NonNull OfflinePlayer player);
+	public abstract boolean leave(@NonNull PPlayer player);
 
 	/**
 	 * Get all players in a section.
 	 *
 	 * @return Section's players
 	 */
-	public @NonNull Collection<OfflinePlayer> getPlayers() {
+	public @NonNull Collection<PPlayer> getPlayers() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -159,7 +158,7 @@ public abstract class Section {
 	 * @param player Player to consider
 	 * @return {@code true} if the player is in this section
 	 */
-	public boolean contains(@NonNull OfflinePlayer player) {
+	public boolean contains(@NonNull PPlayer player) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -169,7 +168,7 @@ public abstract class Section {
 	 * @param player Player to add
 	 * @return {@code true} if the player was added to this section
 	 */
-	protected boolean add(@NonNull OfflinePlayer player) {
+	protected boolean add(@NonNull PPlayer player) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -179,7 +178,7 @@ public abstract class Section {
 	 * @param player Player to remove
 	 * @return {@code true} if the player was removed from this section
 	 */
-	protected boolean remove(@NonNull OfflinePlayer player) {
+	protected boolean remove(@NonNull PPlayer player) {
 		throw new UnsupportedOperationException();
 	}
 

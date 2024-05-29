@@ -1,9 +1,9 @@
 package fr.prodrivers.minecraft.commons.sections;
 
 import fr.prodrivers.minecraft.commons.exceptions.*;
-import fr.prodrivers.minecraft.commons.events.PlayerChangeSectionEvent;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
+import fr.prodrivers.minecraft.commons.players.PPlayer;
+
+import java.util.UUID;
 
 /**
  * Prodrivers Commons Section Manager
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
  * Use this class to gather information, about sections, players, move players between sections and register new
  * sections.
  * <p>
- * Before actually moving a player, a {@link PlayerChangeSectionEvent} will be triggered and can be cancelled.
+ * Before actually moving a player, an event will be triggered and can be cancelled, your implementation supports it.
  * <p>
  * Used implementation can be changed in configuration.
  */
@@ -32,7 +32,7 @@ public interface SectionManager {
 	 * @throws IllegalSectionLeavingException  The current section forbids the player to go to the parent section
 	 * @throws IllegalSectionEnteringException The player should not enter the parent section
 	 */
-	boolean enter(Player player) throws NoCurrentSectionException, NoParentSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException;
+	boolean enter(PPlayer player) throws NoCurrentSectionException, NoParentSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException;
 
 	/**
 	 * Make a player enter a section by section name.
@@ -45,7 +45,7 @@ public interface SectionManager {
 	 * @throws IllegalSectionLeavingException  A section along the path the player has to walk forbids the player to leave it
 	 * @throws IllegalSectionEnteringException A section along the path the player has to walk forbids the player from entering it
 	 */
-	boolean enter(Player player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException;
+	boolean enter(PPlayer player, String sectionName) throws InvalidSectionException, IllegalSectionLeavingException, IllegalSectionEnteringException;
 
 	/**
 	 * Register a new section instance against the Prodrivers Commons infrastructure
@@ -68,12 +68,15 @@ public interface SectionManager {
 	 * Registers a player against the Prodrivers Commons infrastructure.
 	 * <p>
 	 * Required before any interaction with Prodrivers Commons and dependent plugins.
+	 * <p>
+	 * <b>Make sure the player is online on your server instance before calling this.</b>
+	 * <p>
 	 * This action is automatically performed by the default section manager on player login, if it is used.
 	 *
-	 * @param player Player to register
+	 * @param playerUniqueId Player to register
 	 * @return {@code true} if player was correctly registered
 	 */
-	boolean register(Player player);
+	boolean register(UUID playerUniqueId);
 
 	/**
 	 * Unregisters a player from the Prodrivers Commons infrastructure.
@@ -81,17 +84,17 @@ public interface SectionManager {
 	 * Once a player is unregistered, no further interaction with Prodrivers Commons and dependent plugins should happen.
 	 * This action is automatically performed by the default section manager on player logout, if it is used.
 	 *
-	 * @param player Player to unregister
+	 * @param playerUniqueId Player to unregister
 	 */
-	void unregister(OfflinePlayer player);
+	void unregister(UUID playerUniqueId);
 
 	/**
 	 * Get a player's current section instance
 	 *
-	 * @param player Player to consider
+	 * @param playerUniqueId Player to consider
 	 * @return Player's section instance if possible or null
 	 */
-	Section getCurrentSection(OfflinePlayer player);
+	Section getCurrentSection(UUID playerUniqueId);
 
 	/**
 	 * Get all registered sections.
@@ -131,5 +134,5 @@ public interface SectionManager {
 	 * @throws InvalidSectionException No corresponding section exists to provided name
 	 * @throws InvalidUIException      Section reports to have custom UI, but does not implement it
 	 */
-	void ui(String sectionName, Player player) throws InvalidSectionException, InvalidUIException;
+	void ui(String sectionName, PPlayer player) throws InvalidSectionException, InvalidUIException;
 }
