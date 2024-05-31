@@ -1,6 +1,5 @@
 package fr.prodrivers.minecraft.server.spigot.commons.plugin.commands;
 
-import fr.prodrivers.minecraft.server.commons.Log;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

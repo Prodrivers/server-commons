@@ -3,7 +3,6 @@ package fr.prodrivers.minecraft.server.commons.configuration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.prodrivers.minecraft.server.commons.Log;
 import fr.prodrivers.minecraft.server.commons.annotations.ExcludedFromConfiguration;
 
 import java.io.*;

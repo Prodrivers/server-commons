@@ -1,6 +1,5 @@
 package fr.prodrivers.minecraft.server.commons.storage;
 
-import fr.prodrivers.minecraft.server.commons.Log;
 import fr.prodrivers.minecraft.server.commons.di.guice.ProdriversCommonsGuiceModule;
 import fr.prodrivers.minecraft.server.spigot.commons.plugin.DependenciesClassLoaderProvider;
 import io.ebean.Database;

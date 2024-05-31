@@ -1,6 +1,5 @@
 package fr.prodrivers.minecraft.server.commons.parties;
 
-import fr.prodrivers.minecraft.server.commons.Log;
 import fr.prodrivers.minecraft.server.commons.exceptions.PartyCannotInviteYourselfException;
 import fr.prodrivers.minecraft.server.commons.exceptions.PlayerNotConnectedException;
 import fr.prodrivers.minecraft.server.commons.exceptions.PlayerNotInvitedToParty;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Singleton

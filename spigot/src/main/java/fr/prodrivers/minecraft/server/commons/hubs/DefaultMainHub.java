@@ -1,6 +1,5 @@
 package fr.prodrivers.minecraft.server.commons.hubs;
 
-import fr.prodrivers.minecraft.server.commons.Log;
 import fr.prodrivers.minecraft.server.commons.sections.Section;
 import fr.prodrivers.minecraft.server.spigot.commons.plugin.EConfiguration;
 import fr.prodrivers.minecraft.server.spigot.commons.plugin.EMessages;

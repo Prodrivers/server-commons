@@ -1,6 +1,5 @@
 package fr.prodrivers.minecraft.server.commons.sections;
 
-import fr.prodrivers.minecraft.server.commons.Log;
 import fr.prodrivers.minecraft.server.commons.events.PlayerChangeSectionEvent;
 import fr.prodrivers.minecraft.server.commons.parties.Party;
 import fr.prodrivers.minecraft.server.commons.exceptions.*;

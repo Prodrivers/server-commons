@@ -1,6 +1,5 @@
 package fr.prodrivers.minecraft.server.commons.configuration.file;
 
-import fr.prodrivers.minecraft.server.commons.Log;
 import fr.prodrivers.minecraft.server.commons.annotations.ExcludedFromConfiguration;
 import fr.prodrivers.minecraft.server.commons.configuration.AbstractAttributeConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

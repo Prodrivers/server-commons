@@ -4,7 +4,6 @@ import co.aikar.commands.BukkitCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
-import fr.prodrivers.minecraft.server.commons.Log;
 import fr.prodrivers.minecraft.server.commons.ProdriversCommons;
 import fr.prodrivers.minecraft.server.commons.chat.Chat;
 import fr.prodrivers.minecraft.server.commons.chat.ChatModule;
@@ -79,8 +78,6 @@ public class Main extends JavaPlugin implements Listener {
 		);
 
 		configuration = (EConfiguration) injector.getInstance(Configuration.class);
-
-		Log.setLevel(configuration);
 
 		Chat chat = injector.getInstance(Chat.class);
 		chat.setName(this.getDescription().getName());

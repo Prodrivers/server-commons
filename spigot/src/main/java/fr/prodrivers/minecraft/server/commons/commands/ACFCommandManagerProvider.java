@@ -3,7 +3,6 @@ package fr.prodrivers.minecraft.server.commons.commands;
 import co.aikar.commands.*;
 import co.aikar.locales.MessageKeyProvider;
 import com.google.common.collect.ImmutableMap;
-import fr.prodrivers.minecraft.server.commons.Log;
 import fr.prodrivers.minecraft.server.commons.chat.Chat;
 import fr.prodrivers.minecraft.server.commons.configuration.Messages;
 import org.bukkit.ChatColor;
