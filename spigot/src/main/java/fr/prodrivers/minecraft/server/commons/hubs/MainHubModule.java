@@ -5,6 +5,7 @@ import fr.prodrivers.minecraft.server.spigot.commons.plugin.EConfiguration;
 
 import javax.inject.Inject;
 
+@Deprecated
 public class MainHubModule extends AbstractModule {
 	private final Class<? extends MainHub> mainHubClass;
 

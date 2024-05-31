@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.lang.reflect.Field;
 
+@Deprecated
 public class MessageFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
 	public MessageFileAttributeConfigurationAction(FileConfiguration configuration) {
 		super(configuration);

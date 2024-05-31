@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+@Deprecated
 public class MessageMapFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
 	public MessageMapFileAttributeConfigurationAction(FileConfiguration configuration) {
 		super(configuration);

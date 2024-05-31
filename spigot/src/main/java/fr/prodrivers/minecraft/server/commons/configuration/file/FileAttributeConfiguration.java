@@ -25,6 +25,7 @@ import java.util.logging.Logger;
  * {@link #init()} have to be called immediately after constructing the object, either at the end of the constructor or
  * outside of it.
  */
+@Deprecated
 public class FileAttributeConfiguration extends AbstractFileAttributeConfiguration {
 	private final File configurationFile;
 

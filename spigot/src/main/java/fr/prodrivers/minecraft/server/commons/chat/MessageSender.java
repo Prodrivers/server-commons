@@ -15,6 +15,7 @@ import java.util.UUID;
  * <p>
  * Used implementation can be changed in configuration.
  */
+@Deprecated
 public interface MessageSender {
 	/**
 	 * Generic message sender

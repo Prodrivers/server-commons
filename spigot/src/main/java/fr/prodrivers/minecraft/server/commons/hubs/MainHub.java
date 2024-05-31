@@ -16,6 +16,7 @@ import java.util.Set;
  * Implement this class if you want to use Prodrivers Commons' managed main hub with your own logic.
  * Used implementation can be changed in configuration.
  */
+@Deprecated
 public abstract class MainHub extends Section {
 	private final static Set<SectionCapabilities> capabilities = new HashSet<>();
 

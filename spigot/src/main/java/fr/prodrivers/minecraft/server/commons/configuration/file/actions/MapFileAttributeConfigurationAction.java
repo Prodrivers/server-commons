@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Deprecated
 public class MapFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
 	public MapFileAttributeConfigurationAction(FileConfiguration configuration) {
 		super(configuration);

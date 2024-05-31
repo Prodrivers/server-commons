@@ -24,6 +24,7 @@ import java.util.logging.Logger;
  * <p>
  * Correctly handles players wanting to leave the hub by forbidding them and teleporting them.
  */
+@Deprecated
 @Singleton
 public class DefaultMainHub extends MainHub {
 	private final Logger logger;

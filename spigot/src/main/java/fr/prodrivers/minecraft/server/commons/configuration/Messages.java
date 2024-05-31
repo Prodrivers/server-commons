@@ -25,6 +25,7 @@ import java.util.logging.Logger;
  * after constructing the object, either at the end of the constructor or outside of it.
  */
 @SuppressWarnings("CanBeFinal")
+@Deprecated
 public class Messages extends FileAttributeConfiguration {
 	/**
 	 * Prefix to use in messages sent using {@link Chat Chat}

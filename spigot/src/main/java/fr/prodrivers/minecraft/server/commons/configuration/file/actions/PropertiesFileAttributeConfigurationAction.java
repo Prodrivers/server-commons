@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Properties;
 
+@Deprecated
 public class PropertiesFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
 	public PropertiesFileAttributeConfigurationAction(FileConfiguration configuration) {
 		super(configuration);

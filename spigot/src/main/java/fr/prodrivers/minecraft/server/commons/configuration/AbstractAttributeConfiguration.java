@@ -37,6 +37,7 @@ import java.util.logging.Logger;
  * As with every AbstractAttributeConfiguration derivative, {@link #init()} have to be called immediately after
  * constructing the object, either at the end of the constructor or outside of it.
  */
+@Deprecated
 public abstract class AbstractAttributeConfiguration {
 	protected final Logger logger;
 

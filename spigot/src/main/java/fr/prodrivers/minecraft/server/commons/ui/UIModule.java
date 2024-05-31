@@ -6,6 +6,7 @@ import fr.prodrivers.minecraft.server.spigot.commons.plugin.EConfiguration;
 
 import javax.inject.Inject;
 
+@Deprecated
 public class UIModule extends AbstractModule {
 	private final Class<? extends SelectionUI> sectionSelectionUiClass;
 

@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
  * provide getters and setters for the underlying storage mechanism, abstracting away storage concerns from the core
  * logic.
  */
+@Deprecated
 public interface IConfigurationAction {
 	/**
 	 * Returns an array of classes (types) that this configuration action can handle.

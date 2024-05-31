@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
  * <p>
  * This implementation is currently non-functional.
  */
+@Deprecated
 public class DefaultSelectionUI implements SelectionUI {
 	@Override
 	public void ui(Section section, Player player) {

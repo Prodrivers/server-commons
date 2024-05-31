@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  * constructing the object, either at the end of the constructor or outside of it.
  */
 @SuppressWarnings("CanBeFinal")
+@Deprecated
 public class Configuration extends AbstractFileAttributeConfiguration {
 	@ExcludedFromConfiguration
 	private final Plugin plugin;

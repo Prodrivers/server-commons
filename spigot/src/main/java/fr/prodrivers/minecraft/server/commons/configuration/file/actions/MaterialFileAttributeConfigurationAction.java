@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.lang.reflect.Field;
 
+@Deprecated
 public class MaterialFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
 	public MaterialFileAttributeConfigurationAction(FileConfiguration configuration) {
 		super(configuration);

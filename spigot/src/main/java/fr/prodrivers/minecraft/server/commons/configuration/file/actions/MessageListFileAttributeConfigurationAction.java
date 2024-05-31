@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Deprecated
 public class MessageListFileAttributeConfigurationAction extends ObjectFileConfigurationAction {
 	public MessageListFileAttributeConfigurationAction(FileConfiguration configuration) {
 		super(configuration);

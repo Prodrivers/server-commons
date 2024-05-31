@@ -11,6 +11,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
 
+@Deprecated
 public class SpigotMessageSender implements MessageSender {
 	public void send(@NonNull CommandSender sender, @NonNull String message, @NonNull String prefix) {
 		sender.sendMessage(prefix + ChatColor.RESET + " " + message);

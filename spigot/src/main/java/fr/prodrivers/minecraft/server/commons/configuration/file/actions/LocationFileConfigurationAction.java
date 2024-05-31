@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.lang.reflect.Field;
 
+@Deprecated
 public class LocationFileConfigurationAction implements IConfigurationAction {
 	private final FileConfiguration configuration;
 

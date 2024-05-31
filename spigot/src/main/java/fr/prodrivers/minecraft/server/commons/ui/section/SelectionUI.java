@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
  * <p>
  * Used default implementation can be changed in configuration.
  */
+@Deprecated
 public interface SelectionUI {
 	/**
 	 * Opens a selection UI for a specific section. If you return this as a custom UI for one or several sections, you

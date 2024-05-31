@@ -17,6 +17,7 @@ import java.util.UUID;
  * Expose more advanced functions to send messages to players.
  * Handles prefix and colors directly.
  */
+@Deprecated
 @Singleton
 public class Chat {
 	private final MessageSender messageSender;
