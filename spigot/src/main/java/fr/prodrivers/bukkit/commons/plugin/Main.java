@@ -25,15 +25,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 @Singleton
 public class Main extends JavaPlugin implements Listener {
+	// Ensure that logback.xml is parsed by LoggerFactory _before_ Guice calls JUL.
+	private final Logger logger = org.slf4j.LoggerFactory.getLogger(Main.class);
+
 	private Injector injector;
 
 	private EConfiguration configuration;
-	private Logger logger;
 
 	private SectionManager sectionManager;
 	private EbeanPropertiesProvider ebeanPropertiesProvider;
@@ -50,8 +51,8 @@ public class Main extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
-		logger = getLogger();
-		Log.init(logger);
+		java.util.logging.Logger logger2 = getLogger();
+		Log.init(logger2);
 
 		logger.info("Java version is " + System.getProperty("java.version") + ".");
 
@@ -97,7 +98,7 @@ public class Main extends JavaPlugin implements Listener {
 		if(hub != null) {
 			sectionManager.register(hub);
 		} else {
-			Log.info("No main hub available to ProdriversCommons.");
+			this.logger.info("No main hub available to ProdriversCommons.");
 		}
 
 		BukkitCommandManager bukkitCommandManager = injector.getInstance(BukkitCommandManager.class);
