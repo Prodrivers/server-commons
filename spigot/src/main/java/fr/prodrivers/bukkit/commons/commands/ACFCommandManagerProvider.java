@@ -3,7 +3,6 @@ package fr.prodrivers.bukkit.commons.commands;
 import co.aikar.commands.*;
 import co.aikar.locales.MessageKeyProvider;
 import com.google.common.collect.ImmutableMap;
-import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.configuration.Messages;
 import org.bukkit.ChatColor;
@@ -15,9 +14,12 @@ import javax.inject.Singleton;
 import java.lang.reflect.Field;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @Singleton
 public class ACFCommandManagerProvider implements Provider<BukkitCommandManager> {
+	private final Logger logger;
+
 	private final BukkitCommandManager commandManager;
 
 	private static Map<MessageKeyProvider, String> getMessageMap() {
@@ -35,7 +37,8 @@ public class ACFCommandManagerProvider implements Provider<BukkitCommandManager>
 
 	@Inject
 	@SuppressWarnings("deprecation")
-	public ACFCommandManagerProvider(Plugin plugin, Messages messages, Chat chat) {
+	public ACFCommandManagerProvider(Logger logger, Plugin plugin, Messages messages, Chat chat) {
+		this.logger = logger;
 		// Create manager
 		this.commandManager = new PaperCommandManager(plugin);
 		// Enable help API
@@ -55,7 +58,7 @@ public class ACFCommandManagerProvider implements Provider<BukkitCommandManager>
 				Field messageField = messages.getClass().getDeclaredField(entry.getValue());
 				this.commandManager.getLocales().addMessage(defaultLocale, entry.getKey(), (String) messageField.get(messages));
 			} catch(NoSuchFieldException | IllegalAccessException | ClassCastException e) {
-				Log.info(messages + " has no field named " + entry.getValue() + ", ignoring.");
+				this.logger.info(messages + " has no field named " + entry.getValue() + ", ignoring.");
 			}
 		}
 	}

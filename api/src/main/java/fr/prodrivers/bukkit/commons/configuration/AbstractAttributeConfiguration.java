@@ -1,5 +1,7 @@
 package fr.prodrivers.bukkit.commons.configuration;
 
+import java.util.logging.Logger;
+
 /**
  * Field-based configuration framework for Prodrivers plugins.
  * <p>
@@ -22,6 +24,16 @@ package fr.prodrivers.bukkit.commons.configuration;
  * constructing the object, either at the end of the constructor or outside of it.
  */
 public abstract class AbstractAttributeConfiguration {
+
+	/**
+     * Creates a new attributed-based configuration instance.
+     *
+     * @param logger Logger to use
+     */
+	public AbstractAttributeConfiguration(Logger logger) {
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Register a Configuration Action.
 	 *

@@ -1,6 +1,7 @@
 package fr.prodrivers.bukkit.commons.configuration.file;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 /**
  * Fully managed, field-based, Bukkit's FileConfiguration backed configuration class for Prodrivers plugins.
@@ -22,10 +23,11 @@ public class FileAttributeConfiguration extends AbstractFileAttributeConfigurati
 	/**
 	 * Fully managed, field-based, Bukkit's FileConfiguration backed configuration class constructor.
 	 *
+	 * @param logger            Logger to use
 	 * @param configurationFile YAML file to use for storage
 	 */
-	public FileAttributeConfiguration(File configurationFile) {
-		super();
+	public FileAttributeConfiguration(Logger logger, File configurationFile) {
+		super(logger);
 		throw new UnsupportedOperationException();
 	}
 }

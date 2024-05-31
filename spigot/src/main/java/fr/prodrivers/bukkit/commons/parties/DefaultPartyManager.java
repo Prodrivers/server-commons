@@ -1,6 +1,5 @@
 package fr.prodrivers.bukkit.commons.parties;
 
-import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.exceptions.PartyCannotInviteYourselfException;
 import fr.prodrivers.bukkit.commons.exceptions.PlayerNotConnectedException;
 import fr.prodrivers.bukkit.commons.exceptions.PlayerNotInvitedToParty;
@@ -15,9 +14,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Singleton
 public class DefaultPartyManager implements PartyManager {
+	private final Logger logger;
+
 	private final HashMap<UUID, Party> parties = new HashMap<>();
 	private final HashMap<UUID, ArrayList<Party>> partyInvites = new HashMap<>();
 
@@ -25,7 +28,8 @@ public class DefaultPartyManager implements PartyManager {
 	private final DefaultPartyFactory defaultPartyFactory;
 
 	@Inject
-	public DefaultPartyManager(Plugin plugin, DefaultPartyFactory defaultPartyFactory) {
+	public DefaultPartyManager(Logger logger, Plugin plugin, DefaultPartyFactory defaultPartyFactory) {
+		this.logger = logger;
 		this.partyListener = new PartyListener(plugin, this);
 		this.defaultPartyFactory = defaultPartyFactory;
 	}
@@ -83,7 +87,7 @@ public class DefaultPartyManager implements PartyManager {
 			if(!isInParty(playerToAddUniqueId)) {
 				Player ownerPlayer = Bukkit.getPlayer(party.getOwnerUniqueId());
 				if(ownerPlayer == null) {
-					Log.severe("Owner " + party.getOwnerUniqueId() + "  of party is null on party add of " + playerToAdd);
+					this.logger.severe("Owner " + party.getOwnerUniqueId() + "  of party is null on party add of " + playerToAdd);
 					return false;
 				}
 				this.parties.put(playerToAddUniqueId, party);
@@ -117,17 +121,17 @@ public class DefaultPartyManager implements PartyManager {
 		}
 
 		if(party.isPartyOwner(playerToRemoveUniqueId)) {
-			Log.fine("Party owner leaving");
+			this.logger.fine("Party owner leaving");
 			// If there is still more than one player in the party
 			if(party.size() > 1) {
-				Log.fine("Still players in party");
+				this.logger.fine("Still players in party");
 				// Remove the leaving player
 				party.unregisterPlayer(playerToRemoveUniqueId);
 				this.parties.remove(playerToRemoveUniqueId);
 				// Elect a player to be the new leader
 				party.assignOwner(party.getPlayers().get(0));
 			} else {
-				Log.fine("Disbanding party");
+				this.logger.fine("Disbanding party");
 				disband(party);
 			}
 			return true;
@@ -140,7 +144,7 @@ public class DefaultPartyManager implements PartyManager {
 			if(playerToRemove != null) {
 				Player ownerPlayer = Bukkit.getPlayer(party.getOwnerUniqueId());
 				if(ownerPlayer == null) {
-					Log.severe("Owner " + party.getOwnerUniqueId() + "  of party is null on party remove of " + playerToRemove);
+					this.logger.severe("Owner " + party.getOwnerUniqueId() + "  of party is null on party remove of " + playerToRemove);
 					return false;
 				}
 
@@ -236,7 +240,7 @@ public class DefaultPartyManager implements PartyManager {
 	}
 
 	public boolean assignOwner(@NonNull final Party party, @NonNull final UUID newOwnerUniqueId) {
-		Log.fine("Assigning owner " + newOwnerUniqueId);
+		this.logger.fine("Assigning owner " + newOwnerUniqueId);
 		// Tell the party who is the new leader
 		final Player newOwnerPlayer = Bukkit.getPlayer(newOwnerUniqueId);
 		if(newOwnerPlayer != null && party.containsPlayer(newOwnerUniqueId)) {

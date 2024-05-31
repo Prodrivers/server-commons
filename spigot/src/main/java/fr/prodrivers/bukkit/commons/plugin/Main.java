@@ -4,7 +4,6 @@ import co.aikar.commands.BukkitCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
-import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.ProdriversCommons;
 import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.chat.ChatModule;
@@ -46,14 +45,11 @@ public class Main extends JavaPlugin implements Listener {
 	@Override
 	public void onDisable() {
 		PluginDescriptionFile plugindescription = this.getDescription();
-		logger.info("" + plugindescription.getName() + " has been disabled!");
+		logger.info(plugindescription.getName() + " has been disabled!");
 	}
 
 	@Override
 	public void onEnable() {
-		java.util.logging.Logger logger2 = getLogger();
-		Log.init(logger2);
-
 		logger.info("Java version is " + System.getProperty("java.version") + ".");
 
 		// Create an injector with only the plugin module, containing its configuration
@@ -82,8 +78,6 @@ public class Main extends JavaPlugin implements Listener {
 		);
 
 		configuration = (EConfiguration) injector.getInstance(Configuration.class);
-
-		Log.setLevel(configuration);
 
 		Chat chat = injector.getInstance(Chat.class);
 		chat.setName(this.getDescription().getName());

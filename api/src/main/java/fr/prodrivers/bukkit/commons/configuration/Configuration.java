@@ -4,6 +4,8 @@ import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.configuration.file.AbstractFileAttributeConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Logger;
+
 /**
  * Configuration helper for Prodrivers plugins.
  * <p>
@@ -21,10 +23,12 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	 * Configuration helper constructor.
 	 * Intended to be used with a dependency injector.
 	 *
+	 * @param logger   Logger to use
 	 * @param plugin   Plugin initializing the helper
 	 * @param messages Messages instance to manage, uses this to provide your own inheriting class that adds its own message fields
 	 */
-	public Configuration(Plugin plugin, Messages messages) {
+	public Configuration(Logger logger, Plugin plugin, Messages messages) {
+		super(logger);
 		throw new UnsupportedOperationException();
 	}
 

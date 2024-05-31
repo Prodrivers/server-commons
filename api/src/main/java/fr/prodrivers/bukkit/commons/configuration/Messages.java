@@ -4,6 +4,8 @@ import fr.prodrivers.bukkit.commons.chat.Chat;
 import fr.prodrivers.bukkit.commons.configuration.file.FileAttributeConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Logger;
+
 /**
  * Messages helper for Prodrivers plugins.
  * <p>
@@ -25,10 +27,11 @@ public class Messages extends FileAttributeConfiguration {
 	/**
 	 * Messages helper constructor.
 	 *
+	 * @param logger Logger to use
 	 * @param plugin Plugin initializing the helper
 	 */
-	public Messages(Plugin plugin) {
-		super(null);
+	public Messages(Logger logger, Plugin plugin) {
+		super(logger, null);
 		throw new UnsupportedOperationException();
 	}
 }

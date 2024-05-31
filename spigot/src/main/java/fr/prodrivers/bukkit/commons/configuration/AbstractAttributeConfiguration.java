@@ -3,7 +3,6 @@ package fr.prodrivers.bukkit.commons.configuration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.annotations.ExcludedFromConfiguration;
 
 import java.io.*;
@@ -13,8 +12,12 @@ import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class AbstractAttributeConfiguration {
+	@ExcludedFromConfiguration
+    protected final Logger logger;
 	@ExcludedFromConfiguration
 	private final Map<Class<?>, IConfigurationAction> actions = new HashMap<>();
 	@ExcludedFromConfiguration
@@ -33,6 +36,10 @@ public abstract class AbstractAttributeConfiguration {
 		void run(ProcessCallbackType type, IConfigurationAction action, Field field);
 	}
 
+	public AbstractAttributeConfiguration(Logger logger) {
+		this.logger = logger;
+	}
+
 	protected void registerAction(IConfigurationAction action) {
 		for(Class<?> type : action.getTypes()) {
 			if(!this.actions.containsKey(type)) {
@@ -49,7 +56,7 @@ public abstract class AbstractAttributeConfiguration {
 			oo.flush();
 			return Base64.getEncoder().encodeToString(bo.toByteArray());
 		} catch(IOException ex) {
-			Log.severe("Error while serializing object. Some configuration values might be invalid. Problematic object: " + object.getClass().getName(), ex);
+			this.logger.log(Level.SEVERE, "Error while serializing object. Some configuration values might be invalid. Problematic object: " + object.getClass().getName(), ex);
 			return "";
 		}
 	}
@@ -61,7 +68,7 @@ public abstract class AbstractAttributeConfiguration {
 			ObjectInputStream oi = new ObjectInputStream(bi);
 			return oi.readObject();
 		} catch(IOException | ClassNotFoundException ex) {
-			Log.severe("Error while unserializing object. Some configuration values might be invalid. Problematic object: " + serializedObject, ex);
+			this.logger.log(Level.SEVERE, "Error while unserializing object. Some configuration values might be invalid. Problematic object: " + serializedObject, ex);
 			return null;
 		}
 	}
@@ -306,6 +313,6 @@ public abstract class AbstractAttributeConfiguration {
 			}
 		});
 
-		Log.info("- Loaded " + loadCount + " " + getClass().getSimpleName() + " fields");
+		this.logger.fine("- Loaded " + loadCount + " " + getClass().getSimpleName() + " fields");
 	}
 }

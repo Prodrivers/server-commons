@@ -3,6 +3,8 @@ package fr.prodrivers.bukkit.commons.configuration.file;
 import fr.prodrivers.bukkit.commons.configuration.AbstractAttributeConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.logging.Logger;
+
 /**
  * Field-based, Bukkit's {@link FileConfiguration} backed configuration framework for Prodrivers plugins.
  * <p>
@@ -28,6 +30,16 @@ public abstract class AbstractFileAttributeConfiguration extends AbstractAttribu
 	 * FileConfiguration used by this AbstractFileAttributeConfiguration instance.
 	 */
 	protected FileConfiguration configuration;
+
+	/**
+	 * Creates a new attributed and file-based configuration instance.
+	 *
+	 * @param logger Logger to use
+	 */
+	public AbstractFileAttributeConfiguration(Logger logger) {
+		super(logger);
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * Field name filter. Allows translating from field name to configuration path.

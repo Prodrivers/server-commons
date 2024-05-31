@@ -7,6 +7,7 @@ import org.bukkit.plugin.Plugin;
 
 import javax.inject.Inject;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("CanBeFinal")
 public class Configuration extends AbstractFileAttributeConfiguration {
@@ -20,8 +21,8 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	public Level logLevel = Level.INFO;
 
 	@Inject
-	public Configuration(Plugin plugin, Messages messages) {
-		super();
+	public Configuration(Logger logger, Plugin plugin, Messages messages) {
+		super(logger);
 		this.plugin = plugin;
 		this.messages = messages;
 		this.configuration = this.plugin.getConfig();

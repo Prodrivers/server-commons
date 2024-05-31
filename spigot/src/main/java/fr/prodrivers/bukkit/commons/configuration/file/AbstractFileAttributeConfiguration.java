@@ -4,8 +4,14 @@ import fr.prodrivers.bukkit.commons.configuration.AbstractAttributeConfiguration
 import fr.prodrivers.bukkit.commons.configuration.file.actions.*;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.logging.Logger;
+
 public abstract class AbstractFileAttributeConfiguration extends AbstractAttributeConfiguration {
 	protected FileConfiguration configuration;
+
+	public AbstractFileAttributeConfiguration(Logger logger) {
+		super(logger);
+	}
 
 	@Override
 	protected void init() {

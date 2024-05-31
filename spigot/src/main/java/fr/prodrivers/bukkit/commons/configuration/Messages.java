@@ -8,14 +8,15 @@ import org.bukkit.plugin.Plugin;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.util.logging.Logger;
 
 @SuppressWarnings("CanBeFinal")
 public class Messages extends FileAttributeConfiguration {
 	public String prefix = "[<name>]";
 
 	@Inject
-	public Messages(Plugin plugin) {
-		super(new File(plugin.getDataFolder(), "messages.yml"));
+	public Messages(Logger logger, Plugin plugin) {
+		super(logger, new File(plugin.getDataFolder(), "messages.yml"));
 	}
 
 	@Override

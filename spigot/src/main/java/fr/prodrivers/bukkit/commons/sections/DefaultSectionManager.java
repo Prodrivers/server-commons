@@ -1,6 +1,5 @@
 package fr.prodrivers.bukkit.commons.sections;
 
-import fr.prodrivers.bukkit.commons.Log;
 import fr.prodrivers.bukkit.commons.events.PlayerChangeSectionEvent;
 import fr.prodrivers.bukkit.commons.exceptions.*;
 import fr.prodrivers.bukkit.commons.parties.Party;
@@ -16,6 +15,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Singleton
 public class DefaultSectionManager implements SectionManager {
@@ -26,6 +27,7 @@ public class DefaultSectionManager implements SectionManager {
 	private final Set<UUID> inEnter = new HashSet<>();
 	private final Map<UUID, List<Section>> playersSectionPath = new HashMap<>();
 
+	private final Logger logger;
 	private final JavaPlugin plugin;
 	private final EMessages messages;
 	private final PartyManager partyManager;
@@ -35,7 +37,8 @@ public class DefaultSectionManager implements SectionManager {
 	private boolean treeBuildingScheduled = false;
 
 	@Inject
-	public DefaultSectionManager(JavaPlugin plugin, EMessages messages, PartyManager partyManager, SelectionUI defaultSelectionUi) {
+	public DefaultSectionManager(Logger logger, JavaPlugin plugin, EMessages messages, PartyManager partyManager, SelectionUI defaultSelectionUi) {
+		this.logger = logger;
 		this.plugin = plugin;
 		this.messages = messages;
 		this.partyManager = partyManager;
@@ -104,7 +107,7 @@ public class DefaultSectionManager implements SectionManager {
 		if(targetNode != null) {
 			nonTransitiveTarget = targetNode.getFirstNonTransitiveSection();
 			if(nonTransitiveTarget == null) {
-				Log.severe("Party player " + player.getUniqueId() + " asked to join section " + targetNode + ", bu it is transitive and it has no non-transitive parent.");
+				this.logger.severe("Party player " + player.getUniqueId() + " asked to join section " + targetNode + ", bu it is transitive and it has no non-transitive parent.");
 				// If not, stop everything
 				return false;
 			}
@@ -138,11 +141,11 @@ public class DefaultSectionManager implements SectionManager {
 									// Get player current section
 									Section currentSection = playersCurrentSection.get(partyPlayer.getUniqueId());
 
-									Log.fine("Checking section walk for party player " + partyPlayer + " from " + currentSection + " to " + targetNode);
+									this.logger.fine("Checking section walk for party player " + partyPlayer + " from " + currentSection + " to " + targetNode);
 
 									// Check that the player can go to the section
 									if(!canPlayerWalkAlongSectionPath(partyPlayer, currentSection, targetNode, true)) {
-										Log.severe("Party player " + partyPlayer + " cannot join or leave, stopping everything.");
+										this.logger.severe("Party player " + partyPlayer + " cannot join or leave, stopping everything.");
 										// If not, stop everything
 										return false;
 									}
@@ -165,11 +168,11 @@ public class DefaultSectionManager implements SectionManager {
 		// If the player is already in an enter process
 		if(inEnter.contains(player.getUniqueId())) {
 			// Stop
-			Log.fine(player + " is already in enter process");
+			this.logger.fine(player + " is already in enter process");
 			return false;
 		}
 
-		Log.fine(player + " entering section : " + targetNode);
+		this.logger.fine(player + " entering section : " + targetNode);
 
 		// Check that the player can walk along the path
 		if(!canPlayerWalkAlongSectionPath(player, leftNode, targetNode, fromParty)) {
@@ -182,7 +185,7 @@ public class DefaultSectionManager implements SectionManager {
 		PlayerChangeSectionEvent event = new PlayerChangeSectionEvent(player, leftNode, targetNode);
 		Bukkit.getPluginManager().callEvent(event);
 		if(event.isCancelled()) {
-			Log.warning("Section move of player " + player + " from " + leftNode + " to " + targetNode + " was canceled by event.");
+			this.logger.warning("Section move of player " + player + " from " + leftNode + " to " + targetNode + " was canceled by event.");
 			return false;
 		}
 
@@ -205,17 +208,17 @@ public class DefaultSectionManager implements SectionManager {
 		inEnter.add(player.getUniqueId());
 
 		try {
-			Log.finest("Player " + player + ": path to travel : " + nodesToVisit);
+			this.logger.finest("Player " + player + ": path to travel : " + nodesToVisit);
 
-			Log.finest("Player " + player + ": left : " + leftNode);
-			Log.finest("Player " + player + ": target : " + targetNode);
+			this.logger.finest("Player " + player + ": left : " + leftNode);
+			this.logger.finest("Player " + player + ": target : " + targetNode);
 
 			// Special case for root node exit
 			// Path traversal will be skipped as it is empty
 			if(leftNode != null && leftNode.getFullName().equals(SectionManager.ROOT_NODE_NAME) && targetNode == null) {
 				if(!leftNode.leave(player)) {
 					// The node refused the player to leave, stop processing.
-					Log.severe("Section " + leftNode + " refused player " + player + " to leave.");
+					this.logger.severe("Section " + leftNode + " refused player " + player + " to leave.");
 					return false;
 				} else {
 					// Remove the corresponding section as this player's current section
@@ -227,11 +230,11 @@ public class DefaultSectionManager implements SectionManager {
 			for(Section node : nodesToVisit) {
 				// If we are not considering the first node, as the player is already in this node
 				if(node != leftNode) {
-					Log.finest("Player " + player + " joining node : " + node);
+					this.logger.finest("Player " + player + " joining node : " + node);
 
 					if(!node.join(player)) {
 						// The node refused the player to enter, stop processing.
-						Log.severe("Section " + node + " refused player " + player + " to join.");
+						this.logger.severe("Section " + node + " refused player " + player + " to join.");
 						// If this is the root node
 						if(ROOT_NODE_NAME.equals(node.getFullName())) {
 							// Kick the player
@@ -242,25 +245,25 @@ public class DefaultSectionManager implements SectionManager {
 
 					// Register the target section as current section for the player
 					playersCurrentSection.put(player.getUniqueId(), node);
-					Log.finest("Player " + player + " joined node : " + node);
+					this.logger.finest("Player " + player + " joined node : " + node);
 				}
 				// If we are not considering the last node, as the player should stay in it
 				if(node != targetNode) {
-					Log.finest("Player " + player + " leaving node : " + node);
+					this.logger.finest("Player " + player + " leaving node : " + node);
 
 					if(!node.leave(player)) {
 						// The node refused the player to leave, stop processing.
-						Log.severe("Section " + node + " refused player " + player + " to leave.");
+						this.logger.severe("Section " + node + " refused player " + player + " to leave.");
 						return false;
 					}
 
 					// Remove the corresponding section as this player's current section
 					playersCurrentSection.remove(player.getUniqueId());
-					Log.finest("Player " + player + " left node : " + node);
+					this.logger.finest("Player " + player + " left node : " + node);
 				}
 			}
 		} catch(Throwable e) {
-			Log.severe("Error when moving player " + player + " along path from " + leftNode + " to " + targetNode + ".", e);
+			this.logger.log(Level.SEVERE, "Error when moving player " + player + " along path from " + leftNode + " to " + targetNode + ".", e);
 			return false;
 		} finally {
 			// Indicate that the player finished its enter process, remove temporary values
@@ -284,11 +287,11 @@ public class DefaultSectionManager implements SectionManager {
 					// Move all party players, except the owner, to the target section
 					for(UUID partyPlayerUUID : party.getPlayers()) {
 						if(partyPlayerUUID != party.getOwnerUniqueId()) {
-							Log.fine("Moving party player " + partyPlayerUUID + " to " + targetNode);
+							this.logger.fine("Moving party player " + partyPlayerUUID + " to " + targetNode);
 							// Get party player
 							Player partyPlayer = this.plugin.getServer().getPlayer(partyPlayerUUID);
 							if(partyPlayer != null) {
-								Log.fine("Moving party player " + partyPlayer + " to " + targetNode);
+								this.logger.fine("Moving party player " + partyPlayer + " to " + targetNode);
 								// Move player to section
 								enter(partyPlayer, targetNode, true);
 							}
@@ -298,7 +301,7 @@ public class DefaultSectionManager implements SectionManager {
 			}
 		}
 
-		Log.finest("===== Movement ended for player " + player + " ==");
+		this.logger.finest("===== Movement ended for player " + player + " ==");
 
 		return true;
 	}
@@ -317,19 +320,19 @@ public class DefaultSectionManager implements SectionManager {
 			sections.put(section.getFullName(), section);
 
 			if(!silent) {
-				Log.info("SectionManager registered section " + section + ".");
+				this.logger.info("SectionManager registered section " + section + ".");
 			}
 
 			if(this.treeBuilt && !this.treeBuildingScheduled) {
 				this.treeBuildingScheduled = true;
 				Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, () -> {
-					Log.info("Recreating section tree...");
+					this.logger.info("Recreating section tree...");
 					buildSectionTree();
 					this.treeBuildingScheduled = false;
 				}, SECTION_TREE_REBUILD_DELAY_TICKS);
 			}
 		} else {
-			Log.warning("Section " + section + " tried to be registered for a second time.");
+			this.logger.warning("Section " + section + " tried to be registered for a second time.");
 		}
 	}
 
@@ -347,7 +350,7 @@ public class DefaultSectionManager implements SectionManager {
 			if(section.preLeave(player, null, true)) {
 				section.leave(player);
 			} else {
-				Log.severe("Could not make player " + player + " leave section " + section);
+				this.logger.severe("Could not make player " + player + " leave section " + section);
 			}
 		}
 	}
@@ -376,10 +379,10 @@ public class DefaultSectionManager implements SectionManager {
 		// If there is already a temporary path stored
 		if(playersSectionPath.containsKey(player.getUniqueId())) {
 			// Do not make the computation again
-			Log.fine("Path already computed for " + player + ": " + playersSectionPath.get(player.getUniqueId()));
+			this.logger.fine("Path already computed for " + player + ": " + playersSectionPath.get(player.getUniqueId()));
 			return true;
 		}
-		Log.fine("Computing path for " + player + " from " + leftNode + " to " + targetNode);
+		this.logger.fine("Computing path for " + player + " from " + leftNode + " to " + targetNode);
 
 		// Special case for root node exit
 		if(leftNode != null && leftNode.getFullName().equals(SectionManager.ROOT_NODE_NAME) && targetNode == null) {
@@ -387,7 +390,7 @@ public class DefaultSectionManager implements SectionManager {
 			// Do a leave check for the parent
 			if(!leftNode.preLeave(player, null, fromParty)) {
 				// The current node does not want us to leave it. Stop going back.
-				Log.severe("Node " + leftNode + " refused player " + player + " to leave with its leave check.");
+				this.logger.severe("Node " + leftNode + " refused player " + player + " to leave with its leave check.");
 				return false;
 			}
 
@@ -424,7 +427,7 @@ public class DefaultSectionManager implements SectionManager {
 			if(leftNode != null) {
 				// Find the common node with left node and target node
 				commonNode = findCommonNode(leftNode, targetNode);
-				Log.finest("For player " + player + ", common node is " + commonNode);
+				this.logger.finest("For player " + player + ", common node is " + commonNode);
 
 				// Walk back player to common node with target node
 				if(!walkBackward(player, leftNode, commonNode, nodesToVisit, fromParty, targetNode)) {
@@ -437,7 +440,7 @@ public class DefaultSectionManager implements SectionManager {
 				return false;
 			}
 		} catch(Exception e) {
-			Log.severe("Error encountered during section tree traversal.", e);
+			this.logger.log(Level.SEVERE, "Error encountered during section tree traversal.", e);
 			return false;
 		}
 
@@ -463,14 +466,14 @@ public class DefaultSectionManager implements SectionManager {
 		for(node = start.getParentSection(); node != null; node = node.getParentSection()) {
 			if(!node.preJoin(player, finalNode, fromParty)) {
 				// The current node does not want us to enter it. Stop going back.
-				Log.severe("Node " + node + " refused player " + player + " to enter with its join check.");
+				this.logger.severe("Node " + node + " refused player " + player + " to enter with its join check.");
 				return false;
 			}
 
 			// Do a leave check for the parent
 			if(!node.preLeave(player, finalNode, fromParty)) {
 				// The current node does not want us to leave it. Stop going back.
-				Log.severe("Node " + node + " refused player " + player + " to leave with its leave check.");
+				this.logger.severe("Node " + node + " refused player " + player + " to leave with its leave check.");
 				return false;
 			}
 
@@ -522,7 +525,7 @@ public class DefaultSectionManager implements SectionManager {
 			if(node != start) {
 				if(!node.preJoin(player, finalNode, fromParty)) {
 					// The current node does not want us to enter it. Stop going back.
-					Log.severe("Node " + node + " refused player " + player + " to enter with its join check.");
+					this.logger.severe("Node " + node + " refused player " + player + " to enter with its join check.");
 					return false;
 				}
 			}
@@ -530,7 +533,7 @@ public class DefaultSectionManager implements SectionManager {
 			if(node != target) {
 				if(!node.preLeave(player, finalNode, fromParty)) {
 					// The current node does not want us to leave it. Stop going forward.
-					Log.severe("Node " + node + " refused player " + player + " to leave with its leave check.");
+					this.logger.severe("Node " + node + " refused player " + player + " to leave with its leave check.");
 					return false;
 				}
 			}
