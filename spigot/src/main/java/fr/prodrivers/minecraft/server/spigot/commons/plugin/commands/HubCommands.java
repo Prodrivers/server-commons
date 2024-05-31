@@ -10,8 +10,8 @@ import fr.prodrivers.minecraft.server.commons.sections.SectionCapabilities;
 import fr.prodrivers.minecraft.server.commons.sections.SectionManager;
 import org.bukkit.entity.Player;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -2,9 +2,9 @@ package fr.prodrivers.minecraft.server.commons.storage;
 
 import fr.prodrivers.minecraft.server.spigot.commons.plugin.EConfiguration;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 import java.util.Properties;
 
 @Singleton

@@ -3,7 +3,7 @@ package fr.prodrivers.minecraft.server.commons.sections;
 import com.google.inject.AbstractModule;
 import fr.prodrivers.minecraft.server.spigot.commons.plugin.EConfiguration;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 public class SectionManagerModule extends AbstractModule {
 	private final Class<? extends SectionManager> sectionManagerClass;

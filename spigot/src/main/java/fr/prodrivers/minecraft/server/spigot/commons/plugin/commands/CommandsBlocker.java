@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import java.util.Arrays;
 import java.util.HashSet;

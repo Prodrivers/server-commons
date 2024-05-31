@@ -3,8 +3,8 @@ package fr.prodrivers.minecraft.server.commons.storage;
 import fr.prodrivers.minecraft.server.commons.di.guice.ProdriversCommonsGuiceModule;
 import io.ebean.datasource.DataSourceConfig;
 
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 
 /**
  * Database source configuration for Ebean ORM usage in Prodrivers plugins. Requires dependency injection.

@@ -5,7 +5,7 @@ import fr.prodrivers.minecraft.server.commons.chat.Chat;
 import fr.prodrivers.minecraft.server.commons.configuration.file.AbstractFileAttributeConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

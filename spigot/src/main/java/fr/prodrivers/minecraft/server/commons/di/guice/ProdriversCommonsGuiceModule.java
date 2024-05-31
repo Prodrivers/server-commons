@@ -13,7 +13,7 @@ import fr.prodrivers.minecraft.server.commons.ui.section.SelectionUI;
 import fr.prodrivers.minecraft.server.spigot.commons.plugin.DependenciesClassLoaderProvider;
 import io.ebean.Database;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Properties;
 
 /**

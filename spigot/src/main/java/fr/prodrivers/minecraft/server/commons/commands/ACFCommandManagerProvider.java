@@ -9,9 +9,9 @@ import fr.prodrivers.minecraft.server.commons.configuration.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 import java.lang.reflect.Field;
 import java.util.Locale;
 import java.util.Map;

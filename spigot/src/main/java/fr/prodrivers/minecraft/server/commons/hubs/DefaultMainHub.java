@@ -10,8 +10,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -8,7 +8,7 @@ import fr.prodrivers.minecraft.server.commons.configuration.file.actions.Message
 import fr.prodrivers.minecraft.server.commons.configuration.file.actions.MessageMapFileAttributeConfigurationAction;
 import org.bukkit.plugin.Plugin;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.File;
 import java.util.logging.Logger;
 
