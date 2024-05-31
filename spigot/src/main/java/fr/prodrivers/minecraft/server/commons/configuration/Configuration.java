@@ -7,6 +7,7 @@ import org.bukkit.plugin.Plugin;
 
 import javax.inject.Inject;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Configuration helper for Prodrivers plugins.
@@ -35,12 +36,13 @@ public class Configuration extends AbstractFileAttributeConfiguration {
 	 * Configuration helper constructor.
 	 * Intended to be used with a dependency injector.
 	 *
+	 * @param logger   Logger to use
 	 * @param plugin   Plugin initializing the helper
 	 * @param messages Messages instance to manage, uses this to provide your own inheriting class that adds its own message fields
 	 */
 	@Inject
-	public Configuration(Plugin plugin, Messages messages) {
-		super();
+	public Configuration(Logger logger, Plugin plugin, Messages messages) {
+		super(logger);
 		this.plugin = plugin;
 		this.messages = messages;
 		this.configuration = this.plugin.getConfig();

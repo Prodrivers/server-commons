@@ -10,6 +10,7 @@ import org.bukkit.plugin.Plugin;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.util.logging.Logger;
 
 /**
  * Messages helper for Prodrivers plugins.
@@ -33,11 +34,12 @@ public class Messages extends FileAttributeConfiguration {
 	/**
 	 * Messages helper constructor.
 	 *
+	 * @param logger Logger to use
 	 * @param plugin Plugin initializing the helper
 	 */
 	@Inject
-	public Messages(Plugin plugin) {
-		super(new File(plugin.getDataFolder(), "messages.yml"));
+	public Messages(Logger logger, Plugin plugin) {
+		super(logger, new File(plugin.getDataFolder(), "messages.yml"));
 	}
 
 

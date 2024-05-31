@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @SuppressWarnings("CanBeFinal")
 @Singleton
@@ -60,7 +61,7 @@ public class EMessages extends Messages {
 	}
 
 	@Inject
-	public EMessages(Plugin plugin) {
-		super(plugin);
+	public EMessages(Logger logger, Plugin plugin) {
+		super(logger, plugin);
 	}
 }

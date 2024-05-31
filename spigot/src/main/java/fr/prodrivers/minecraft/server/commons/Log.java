@@ -6,6 +6,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Deprecated
 public class Log {
 	private static Logger logger;
 

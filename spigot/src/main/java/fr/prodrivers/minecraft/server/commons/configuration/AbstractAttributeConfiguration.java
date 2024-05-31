@@ -13,6 +13,8 @@ import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Field-based configuration framework for Prodrivers plugins.
@@ -36,6 +38,8 @@ import java.util.Map;
  * constructing the object, either at the end of the constructor or outside of it.
  */
 public abstract class AbstractAttributeConfiguration {
+	protected final Logger logger;
+
 	@ExcludedFromConfiguration
 	private final Map<Class<?>, IConfigurationAction> actions = new HashMap<>();
 	@ExcludedFromConfiguration
@@ -52,6 +56,15 @@ public abstract class AbstractAttributeConfiguration {
 
 	private interface ProcessCallback {
 		void run(ProcessCallbackType type, IConfigurationAction action, Field field);
+	}
+
+	/**
+	 * Creates a new instance of attribute-based configuration, with a logger.
+	 *
+	 * @param logger Logger to use
+	 */
+	public AbstractAttributeConfiguration(Logger logger) {
+		this.logger = logger;
 	}
 
 	/**
@@ -338,7 +351,7 @@ public abstract class AbstractAttributeConfiguration {
 			}
 		});
 
-		Log.info("- Loaded " + loadCount + " " + getClass().getSimpleName() + " fields");
+		this.logger.info("- Loaded " + loadCount + " " + getClass().getSimpleName() + " fields");
 	}
 
 	private String serialize(Object object) {
@@ -349,7 +362,7 @@ public abstract class AbstractAttributeConfiguration {
 			oo.flush();
 			return Base64.getEncoder().encodeToString(bo.toByteArray());
 		} catch(IOException ex) {
-			Log.severe("Error while serializing object. Some configuration values might be invalid. Problematic object: " + object.getClass().getName(), ex);
+			this.logger.log(Level.SEVERE, "Error while serializing object. Some configuration values might be invalid. Problematic object: " + object.getClass().getName(), ex);
 			return "";
 		}
 	}
@@ -361,7 +374,7 @@ public abstract class AbstractAttributeConfiguration {
 			ObjectInputStream oi = new ObjectInputStream(bi);
 			return oi.readObject();
 		} catch(IOException | ClassNotFoundException ex) {
-			Log.severe("Error while unserializing object. Some configuration values might be invalid. Problematic object: " + serializedObject, ex);
+			this.logger.log(Level.SEVERE, "Error while unserializing object. Some configuration values might be invalid. Problematic object: " + serializedObject, ex);
 			return null;
 		}
 	}

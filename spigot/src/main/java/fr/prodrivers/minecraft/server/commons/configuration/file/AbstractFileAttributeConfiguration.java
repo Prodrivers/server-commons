@@ -5,6 +5,8 @@ import fr.prodrivers.minecraft.server.commons.configuration.AbstractAttributeCon
 import fr.prodrivers.minecraft.server.commons.configuration.file.actions.*;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.logging.Logger;
+
 /**
  * Field-based, Bukkit's {@link FileConfiguration} backed configuration framework for Prodrivers plugins.
  * <p>
@@ -29,6 +31,15 @@ public abstract class AbstractFileAttributeConfiguration extends AbstractAttribu
  * FileConfiguration used by this AbstractFileAttributeConfiguration instance.
  */
 	protected FileConfiguration configuration;
+
+	/**
+	 * Creates a new instance of attribute and file-based configuration, with a logger.
+	 *
+	 * @param logger Logger to use
+	 */
+	public AbstractFileAttributeConfiguration(Logger logger) {
+		super(logger);
+	}
 
 	@Override
 	protected void init() {

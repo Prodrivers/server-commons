@@ -16,6 +16,7 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 /**
  * Ebean ORM provider for Prodrivers plugins. Requires dependency injection.
@@ -40,21 +41,23 @@ import java.util.Properties;
  */
 @Singleton
 public class EbeanProvider implements Provider<Database> {
+	private final Logger logger;
 	private final DatabaseConfig dbConfig;
 	private final Properties ebeanProperties;
 	private final DependenciesClassLoaderProvider dependenciesClassLoaderProvider;
 
 	/**
 	 * Initialize a new Ebean provider with defined properties
-	 *
-	 * @return Ebean provider with configuration
 	 */
 	@Inject
-	public EbeanProvider(@Named("ebean") Properties ebeanProperties, DatabaseConfig dbConfig, DependenciesClassLoaderProvider dependenciesClassLoaderProvider) {
-		Log.info("DbConfig is: " + dbConfig.getClass().getCanonicalName());
-		Log.info("DbConfig has classes: " + dbConfig.getClasses());
+	public EbeanProvider(Logger logger, @Named("ebean") Properties ebeanProperties, DatabaseConfig dbConfig, DependenciesClassLoaderProvider dependenciesClassLoaderProvider) {
+		this.logger = logger;
+
+		this.logger.finest("DbConfig instance class: " + dbConfig.getClass().getCanonicalName());
+		this.logger.finest("DbConfig has classes: " + dbConfig.getClasses());
+		this.logger.finest("EbeanPropertiesProvider instance class: " + ebeanProperties.getClass().getCanonicalName());
+
 		this.dbConfig = dbConfig;
-		Log.info("EbeanPropertiesProvider is: " + ebeanProperties.getClass().getCanonicalName());
 		this.ebeanProperties = ebeanProperties;
 		this.dependenciesClassLoaderProvider = dependenciesClassLoaderProvider;
 	}

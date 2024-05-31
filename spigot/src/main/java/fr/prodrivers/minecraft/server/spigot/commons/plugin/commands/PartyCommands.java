@@ -19,10 +19,13 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Singleton
 @CommandAlias("party")
 public class PartyCommands extends BaseCommand {
+	private final Logger logger;
 	private static final String label = "party";
 
 	private final EMessages messages;
@@ -30,7 +33,8 @@ public class PartyCommands extends BaseCommand {
 	private final PartyManager partyManager;
 
 	@Inject
-	PartyCommands(Chat chat, EMessages messages, PartyManager partyManager) {
+	PartyCommands(Logger logger, Chat chat, EMessages messages, PartyManager partyManager) {
+		this.logger = logger;
 		this.chat = chat;
 		this.messages = messages;
 		this.partyManager = partyManager;
@@ -87,7 +91,7 @@ public class PartyCommands extends BaseCommand {
 			this.chat.error(inviter, this.messages.party_player_not_online.formatted(invited.getName()), this.messages.party_prefix);
 		} catch(Exception e) {
 			this.chat.error(inviter, this.messages.error_occurred);
-			Log.severe("Error while player " + inviter + " invited player " + invited + " .", e);
+			this.logger.log(Level.SEVERE, "Error while player " + inviter + " invited player " + invited + " .", e);
 		}
 	}
 
@@ -103,7 +107,7 @@ public class PartyCommands extends BaseCommand {
 			this.chat.error(invited, this.messages.party_not_invited_to_players_party.formatted(inviter.getName()), this.messages.party_prefix);
 		} catch(Exception e) {
 			this.chat.error(invited, this.messages.error_occurred);
-			Log.severe("Error while player " + invited + " accepted invitet from player " + inviter + " .", e);
+			this.logger.log(Level.SEVERE, "Error while player " + invited + " accepted invitet from player " + inviter + " .", e);
 		}
 	}
 

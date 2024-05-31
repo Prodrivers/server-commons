@@ -13,15 +13,20 @@ import org.bukkit.entity.Player;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Singleton
 @CommandAlias("hub")
 public class HubCommands extends BaseCommand {
+	private final Logger logger;
 	private final SectionManager sectionManager;
 	private final Chat chat;
 	private final EMessages messages;
 
 	@Inject
-	HubCommands(SectionManager sectionManager, Chat chat, EMessages messages) {
+	HubCommands(Logger logger, SectionManager sectionManager, Chat chat, EMessages messages) {
+		this.logger = logger;
 		this.chat = chat;
 		this.messages = messages;
 		this.sectionManager = sectionManager;
@@ -44,7 +49,7 @@ public class HubCommands extends BaseCommand {
 				this.sectionManager.enter(player);
 			}
 		} catch(Exception e) {
-			Log.severe("Unexpected error during hub command.", e);
+			this.logger.log(Level.SEVERE, "Unexpected error during hub command.", e);
 			this.chat.error(player, this.messages.error_occurred);
 		}
 	}

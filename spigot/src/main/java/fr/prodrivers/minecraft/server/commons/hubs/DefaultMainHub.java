@@ -13,6 +13,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Default implementation of main hub.
  * <p>
@@ -23,13 +26,15 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class DefaultMainHub extends MainHub {
+	private final Logger logger;
 	private final EConfiguration configuration;
 	private final EMessages messages;
 	private final SectionManager sectionManager;
 
 	@Inject
-	DefaultMainHub(EConfiguration configuration, EMessages messages, SectionManager sectionManager) {
+	DefaultMainHub(Logger logger, EConfiguration configuration, EMessages messages, SectionManager sectionManager) {
 		super();
+		this.logger = logger;
 		this.configuration = configuration;
 		this.messages = messages;
 		this.sectionManager = sectionManager;
@@ -44,7 +49,7 @@ public class DefaultMainHub extends MainHub {
 			player.teleport(this.configuration.sections_mainHub);
 			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10, 5);
 		} catch(Throwable e) {
-			Log.severe("Error while trying to make player " + player + " enter hub. Kicking him.", e);
+			this.logger.log(Level.SEVERE, "Error while trying to make player " + player + " enter hub. Kicking him.", e);
 			player.kickPlayer(this.messages.player_kicked_invalid_hub);
 			return false;
 		}

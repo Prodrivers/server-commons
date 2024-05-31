@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Properties;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("CanBeFinal")
 @Singleton
@@ -30,8 +31,8 @@ public class EConfiguration extends Configuration {
 	public String providers_MessageSender = SpigotMessageSender.class.getCanonicalName();
 
 	@Inject
-	public EConfiguration(Plugin plugin, Messages messages) {
-		super(plugin, messages);
+	public EConfiguration(Logger logger, Plugin plugin, Messages messages) {
+		super(logger, plugin, messages);
 		init();
 	}
 }

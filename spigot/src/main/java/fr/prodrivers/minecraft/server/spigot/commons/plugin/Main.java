@@ -51,9 +51,6 @@ public class Main extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
-		java.util.logging.Logger logger2 = getLogger();
-		Log.init(logger2);
-
 		logger.info("Java version is " + System.getProperty("java.version") + ".");
 
 		// Create an injector with only the plugin module, containing its configuration
